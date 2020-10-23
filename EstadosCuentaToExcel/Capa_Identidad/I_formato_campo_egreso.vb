@@ -2,6 +2,9 @@
     Private _id As Integer
     Private _cadena As String
 
+    Public Sub New()
+    End Sub
+
     Public Sub New(id As Integer, cadena As String)
         Me.Id = id
         Me.Cadena = cadena

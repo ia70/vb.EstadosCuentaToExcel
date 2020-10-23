@@ -29,6 +29,7 @@ Partial Class Test
         Me.btnBorrar = New System.Windows.Forms.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.btnDeserializar = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
@@ -87,11 +88,21 @@ Partial Class Test
         Me.btnDeserializar.Text = "Deserializar JSON"
         Me.btnDeserializar.UseVisualStyleBackColor = True
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(654, 30)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(58, 41)
+        Me.Button1.TabIndex = 6
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'Test
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1281, 783)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.btnDeserializar)
         Me.Controls.Add(Me.btnBorrar)
         Me.Controls.Add(Me.btnBuscar)
@@ -114,4 +125,5 @@ Partial Class Test
     Friend WithEvents btnBorrar As Button
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents btnDeserializar As Button
+    Friend WithEvents Button1 As Button
 End Class

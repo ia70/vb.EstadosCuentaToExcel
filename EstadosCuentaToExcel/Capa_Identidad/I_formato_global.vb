@@ -1,5 +1,6 @@
 ﻿Public Class I_formato_global
-
+    Private _id As Integer
+    Private _id_formato As String
     Private _rfc_ini As String
     Private _rfc_fin As String
     Private _fecha_corte_ini As String
@@ -14,7 +15,27 @@
 
 
 #Region "CONSTRUCTORES"
+
+    Public Sub New()
+    End Sub
+
     Public Sub New(rfc_ini As String, rfc_fin As String, fecha_corte_ini As String, fecha_corte_fin As String, saldo_inicial_ini As String, saldo_inicial_fin As String, algoritmo_nueva_linea As String, separador_linea As String, ignora_parcial_ini As String, ignora_parcial_fin As String, ignora_total As String)
+        _rfc_ini = rfc_ini
+        _rfc_fin = rfc_fin
+        _fecha_corte_ini = fecha_corte_ini
+        _fecha_corte_fin = fecha_corte_fin
+        _saldo_inicial_ini = saldo_inicial_ini
+        _saldo_inicial_fin = saldo_inicial_fin
+        _algoritmo_nueva_linea = algoritmo_nueva_linea
+        _separador_linea = separador_linea
+        _ignora_parcial_ini = ignora_parcial_ini
+        _ignora_parcial_fin = ignora_parcial_fin
+        _ignora_total = ignora_total
+    End Sub
+
+    Public Sub New(id As Integer, id_formato As String, rfc_ini As String, rfc_fin As String, fecha_corte_ini As String, fecha_corte_fin As String, saldo_inicial_ini As String, saldo_inicial_fin As String, algoritmo_nueva_linea As String, separador_linea As String, ignora_parcial_ini As String, ignora_parcial_fin As String, ignora_total As String)
+        _id = id
+        _id_formato = id_formato
         _rfc_ini = rfc_ini
         _rfc_fin = rfc_fin
         _fecha_corte_ini = fecha_corte_ini
@@ -31,6 +52,24 @@
 
 #End Region
 #Region "PROPIEDADES"
+    Public Property Id As Integer
+        Get
+            Return _id
+        End Get
+        Set(value As Integer)
+            _id = value
+        End Set
+    End Property
+
+    Public Property Id_formato As String
+        Get
+            Return _id_formato
+        End Get
+        Set(value As String)
+            _id_formato = value
+        End Set
+    End Property
+
     Public Property Rfc_ini As String
         Get
             Return _rfc_ini

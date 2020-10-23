@@ -7,7 +7,9 @@ Module CORE
 #End Region
 
 
+#Region "FUNCIONES"
 
+#End Region
 
 
 End Module

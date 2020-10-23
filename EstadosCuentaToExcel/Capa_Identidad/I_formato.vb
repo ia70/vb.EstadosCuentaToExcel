@@ -12,6 +12,10 @@ Public Class I_formato
     Private _formato_global As I_formato_global
 
 #Region "CONSTRUCTOR"
+
+    Public Sub New()
+    End Sub
+
     Public Sub New(id_formato As String, cadena As String, banco As String, algoritmo As String, formato_campos As List(Of I_formato_campos), formato_campo_ingreso As List(Of String), formato_campo_egreso As List(Of String), formato_global As I_formato_global)
         _id_formato = id_formato
         _cadena = cadena

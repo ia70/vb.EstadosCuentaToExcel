@@ -2,6 +2,8 @@
     Private _id As Integer
     Private _nombre As String
 
+    Public Sub New()
+    End Sub
     Public Sub New(id As Integer, nombre As String)
         _id = id
         _nombre = nombre
