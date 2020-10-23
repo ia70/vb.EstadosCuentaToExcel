@@ -1,0 +1,43 @@
+{
+    "id_formato": "F001",
+    "cadena": "Banamex Resuelve",
+    "banco": "CITIBANAMEX",
+    "algoritmo": "1",
+    "formato_campos": [
+        {
+            "indice": 1,
+            "nombre": "Fecha"
+        },
+        {
+            "indice": 2,
+            "nombre": "Concepto"
+        },
+        {
+            "indice": 3,
+            "nombre": "Retiros"
+        },
+        {
+            "indice": 4,
+            "nombre": "Depósitos"
+        },
+        {
+            "indice": 5,
+            "nombre": "Saldo"
+        }
+    ],
+    "formato_campo_ingreso": ["PAGO RECIBIDO","CTA.ORDENANTE"],
+    "formato_campo_egreso": ["PAGO INTERBANCARIO","PAGO A TERCEROS","PAGO DE SERVICIO"],
+    "formato_global": {
+        "rfc_ini": "Registro Federal de Contribuyentes: ",
+        "rfc_fin": "\r",
+        "fecha_corte_ini": "SALDO ANTERIOR SALDO AL ",
+        "fecha_corte_fin": "\r",
+        "saldo_inicial_ini": "SALDO ANTERIOR  ",
+        "saldo_inicial_fin": "\r",
+        "algoritmo_nueva_linea": "1",
+        "separador_linea": "\r",
+        "ignora_parcial_ini": "AAAA",
+        "ignora_parcial_fin": "BBBB",
+        "ignora_total": "CCCC"
+    }
+}
