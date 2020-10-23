@@ -25,7 +25,7 @@
             "nombre": "Saldo"
         }
     ],
-    "formato_campo_ingreso": ["PAGO RECIBIDO","CTA.ORDENANTE"],
+    "formato_campo_ingreso": ["PAGO RECIBIDO","CTA.ORDENANTE","DEPOSITO"],
     "formato_campo_egreso": ["PAGO INTERBANCARIO","PAGO A TERCEROS","PAGO DE SERVICIO"],
     "formato_global": {
         "rfc_ini": "Registro Federal de Contribuyentes: ",
