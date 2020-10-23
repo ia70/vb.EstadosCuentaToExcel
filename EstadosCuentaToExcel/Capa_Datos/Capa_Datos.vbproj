@@ -69,7 +69,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="D_Conexion.vb" />
+    <Compile Include="DataBase.vb" />
+    <Compile Include="D_conexion.vb" />
+    <Compile Include="D_VarGlobal.vb" />
     <Compile Include="Funciones.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

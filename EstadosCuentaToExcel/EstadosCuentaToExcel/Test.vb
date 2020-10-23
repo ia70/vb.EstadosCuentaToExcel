@@ -3,6 +3,7 @@ Imports System.Text
 Imports Capa_Identidad
 Imports iTextSharp.text.pdf
 Imports iTextSharp.text.pdf.parser
+Imports Capa_Negocios
 
 Imports Newtonsoft.Json
 
@@ -94,6 +95,7 @@ Public Class Test
 
 
         Dim formato As I_formato = JsonConvert.DeserializeObject(Of I_formato)(jsonTxt)
+        'Dim formato As Object = JsonConvert.DeserializeObject(Of Object)(jsonTxt)
 
         Console.WriteLine(formato.Banco)
         Console.ReadLine()
@@ -109,6 +111,10 @@ Public Class Test
         '{"Id":0,"Db_ip":"192.168.8.1","Db_user":"root","Db_password":"12345","Db_name":"data","Folder_in":"C:","Folder_out":"D:"}
 
         'MsgBox(getCampos(cadena))
+
+        Dim cn As New N_conexion
+        cn.leerDBinfo()
+
     End Sub
 
 End Class
