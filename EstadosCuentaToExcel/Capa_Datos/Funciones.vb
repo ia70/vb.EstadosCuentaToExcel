@@ -1,4 +1,24 @@
-﻿Module Funciones
+﻿Imports Newtonsoft.Json
+
+Module Funciones
+    Public Function jsonGetCampos(ByVal obj As Object) As String
+        Try
+            Dim cadena As String = JsonConvert.SerializeObject(obj)
+            Return cadena
+        Catch ex As Exception
+            Return ""
+        End Try
+    End Function
+
+    Public Function jsonGetValores(ByVal obj As Object) As String
+        Try
+            Dim cadena As String = JsonConvert.SerializeObject(obj)
+            Return cadena
+        Catch ex As Exception
+            Return ""
+        End Try
+    End Function
+
     Public Function jsonGetCampos(ByVal cadena As String) As String
         Dim indice As Integer
         Dim subcadena, respuesta, campo, valor As String
@@ -94,4 +114,36 @@
 
         Return respuesta.Replace("*", Chr(39))
     End Function
+
+    Public Function jsonGetString(ByVal obj As Object) As String
+        Dim cadena As String = JsonConvert.SerializeObject(obj)
+
+        cadena = cadena.Replace(":", "=")
+        cadena = cadena.Replace("{", "")
+        cadena = cadena.Replace("}", "")
+
+        Return cadena
+    End Function
+
+    Public Function jsonGetId(ByVal obj As Object) As String
+        Dim cadena As String = JsonConvert.SerializeObject(obj)
+        Dim indice As Integer
+        Dim subcadena As String = ""
+
+        Try
+            indice = cadena.IndexOf(",")
+            If indice >= 0 Then
+                cadena = cadena.Substring(0, indice)
+                indice = cadena.IndexOf(":")
+                If indice >= 0 Then
+                    subcadena = cadena.Substring(indice + 1)
+                End If
+            End If
+        Catch ex As Exception
+            subcadena = ""
+        End Try
+
+        Return subcadena
+    End Function
+
 End Module

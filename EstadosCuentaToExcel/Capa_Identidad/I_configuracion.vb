@@ -1,5 +1,5 @@
 ﻿Public Class I_configuracion
-    Private _id As Integer
+    Private _id As Integer = 1
     Private _folder_in As String
     Private _folder_out As String
 
