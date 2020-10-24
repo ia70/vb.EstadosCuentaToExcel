@@ -18,11 +18,24 @@ Public Class N_conexion
     End Function
 
     Public Sub setConexionInfo(ByVal info As I_Conexion)
+        Dim fichero As String = "Conexion.json"
+        Dim texto As String
 
+        texto = "{" + vbCrLf + vbTab + "'server': '" + info.Server + "'," + vbCrLf + vbTab + "'user_id': '" + info.User_id + "'," + vbCrLf + vbTab + "'password': '" + info.Password + "'," + vbCrLf + vbTab + "'database': '" + info.Database + "'" + vbCrLf + "}"
+        texto = texto.Replace("'", Chr(34))
+
+        Try
+            Dim sw As New StreamWriter(fichero)
+            sw.WriteLine(texto)
+            sw.Close()
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
     End Sub
 
     Public Function getConexionInfo() As I_Conexion
-
+        leerDBinfo()
+        Return conexionInfo
     End Function
 
     Public Function testConexion(ByVal obj As I_Conexion) As Boolean
@@ -30,7 +43,7 @@ Public Class N_conexion
         Return _test.testConexion(getConexionString(obj))
     End Function
 
-    Public Sub leerDBinfo()
+    Private Sub leerDBinfo()
         Dim fichero As String = "Conexion.json"
         Dim texto As String = ""
 
