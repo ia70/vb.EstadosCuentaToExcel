@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.EstadosCuentaToExcel.Test
+            Me.MainForm = Global.EstadosCuentaToExcel.GUI_ini
         End Sub
     End Class
 End Namespace

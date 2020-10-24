@@ -9,12 +9,24 @@ Public Class N_conexion
     Public Sub New()
     End Sub
 
-    Private Function getConexionString(ByVal obj As I_Conexion) As String
-        Dim _conexion As String
+#Region "FUNCIONES PUBLICAS"
 
-        _conexion = "server=" & obj.Server & ";user id=" & obj.User_id & ";password=" & obj.Password & ";database=" & obj.Database
+    Public Function InicializarDB() As Boolean
+        Dim db = New D_conexion
 
-        Return _conexion
+        Try
+            leerDBinfo()
+            Return db.InicializarDB(getConexionString(conexionInfo))
+        Catch ex As Exception
+            Return False
+            MsgBox(ex.ToString)
+        End Try
+
+    End Function
+
+    Public Function getConexionInfo() As I_Conexion
+        leerDBinfo()
+        Return conexionInfo
     End Function
 
     Public Sub setConexionInfo(ByVal info As I_Conexion)
@@ -33,14 +45,19 @@ Public Class N_conexion
         End Try
     End Sub
 
-    Public Function getConexionInfo() As I_Conexion
-        leerDBinfo()
-        Return conexionInfo
-    End Function
-
     Public Function testConexion(ByVal obj As I_Conexion) As Boolean
         Dim _test As New D_conexion
         Return _test.testConexion(getConexionString(obj))
+    End Function
+
+#End Region
+#Region "FUNCIONES PRIVADAS"
+    Private Function getConexionString(ByVal obj As I_Conexion) As String
+        Dim _conexion As String
+
+        _conexion = "server=" & obj.Server & ";user id=" & obj.User_id & ";password=" & obj.Password & ";database=" & obj.Database
+
+        Return _conexion
     End Function
 
     Private Sub leerDBinfo()
@@ -81,7 +98,7 @@ Public Class N_conexion
         Dim fichero As String = "Conexion.json"
         Dim texto As String
 
-        texto = "{" + vbCrLf + vbTab + "'server': '127.0.0.1'," + vbCrLf + vbTab + "'user_id': 'root'," + vbCrLf + vbTab + "'password': ''," + vbCrLf + vbTab + "'database': 'xrestadoscuentas'" + vbCrLf + "}"
+        texto = "{" + vbCrLf + vbTab + "'server': ''," + vbCrLf + vbTab + "'user_id': ''," + vbCrLf + vbTab + "'password': ''," + vbCrLf + vbTab + "'database': ''" + vbCrLf + "}"
         texto = texto.Replace("'", Chr(34))
 
         Try
@@ -93,15 +110,6 @@ Public Class N_conexion
         End Try
 
     End Sub
+#End Region
 
-    Public Sub InicializarDB()
-        Dim db = New D_conexion
-        Try
-            leerDBinfo()
-            db.InicializarDB(getConexionString(conexionInfo))
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        End Try
-
-    End Sub
 End Class

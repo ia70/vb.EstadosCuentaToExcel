@@ -105,15 +105,15 @@ Public Class Test
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim _d As New I_configuracion("192.168.8.1", "root", "12345", "data", "C:", "D:")
-        Dim cadena As String = JsonConvert.SerializeObject(_d)
+        'Dim _d As New I_configuracion("192.168.8.1", "root", "12345", "data", "C:", "D:")
+        'Dim cadena As String = JsonConvert.SerializeObject(_d)
 
         '{"Id":0,"Db_ip":"192.168.8.1","Db_user":"root","Db_password":"12345","Db_name":"data","Folder_in":"C:","Folder_out":"D:"}
 
         'MsgBox(getCampos(cadena))
 
-        Dim cn As New N_conexion
-        cn.leerDBinfo()
+        'Dim cn As New N_conexion
+        'cn.leerDBinfo()
 
     End Sub
 
