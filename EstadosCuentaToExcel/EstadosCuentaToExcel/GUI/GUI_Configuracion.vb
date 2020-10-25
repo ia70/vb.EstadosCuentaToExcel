@@ -91,12 +91,6 @@ Public Class GUI_Configuracion
         End If
     End Sub
 
-    Private Sub BtnPruebas_Click(sender As Object, e As EventArgs) Handles btnPruebas.Click
-        Dim db As New N_Configuracion
-        Dim iden As I_configuracion
-        iden = db.Consultar()
-    End Sub
-
     Private Sub BtnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
         Dim db As New N_configuracion
         Dim ini As New N_conexion
