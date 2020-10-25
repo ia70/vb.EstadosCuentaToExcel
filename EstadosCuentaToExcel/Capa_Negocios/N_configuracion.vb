@@ -11,11 +11,15 @@ Public Class N_Configuracion
 
         res = db.Consulta("1")
 
-        With iden
-            .Id = res.Rows(0).Item(0)
-            .Folder_in = res.Rows(0).Item(1)
-            .Folder_out = res.Rows(0).Item(2)
-        End With
+        Try
+            With iden
+                .Id = res.Rows(0).Item(0)
+                .Folder_in = res.Rows(0).Item(1)
+                .Folder_out = res.Rows(0).Item(2)
+            End With
+        Catch ex As Exception
+
+        End Try
 
         Return iden
     End Function
