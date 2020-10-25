@@ -36,9 +36,11 @@ Public Class GUI_Configuracion
         End If
 
         'GET FORMATOS -----------------------------------
-        On Error Resume Next
-        dgTabla.DataSource = db_formato.ListaSimple
-
+        Try
+            dgTabla.DataSource = db_formato.ListaSimple
+        Catch ex As Exception
+            X(ex)
+        End Try
 
     End Sub
 
@@ -78,6 +80,7 @@ Public Class GUI_Configuracion
         If dlgFile.ShowDialog() = DialogResult.OK Then
             Try
                 If db.Insertar(dlgFile.FileName) Then
+                    Inicializar()
                     msg("¡Formato guardado!")
                 Else
                     msg("¡Error al guardar!", 3)

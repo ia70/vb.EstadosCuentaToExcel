@@ -13,11 +13,20 @@
     ''' </summary>
     ''' <returns>DataTable</returns>
     Public Function Lista() As DataTable
+        Return Lista("id")
+    End Function
+
+    ''' <summary>
+    ''' Obtiene Lista completa de los registros
+    ''' </summary>
+    ''' <param name="campo">Nombre del campo</param>
+    ''' <returns>DataTable</returns>
+    Public Function Lista(ByVal campo As String) As DataTable
         Dim DB As New D_DB_Core
         Dim sql As String
         Dim res As DataTable
 
-        sql = "SELECT * FROM " & Tabla & " ORDER BY id ASC"
+        sql = "SELECT * FROM " & Tabla & " ORDER BY " + campo + " ASC"
         res = DB.Query(sql)
 
         Return res

@@ -11,7 +11,7 @@ Public Class N_Formato
     Public Function ListaSimple() As DataTable
         Dim db As New D_db_operaciones(tabla)
 
-        Return db.Lista
+        Return db.Lista("id_formato")
 
     End Function
 
@@ -29,9 +29,8 @@ Public Class N_Formato
     End Function
 
     Public Function Insertar(ByVal ruta As String) As Boolean
-        Dim res As Boolean
-
         Dim iden_formato As I_formato
+        Dim dtabla As DataTable
         Dim f_simple As New I_Formato_simple
         Dim db_f As New D_db_operaciones(tabla)
         Dim db_fce As New N_Formato_campo_egreso
@@ -51,6 +50,9 @@ Public Class N_Formato
             iden_formato = New I_formato
         End Try
 
+        If Existe(iden_formato.Id_formato) Then
+            Return False
+        End If
 
         Try
             If Not db_f.Insertar(f_simple) Then
@@ -101,6 +103,7 @@ Public Class N_Formato
         Dim db_fc As New N_Formato_campos
         Dim db_fg As New N_Formato_global
 
+        id = "'" + id + "'"
         res = db.Consulta("id_formato", id)
 
         With iden
@@ -117,6 +120,21 @@ Public Class N_Formato
         Return iden
     End Function
 
+    Private Function Existe(ByVal id As String) As Boolean
+        Dim db As New D_db_operaciones(tabla)
+        Dim dtabla As DataTable
+
+        id = "'" + id + "'"
+        dtabla = db.Consulta("id_formato", id)
+
+        If dtabla.Rows.Count > 0 Then
+            Return True
+        Else
+            Return False
+        End If
+
+    End Function
+
     Public Function Eliminar(ByVal id As String)
         Dim res As Boolean
         Dim db As New D_db_operaciones(tabla)
@@ -124,6 +142,8 @@ Public Class N_Formato
         Dim db_fci As New N_Formato_campo_ingreso
         Dim db_fc As New N_Formato_campos
         Dim db_fg As New N_Formato_global
+
+        id = "'" + id + "'"
 
         On Error Resume Next
         res = db.Eliminar("id_formato", id)
