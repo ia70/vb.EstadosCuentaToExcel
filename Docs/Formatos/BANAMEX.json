@@ -5,35 +5,59 @@
     "algoritmo": "1",
     "formato_campos": [
         {
-            "indice": 1,
-            "nombre": "Fecha"
+            "nombre": "Fecha",
+            "tipo": "fecha"
         },
         {
-            "indice": 2,
-            "nombre": "Concepto"
+            "nombre": "Concepto",
+            "tipo": "texto"
         },
         {
-            "indice": 3,
-            "nombre": "Retiros"
+            "nombre": "Retiros",
+            "tipo": "numero"
         },
         {
-            "indice": 4,
-            "nombre": "Depósitos"
+            "nombre": "Depósitos",
+            "tipo": "numero"
         },
         {
-            "indice": 5,
-            "nombre": "Saldo"
+            "nombre": "Saldo",
+            "tipo": "numero"
         }
     ],
-    "formato_campo_ingreso": ["PAGO RECIBIDO","CTA.ORDENANTE","DEPOSITO"],
-    "formato_campo_egreso": ["PAGO INTERBANCARIO","PAGO A TERCEROS","PAGO DE SERVICIO"],
+    "formato_campo_ingreso": [
+        {
+            "cadena": "PAGO RECIBIDO"
+        },
+        {
+            "cadena": "CTA.ORDENANTE"
+        },
+        {
+            "cadena": "DEPOSITO"
+        }
+    ],
+    "formato_campo_egreso": [
+        {
+            "cadena": "PAGO INTERBANCARIO"
+        },
+        {
+            "cadena": "PAGO A TERCEROS"
+        },
+        {
+            "cadena": "PAGO DE SERVICIO"
+        }
+    ],
     "formato_global": {
         "rfc_ini": "Registro Federal de Contribuyentes: ",
         "rfc_fin": "\r",
-        "fecha_corte_ini": "SALDO ANTERIOR SALDO AL ",
-        "fecha_corte_fin": "\r",
         "saldo_inicial_ini": "SALDO ANTERIOR  ",
         "saldo_inicial_fin": "\r",
+        "mes_ini": "",
+        "mes_fin": "",
+        "anio_ini": "",
+        "anio_fin": "",
+        "cuenta_ini": "",
+        "cuenta_fin": "",
         "algoritmo_nueva_linea": "1",
         "separador_linea": "\r",
         "ignora_parcial_ini": "AAAA",

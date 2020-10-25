@@ -8,18 +8,33 @@ Public Class N_Formato
 
 #Region "FUNCIONES PUBLICAS"
 
-    Public Function Lista() As DataTable
+    Public Function ListaSimple() As DataTable
         Dim db As New D_db_operaciones(tabla)
 
         Return db.Lista
 
     End Function
 
+    Public Function ListaCompleta() As List(Of I_formato)
+
+    End Function
+
     Public Function Insertar(ByVal ruta As String) As Boolean
-        Dim formato As I_formato
-        formato = leerFichero(ruta)
+        Dim res As Boolean
+
+        Dim iden_formato As I_formato
+        Dim db_f As New D_db_operaciones(tabla)
+        Dim db_fce As New N_Formato_campo_egreso
+        Dim db_fci As New N_Formato_campo_ingreso
+        Dim db_fc As New N_Formato_campos
+        Dim db_fg As New N_Formato_global
+
+        iden_formato = leerFichero(ruta)
+
+        res = db_f.Insertar(iden_formato)
 
 
+        Return res
     End Function
 
     Public Function Consultar(ByVal id As String) As I_formato
@@ -38,18 +53,10 @@ Public Class N_Formato
         Return iden
     End Function
 
-    Public Function Editar(ByVal obj As I_formato) As Boolean
+    Public Function Eliminar(ByVal id As String)
         Dim db As New D_db_operaciones(tabla)
 
-
-        Return db.Insertar(obj)
-
-    End Function
-
-    Public Function Eliminar()
-        Dim db As New D_db_operaciones(tabla)
-
-        Return db.Eliminar(1)
+        Return db.Eliminar(id)
 
     End Function
 
