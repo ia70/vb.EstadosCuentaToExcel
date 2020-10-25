@@ -3,10 +3,14 @@
     Private _id_formato As String
     Private _rfc_ini As String
     Private _rfc_fin As String
-    Private _fecha_corte_ini As String
-    Private _fecha_corte_fin As String
     Private _saldo_inicial_ini As String
     Private _saldo_inicial_fin As String
+    Private _mes_ini As String
+    Private _mes_fin As String
+    Private _anio_ini As String
+    Private _anio_fin As String
+    Private _cuenta_ini As String
+    Private _cuenta_fin As String
     Private _algoritmo_nueva_linea As String
     Private _separador_linea As String
     Private _ignora_parcial_ini As String
@@ -14,34 +18,25 @@
     Private _ignora_total As String
 
 
+
 #Region "CONSTRUCTORES"
 
     Public Sub New()
     End Sub
 
-    Public Sub New(rfc_ini As String, rfc_fin As String, fecha_corte_ini As String, fecha_corte_fin As String, saldo_inicial_ini As String, saldo_inicial_fin As String, algoritmo_nueva_linea As String, separador_linea As String, ignora_parcial_ini As String, ignora_parcial_fin As String, ignora_total As String)
-        _rfc_ini = rfc_ini
-        _rfc_fin = rfc_fin
-        _fecha_corte_ini = fecha_corte_ini
-        _fecha_corte_fin = fecha_corte_fin
-        _saldo_inicial_ini = saldo_inicial_ini
-        _saldo_inicial_fin = saldo_inicial_fin
-        _algoritmo_nueva_linea = algoritmo_nueva_linea
-        _separador_linea = separador_linea
-        _ignora_parcial_ini = ignora_parcial_ini
-        _ignora_parcial_fin = ignora_parcial_fin
-        _ignora_total = ignora_total
-    End Sub
-
-    Public Sub New(id As Integer, id_formato As String, rfc_ini As String, rfc_fin As String, fecha_corte_ini As String, fecha_corte_fin As String, saldo_inicial_ini As String, saldo_inicial_fin As String, algoritmo_nueva_linea As String, separador_linea As String, ignora_parcial_ini As String, ignora_parcial_fin As String, ignora_total As String)
+    Public Sub New(id As Integer, id_formato As String, rfc_ini As String, rfc_fin As String, saldo_inicial_ini As String, saldo_inicial_fin As String, mes_ini As String, mes_fin As String, anio_ini As String, anio_fin As String, cuenta_ini As String, cuenta_fin As String, algoritmo_nueva_linea As String, separador_linea As String, ignora_parcial_ini As String, ignora_parcial_fin As String, ignora_total As String)
         _id = id
         _id_formato = id_formato
         _rfc_ini = rfc_ini
         _rfc_fin = rfc_fin
-        _fecha_corte_ini = fecha_corte_ini
-        _fecha_corte_fin = fecha_corte_fin
         _saldo_inicial_ini = saldo_inicial_ini
         _saldo_inicial_fin = saldo_inicial_fin
+        _mes_ini = mes_ini
+        _mes_fin = mes_fin
+        _anio_ini = anio_ini
+        _anio_fin = anio_fin
+        _cuenta_ini = cuenta_ini
+        _cuenta_fin = cuenta_fin
         _algoritmo_nueva_linea = algoritmo_nueva_linea
         _separador_linea = separador_linea
         _ignora_parcial_ini = ignora_parcial_ini
@@ -52,6 +47,7 @@
 
 #End Region
 #Region "PROPIEDADES"
+
     Public Property Id As Integer
         Get
             Return _id
@@ -88,24 +84,6 @@
         End Set
     End Property
 
-    Public Property Fecha_corte_ini As String
-        Get
-            Return _fecha_corte_ini
-        End Get
-        Set(value As String)
-            _fecha_corte_ini = value
-        End Set
-    End Property
-
-    Public Property Fecha_corte_fin As String
-        Get
-            Return _fecha_corte_fin
-        End Get
-        Set(value As String)
-            _fecha_corte_fin = value
-        End Set
-    End Property
-
     Public Property Saldo_inicial_ini As String
         Get
             Return _saldo_inicial_ini
@@ -121,6 +99,60 @@
         End Get
         Set(value As String)
             _saldo_inicial_fin = value
+        End Set
+    End Property
+
+    Public Property Mes_ini As String
+        Get
+            Return _mes_ini
+        End Get
+        Set(value As String)
+            _mes_ini = value
+        End Set
+    End Property
+
+    Public Property Mes_fin As String
+        Get
+            Return _mes_fin
+        End Get
+        Set(value As String)
+            _mes_fin = value
+        End Set
+    End Property
+
+    Public Property Anio_ini As String
+        Get
+            Return _anio_ini
+        End Get
+        Set(value As String)
+            _anio_ini = value
+        End Set
+    End Property
+
+    Public Property Anio_fin As String
+        Get
+            Return _anio_fin
+        End Get
+        Set(value As String)
+            _anio_fin = value
+        End Set
+    End Property
+
+    Public Property Cuenta_ini As String
+        Get
+            Return _cuenta_ini
+        End Get
+        Set(value As String)
+            _cuenta_ini = value
+        End Set
+    End Property
+
+    Public Property Cuenta_fin As String
+        Get
+            Return _cuenta_fin
+        End Get
+        Set(value As String)
+            _cuenta_fin = value
         End Set
     End Property
 
@@ -168,7 +200,7 @@
             _ignora_total = value
         End Set
     End Property
-#End Region
 
+#End Region
 
 End Class

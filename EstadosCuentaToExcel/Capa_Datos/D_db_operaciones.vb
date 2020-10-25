@@ -43,14 +43,26 @@
     ''' <summary>
     ''' Consultar un registro
     ''' </summary>
-    ''' <param name="id">Clave Primaria</param>
+    ''' <param name="id">Registro a buscar</param>
     ''' <returns>True - Si exitoso</returns>
     Public Function Consulta(ByVal id As String) As DataTable
+
+        Return Consulta("id", id)
+
+    End Function
+
+    ''' <summary>
+    ''' Consultar un registro
+    ''' </summary>
+    ''' <param name="campo">Nombre del campo</param>
+    ''' <param name="id">Registro a buscar</param>
+    ''' <returns>True - Si exitoso</returns>
+    Public Function Consulta(ByVal campo As String, ByVal id As String) As DataTable
         Dim DB As New D_DB_Core
         Dim sql As String
         Dim Res As DataTable
 
-        sql = "SELECT * FROM " & Tabla & " WHERE id=" & id
+        sql = "SELECT * FROM " & Tabla & " WHERE " + campo + "=" & id
         Res = DB.Query(sql)
 
         Return Res
@@ -77,14 +89,26 @@
     ''' <summary>
     ''' Eliminar registro
     ''' </summary>
-    ''' <param name="id">Clave Primaria</param>
+    ''' <param name="id">Registro a eliminar</param>
     ''' <returns>True - Si exitoso</returns>
     Public Function Eliminar(ByVal id As String) As Boolean
+
+        Return Eliminar("id", id)
+
+    End Function
+
+    ''' <summary>
+    ''' Eliminar registro
+    ''' </summary>
+    ''' <param name="campo">Nombre del campo</param>
+    ''' <param name="id">Registro a eliminar</param>
+    ''' <returns>True - Si exitoso</returns>
+    Public Function Eliminar(ByVal campo As String, ByVal id As String) As Boolean
         Dim DB As New D_DB_Core
         Dim sql As String
         Dim res As Boolean
 
-        sql = "DELETE FROM " & Tabla & " WHERE id=" & id
+        sql = "DELETE FROM " & Tabla & " WHERE " + campo + "=" & id
         res = DB.Update(sql)
 
         Return res

@@ -22,6 +22,10 @@ Partial Class GUI_Configuracion
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(GUI_Configuracion))
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -32,6 +36,7 @@ Partial Class GUI_Configuracion
         Me.btnGuardar = New System.Windows.Forms.Button()
         Me.btnIniciarProceso = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.btnPruebas = New System.Windows.Forms.Button()
         Me.btnTest = New System.Windows.Forms.Button()
         Me.txtDataBase = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -53,7 +58,6 @@ Partial Class GUI_Configuracion
         Me.dgTabla = New System.Windows.Forms.DataGridView()
         Me.btnImportar = New System.Windows.Forms.Button()
         Me.dlgFile = New System.Windows.Forms.OpenFileDialog()
-        Me.btnPruebas = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -179,6 +183,15 @@ Partial Class GUI_Configuracion
         Me.GroupBox1.TabIndex = 12
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Base de datos"
+        '
+        'btnPruebas
+        '
+        Me.btnPruebas.Location = New System.Drawing.Point(240, 132)
+        Me.btnPruebas.Name = "btnPruebas"
+        Me.btnPruebas.Size = New System.Drawing.Size(64, 35)
+        Me.btnPruebas.TabIndex = 13
+        Me.btnPruebas.Text = "any"
+        Me.btnPruebas.UseVisualStyleBackColor = True
         '
         'btnTest
         '
@@ -379,11 +392,47 @@ Partial Class GUI_Configuracion
         'dgTabla
         '
         Me.dgTabla.AllowUserToAddRows = False
+        Me.dgTabla.AllowUserToResizeColumns = False
+        Me.dgTabla.AllowUserToResizeRows = False
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.Azure
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White
+        Me.dgTabla.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        Me.dgTabla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.dgTabla.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dgTabla.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgTabla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.dgTabla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgTabla.DefaultCellStyle = DataGridViewCellStyle3
         Me.dgTabla.Location = New System.Drawing.Point(12, 74)
+        Me.dgTabla.MultiSelect = False
         Me.dgTabla.Name = "dgTabla"
         Me.dgTabla.ReadOnly = True
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgTabla.RowHeadersDefaultCellStyle = DataGridViewCellStyle4
+        Me.dgTabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgTabla.Size = New System.Drawing.Size(289, 301)
         Me.dgTabla.TabIndex = 12
         '
@@ -405,15 +454,6 @@ Partial Class GUI_Configuracion
         '
         Me.dlgFile.Filter = "Formato|*.json"
         Me.dlgFile.Title = "Seleccionar archivo de foramto."
-        '
-        'btnPruebas
-        '
-        Me.btnPruebas.Location = New System.Drawing.Point(240, 132)
-        Me.btnPruebas.Name = "btnPruebas"
-        Me.btnPruebas.Size = New System.Drawing.Size(64, 35)
-        Me.btnPruebas.TabIndex = 13
-        Me.btnPruebas.Text = "any"
-        Me.btnPruebas.UseVisualStyleBackColor = True
         '
         'GUI_Configuracion
         '
