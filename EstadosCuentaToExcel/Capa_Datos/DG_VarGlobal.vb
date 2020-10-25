@@ -1,4 +1,4 @@
-﻿Module D_VarGlobal
+﻿Module DG_VarGlobal
 
     Public ConexionString As String = ""
 

@@ -72,11 +72,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataBase.vb" />
-    <Compile Include="D_conexion.vb" />
-    <Compile Include="D_configuracion.vb" />
-    <Compile Include="D_VarGlobal.vb" />
-    <Compile Include="Funciones.vb" />
+    <Compile Include="D_DB_Core.vb" />
+    <Compile Include="D_Conexion.vb" />
+    <Compile Include="D_DB_Operaciones.vb" />
+    <Compile Include="DG_VarGlobal.vb" />
+    <Compile Include="DG_Funciones.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

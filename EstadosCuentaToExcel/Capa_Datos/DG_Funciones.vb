@@ -1,10 +1,12 @@
 ﻿Imports Newtonsoft.Json
 
-Module Funciones
+Module DG_Funciones
     Public Function jsonGetCampos(ByVal obj As Object) As String
         Try
             Dim cadena As String = JsonConvert.SerializeObject(obj)
-            Return cadena
+            Dim res As String
+            res = jsonGetCampos(cadena)
+            Return res
         Catch ex As Exception
             Return ""
         End Try
@@ -13,7 +15,9 @@ Module Funciones
     Public Function jsonGetValores(ByVal obj As Object) As String
         Try
             Dim cadena As String = JsonConvert.SerializeObject(obj)
-            Return cadena
+            Dim res As String
+            res = jsonGetValores(cadena)
+            Return res
         Catch ex As Exception
             Return ""
         End Try
@@ -64,7 +68,9 @@ Module Funciones
             MsgBox(ex.ToString)
         End Try
 
-        Return respuesta.Replace("*", Chr(39))
+        respuesta = respuesta.ToLower
+
+        Return respuesta.Replace("*", "")
     End Function
 
     Public Function jsonGetValores(ByVal cadena As String) As String

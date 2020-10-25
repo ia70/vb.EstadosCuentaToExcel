@@ -1,6 +1,6 @@
 ﻿Imports MySql.Data.MySqlClient
 
-Public Class DataBase
+Public Class D_DB_Core
     '----- BASE DE DATOS --> MySQL -----
 #Region "Variables"
     Private Conexion As MySqlConnection             '-> Variable de conexión a la Base de datos
@@ -24,7 +24,6 @@ Public Class DataBase
             Conexion.Open()
             Return True
         Catch ex As MySqlException
-            MsgBox("Error de conexión a la base de datos!.  Error: " + ex.ToString, vbCritical, "Estados de cuentas")
             Return False
         End Try
     End Function
@@ -70,6 +69,7 @@ Public Class DataBase
             End If
             Return False
         Catch ex As Exception
+            MsgBox(ex.Message)
             Return False
         End Try
     End Function
@@ -88,6 +88,7 @@ Public Class DataBase
             da.Fill(dt)
             Return dt
         Catch ex As Exception
+            MsgBox(ex.Message)
             Return Nothing
         End Try
 

@@ -48,11 +48,19 @@ Partial Class GUI_Configuracion
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.dlgFolder = New System.Windows.Forms.FolderBrowserDialog()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.btnEliminar = New System.Windows.Forms.Button()
+        Me.dgTabla = New System.Windows.Forms.DataGridView()
+        Me.btnImportar = New System.Windows.Forms.Button()
+        Me.dlgFile = New System.Windows.Forms.OpenFileDialog()
+        Me.btnPruebas = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox3.SuspendLayout()
+        CType(Me.dgTabla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label2
@@ -88,13 +96,13 @@ Partial Class GUI_Configuracion
         'btnBuscarIn
         '
         Me.btnBuscarIn.BackColor = System.Drawing.Color.LightSeaGreen
-        Me.btnBuscarIn.FlatAppearance.BorderSize = 0
+        Me.btnBuscarIn.FlatAppearance.BorderSize = 2
         Me.btnBuscarIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnBuscarIn.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnBuscarIn.ForeColor = System.Drawing.Color.White
-        Me.btnBuscarIn.Location = New System.Drawing.Point(446, 59)
+        Me.btnBuscarIn.Location = New System.Drawing.Point(446, 57)
         Me.btnBuscarIn.Name = "btnBuscarIn"
-        Me.btnBuscarIn.Size = New System.Drawing.Size(82, 27)
+        Me.btnBuscarIn.Size = New System.Drawing.Size(82, 32)
         Me.btnBuscarIn.TabIndex = 4
         Me.btnBuscarIn.Text = "Cambiar"
         Me.btnBuscarIn.UseVisualStyleBackColor = False
@@ -102,13 +110,13 @@ Partial Class GUI_Configuracion
         'btnBuscarOut
         '
         Me.btnBuscarOut.BackColor = System.Drawing.Color.LightSeaGreen
-        Me.btnBuscarOut.FlatAppearance.BorderSize = 0
+        Me.btnBuscarOut.FlatAppearance.BorderSize = 2
         Me.btnBuscarOut.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnBuscarOut.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnBuscarOut.ForeColor = System.Drawing.Color.White
-        Me.btnBuscarOut.Location = New System.Drawing.Point(446, 134)
+        Me.btnBuscarOut.Location = New System.Drawing.Point(446, 132)
         Me.btnBuscarOut.Name = "btnBuscarOut"
-        Me.btnBuscarOut.Size = New System.Drawing.Size(82, 27)
+        Me.btnBuscarOut.Size = New System.Drawing.Size(82, 32)
         Me.btnBuscarOut.TabIndex = 6
         Me.btnBuscarOut.Text = "Cambiar"
         Me.btnBuscarOut.UseVisualStyleBackColor = False
@@ -126,13 +134,13 @@ Partial Class GUI_Configuracion
         'btnGuardar
         '
         Me.btnGuardar.BackColor = System.Drawing.Color.LimeGreen
-        Me.btnGuardar.FlatAppearance.BorderSize = 0
+        Me.btnGuardar.FlatAppearance.BorderSize = 2
         Me.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnGuardar.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnGuardar.ForeColor = System.Drawing.Color.White
-        Me.btnGuardar.Location = New System.Drawing.Point(446, 185)
+        Me.btnGuardar.Location = New System.Drawing.Point(415, 185)
         Me.btnGuardar.Name = "btnGuardar"
-        Me.btnGuardar.Size = New System.Drawing.Size(82, 33)
+        Me.btnGuardar.Size = New System.Drawing.Size(113, 33)
         Me.btnGuardar.TabIndex = 10
         Me.btnGuardar.Text = "Guardar"
         Me.btnGuardar.UseVisualStyleBackColor = False
@@ -140,10 +148,11 @@ Partial Class GUI_Configuracion
         'btnIniciarProceso
         '
         Me.btnIniciarProceso.BackColor = System.Drawing.Color.DodgerBlue
+        Me.btnIniciarProceso.FlatAppearance.BorderSize = 2
         Me.btnIniciarProceso.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnIniciarProceso.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnIniciarProceso.ForeColor = System.Drawing.Color.White
-        Me.btnIniciarProceso.Location = New System.Drawing.Point(283, 185)
+        Me.btnIniciarProceso.Location = New System.Drawing.Point(262, 185)
         Me.btnIniciarProceso.Name = "btnIniciarProceso"
         Me.btnIniciarProceso.Size = New System.Drawing.Size(147, 33)
         Me.btnIniciarProceso.TabIndex = 11
@@ -153,6 +162,7 @@ Partial Class GUI_Configuracion
         'GroupBox1
         '
         Me.GroupBox1.BackColor = System.Drawing.SystemColors.Control
+        Me.GroupBox1.Controls.Add(Me.btnPruebas)
         Me.GroupBox1.Controls.Add(Me.btnTest)
         Me.GroupBox1.Controls.Add(Me.txtDataBase)
         Me.GroupBox1.Controls.Add(Me.Label7)
@@ -173,7 +183,7 @@ Partial Class GUI_Configuracion
         'btnTest
         '
         Me.btnTest.BackColor = System.Drawing.Color.DarkOrange
-        Me.btnTest.FlatAppearance.BorderSize = 0
+        Me.btnTest.FlatAppearance.BorderSize = 2
         Me.btnTest.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnTest.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnTest.ForeColor = System.Drawing.Color.White
@@ -287,7 +297,7 @@ Partial Class GUI_Configuracion
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(560, 80)
+        Me.Panel1.Size = New System.Drawing.Size(884, 80)
         Me.Panel1.TabIndex = 14
         '
         'Label8
@@ -297,7 +307,7 @@ Partial Class GUI_Configuracion
         Me.Label8.ForeColor = System.Drawing.Color.White
         Me.Label8.Location = New System.Drawing.Point(91, 39)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(469, 41)
+        Me.Label8.Size = New System.Drawing.Size(793, 41)
         Me.Label8.TabIndex = 2
         Me.Label8.Text = "Configuración"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.TopCenter
@@ -309,7 +319,7 @@ Partial Class GUI_Configuracion
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(91, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(469, 39)
+        Me.Label1.Size = New System.Drawing.Size(793, 39)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "Estados de cuentas a Excel"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -338,12 +348,80 @@ Partial Class GUI_Configuracion
         '
         Me.dlgFolder.Description = "13 Ponientes Analistas"
         '
+        'GroupBox3
+        '
+        Me.GroupBox3.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.GroupBox3.Controls.Add(Me.btnEliminar)
+        Me.GroupBox3.Controls.Add(Me.dgTabla)
+        Me.GroupBox3.Controls.Add(Me.btnImportar)
+        Me.GroupBox3.Font = New System.Drawing.Font("Arial", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox3.Location = New System.Drawing.Point(562, 91)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(311, 428)
+        Me.GroupBox3.TabIndex = 15
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Formatos"
+        '
+        'btnEliminar
+        '
+        Me.btnEliminar.BackColor = System.Drawing.Color.IndianRed
+        Me.btnEliminar.FlatAppearance.BorderSize = 2
+        Me.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnEliminar.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnEliminar.ForeColor = System.Drawing.Color.White
+        Me.btnEliminar.Location = New System.Drawing.Point(12, 381)
+        Me.btnEliminar.Name = "btnEliminar"
+        Me.btnEliminar.Size = New System.Drawing.Size(289, 33)
+        Me.btnEliminar.TabIndex = 13
+        Me.btnEliminar.Text = "Eliminar seleccionado"
+        Me.btnEliminar.UseVisualStyleBackColor = False
+        '
+        'dgTabla
+        '
+        Me.dgTabla.AllowUserToAddRows = False
+        Me.dgTabla.BackgroundColor = System.Drawing.Color.White
+        Me.dgTabla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgTabla.Location = New System.Drawing.Point(12, 74)
+        Me.dgTabla.Name = "dgTabla"
+        Me.dgTabla.ReadOnly = True
+        Me.dgTabla.Size = New System.Drawing.Size(289, 301)
+        Me.dgTabla.TabIndex = 12
+        '
+        'btnImportar
+        '
+        Me.btnImportar.BackColor = System.Drawing.Color.DodgerBlue
+        Me.btnImportar.FlatAppearance.BorderSize = 2
+        Me.btnImportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnImportar.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnImportar.ForeColor = System.Drawing.Color.White
+        Me.btnImportar.Location = New System.Drawing.Point(12, 35)
+        Me.btnImportar.Name = "btnImportar"
+        Me.btnImportar.Size = New System.Drawing.Size(289, 33)
+        Me.btnImportar.TabIndex = 11
+        Me.btnImportar.Text = "Importar nuevo formato"
+        Me.btnImportar.UseVisualStyleBackColor = False
+        '
+        'dlgFile
+        '
+        Me.dlgFile.Filter = "Formato|*.json"
+        Me.dlgFile.Title = "Seleccionar archivo de foramto."
+        '
+        'btnPruebas
+        '
+        Me.btnPruebas.Location = New System.Drawing.Point(240, 132)
+        Me.btnPruebas.Name = "btnPruebas"
+        Me.btnPruebas.Size = New System.Drawing.Size(64, 35)
+        Me.btnPruebas.TabIndex = 13
+        Me.btnPruebas.Text = "any"
+        Me.btnPruebas.UseVisualStyleBackColor = True
+        '
         'GUI_Configuracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 18.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.ClientSize = New System.Drawing.Size(560, 529)
+        Me.ClientSize = New System.Drawing.Size(884, 529)
+        Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
@@ -362,6 +440,8 @@ Partial Class GUI_Configuracion
         Me.Panel1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox3.ResumeLayout(False)
+        CType(Me.dgTabla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -390,4 +470,10 @@ Partial Class GUI_Configuracion
     Friend WithEvents Panel2 As Panel
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents dlgFolder As FolderBrowserDialog
+    Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents dgTabla As DataGridView
+    Friend WithEvents btnImportar As Button
+    Friend WithEvents btnEliminar As Button
+    Friend WithEvents dlgFile As OpenFileDialog
+    Friend WithEvents btnPruebas As Button
 End Class

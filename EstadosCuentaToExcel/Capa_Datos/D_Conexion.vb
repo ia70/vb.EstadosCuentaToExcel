@@ -1,6 +1,6 @@
 ﻿Imports MySql.Data.MySqlClient
 
-Public Class D_conexion
+Public Class D_Conexion
 
     Public Function InicializarDB(ByVal _conexion As String) As Boolean
         Try
