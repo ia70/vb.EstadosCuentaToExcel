@@ -72,6 +72,7 @@
     <Compile Include="I_formato_campo_egreso.vb" />
     <Compile Include="I_formato_campo_ingreso.vb" />
     <Compile Include="I_formato_global.vb" />
+    <Compile Include="I_Formato_simple.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

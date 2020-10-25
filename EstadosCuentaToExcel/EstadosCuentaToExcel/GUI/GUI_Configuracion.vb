@@ -37,7 +37,7 @@ Public Class GUI_Configuracion
 
         'GET FORMATOS -----------------------------------
         On Error Resume Next
-        dgTabla.DataSource = db_formato.Lista
+        dgTabla.DataSource = db_formato.ListaSimple
 
 
     End Sub
@@ -74,8 +74,17 @@ Public Class GUI_Configuracion
     End Sub
 
     Private Sub BtnImportar_Click(sender As Object, e As EventArgs) Handles btnImportar.Click
+        Dim db As New N_Formato
         If dlgFile.ShowDialog() = DialogResult.OK Then
-            txtFolderOut.Text = dlgFile.FileName
+            Try
+                If db.Insertar(dlgFile.FileName) Then
+                    msg("¡Formato guardado!")
+                Else
+                    msg("¡Error al guardar!", 3)
+                End If
+            Catch ex As Exception
+
+            End Try
         End If
     End Sub
 
@@ -118,5 +127,31 @@ Public Class GUI_Configuracion
 
     End Sub
 
+    Private Sub BtnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
+        Dim lineas As Integer = 0
+        Dim indice As Integer
+        Dim opcion As Integer
+        Dim id As String
+        Dim db As N_Formato
 
+        Try
+            lineas = dgTabla.Rows.Count
+            If lineas > 0 Then
+                indice = dgTabla.CurrentRow.Index
+                id = dgTabla.Rows(indice).Cells(0).Value
+                opcion = MsgBox("Esta seguro de eliminar el formato: '" + id + "'", vbYesNo + vbExclamation, G_EmpresaNombre)
+                If opcion = vbYes Then
+                    db = New N_Formato
+                    If db.Eliminar(id) Then
+                        dgTabla.Rows.RemoveAt(indice)
+                        msg("¡Formato eliminado!")
+                    Else
+                        msg("¡Error al eliminar!", 3)
+                    End If
+                End If
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
 End Class

@@ -34,8 +34,8 @@ Public Class N_Formato_campos
             With iden
                 .Id = linea.Item(0)
                 .Id_formato = linea.Item(1)
-                .Indice = linea.Item(2)
-                .Nombre = linea.Item(3)
+                .Nombre = linea.Item(2)
+                .Tipo = linea.Item(3)
             End With
 
             campos.Add(iden)

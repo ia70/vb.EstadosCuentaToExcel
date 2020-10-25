@@ -3,7 +3,7 @@
 Module CORE
 #Region "VAR GLOBALES"
     'Public Formatos As List(Of I_formato)
-    Public EmpresaNombre As String = "13 Ponientes analistas"
+    Public G_EmpresaNombre As String = "13 Ponientes analistas"
     Public G_MostrarErrores As Boolean = True
     Public G_ErrorLog As Boolean = False
 #End Region
@@ -28,7 +28,7 @@ Module CORE
             Case Else
                 icono = vbInformation
         End Select
-        MsgBox(cadena, icono, EmpresaNombre)
+        MsgBox(cadena, icono, G_EmpresaNombre)
     End Sub
 
     Public Sub X(ByVal ex As Exception)

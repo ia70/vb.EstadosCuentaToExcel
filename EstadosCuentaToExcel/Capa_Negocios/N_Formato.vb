@@ -32,34 +32,63 @@ Public Class N_Formato
         Dim res As Boolean
 
         Dim iden_formato As I_formato
+        Dim f_simple As New I_Formato_simple
         Dim db_f As New D_db_operaciones(tabla)
         Dim db_fce As New N_Formato_campo_egreso
         Dim db_fci As New N_Formato_campo_ingreso
         Dim db_fc As New N_Formato_campos
         Dim db_fg As New N_Formato_global
 
-        iden_formato = leerFichero(ruta)
-        res = db_f.Insertar(iden_formato)
+        Try
+            iden_formato = leerFichero(ruta)
+            With iden_formato
+                f_simple.Id_formato = .Id_formato
+                f_simple.Banco = .Banco
+                f_simple.Algoritmo = .Algoritmo
+                f_simple.Cadena = .Cadena
+            End With
+        Catch ex As Exception
+            iden_formato = New I_formato
+        End Try
 
-        For Each ifce As I_formato_campo_egreso In iden_formato.Formato_campo_egreso
-            ifce.Id_formato = iden_formato.Id_formato
-            db_fce.Insertar(ifce)
-        Next
 
-        For Each ifci As I_formato_campo_ingreso In iden_formato.Formato_campo_ingreso
-            ifci.Id_formato = iden_formato.Id_formato
-            db_fci.Insertar(ifci)
-        Next
+        Try
+            If Not db_f.Insertar(f_simple) Then
+                Throw New Exception("Error")
+            End If
 
-        For Each ifc As I_formato_campos In iden_formato.Formato_campos
-            ifc.Id_formato = iden_formato.Id_formato
-            db_fc.Insertar(ifc)
-        Next
+            For Each ifce As I_formato_campo_egreso In iden_formato.Formato_campo_egreso
+                ifce.Id_formato = iden_formato.Id_formato
+                If Not db_fce.Insertar(ifce) Then
+                    Throw New Exception("Error")
+                End If
+            Next
 
-        iden_formato.Formato_global.Id_formato = iden_formato.Id_formato
-        db_fg.Insertar(iden_formato.Formato_global)
+            For Each ifci As I_formato_campo_ingreso In iden_formato.Formato_campo_ingreso
+                ifci.Id_formato = iden_formato.Id_formato
+                If Not db_fci.Insertar(ifci) Then
+                    Throw New Exception("Error")
+                End If
+            Next
 
-        Return res
+            For Each ifc As I_formato_campos In iden_formato.Formato_campos
+                ifc.Id_formato = iden_formato.Id_formato
+                If Not db_fc.Insertar(ifc) Then
+                    Throw New Exception("Error")
+                End If
+            Next
+
+            iden_formato.Formato_global.Id_formato = iden_formato.Id_formato
+            If Not db_fg.Insertar(iden_formato.Formato_global) Then
+                Throw New Exception("Error")
+            End If
+
+            Return True
+        Catch ex As Exception
+            Eliminar(iden_formato.Id_formato)
+            Return False
+        End Try
+
     End Function
 
     Public Function Consultar(ByVal id As String) As I_formato
@@ -96,11 +125,15 @@ Public Class N_Formato
         Dim db_fc As New N_Formato_campos
         Dim db_fg As New N_Formato_global
 
+        On Error Resume Next
         res = db.Eliminar("id_formato", id)
-
+        On Error Resume Next
         db_fce.Eliminar(id)
+        On Error Resume Next
         db_fci.Eliminar(id)
+        On Error Resume Next
         db_fc.Eliminar(id)
+        On Error Resume Next
         db_fg.Eliminar(id)
 
         Return res
