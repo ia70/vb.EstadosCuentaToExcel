@@ -16,7 +16,16 @@ Public Class N_Formato
     End Function
 
     Public Function ListaCompleta() As List(Of I_formato)
+        Dim lista As DataTable
+        Dim formatos As New List(Of I_formato)
 
+        lista = ListaSimple()
+
+        For Each linea As DataRow In lista.Rows
+            formatos.Add(Consultar(linea.Item(0)))
+        Next
+
+        Return formatos
     End Function
 
     Public Function Insertar(ByVal ruta As String) As Boolean
@@ -30,9 +39,25 @@ Public Class N_Formato
         Dim db_fg As New N_Formato_global
 
         iden_formato = leerFichero(ruta)
-
         res = db_f.Insertar(iden_formato)
 
+        For Each ifce As I_formato_campo_egreso In iden_formato.Formato_campo_egreso
+            ifce.Id_formato = iden_formato.Id_formato
+            db_fce.Insertar(ifce)
+        Next
+
+        For Each ifci As I_formato_campo_ingreso In iden_formato.Formato_campo_ingreso
+            ifci.Id_formato = iden_formato.Id_formato
+            db_fci.Insertar(ifci)
+        Next
+
+        For Each ifc As I_formato_campos In iden_formato.Formato_campos
+            ifc.Id_formato = iden_formato.Id_formato
+            db_fc.Insertar(ifc)
+        Next
+
+        iden_formato.Formato_global.Id_formato = iden_formato.Id_formato
+        db_fg.Insertar(iden_formato.Formato_global)
 
         Return res
     End Function
@@ -42,22 +67,43 @@ Public Class N_Formato
         Dim iden As New I_formato
         Dim res As DataTable
 
-        res = db.Consulta(id)
+        Dim db_fce As New N_Formato_campo_egreso
+        Dim db_fci As New N_Formato_campo_ingreso
+        Dim db_fc As New N_Formato_campos
+        Dim db_fg As New N_Formato_global
+
+        res = db.Consulta("id_formato", id)
 
         With iden
-            '.Id = res.Rows(0).Item(0)
-            '.Folder_in = res.Rows(0).Item(1)
-            '.Folder_out = res.Rows(0).Item(2)
+            .Id_formato = res.Rows(0).Item(0)
+            .Banco = res.Rows(0).Item(1)
+            .Algoritmo = res.Rows(0).Item(2)
+            .Cadena = res.Rows(0).Item(3)
+            .Formato_campos = db_fc.Consultar(id)
+            .Formato_campo_egreso = db_fce.Consultar(id)
+            .Formato_campo_ingreso = db_fci.Consultar(id)
+            .Formato_global = db_fg.Consultar(id)
         End With
 
         Return iden
     End Function
 
     Public Function Eliminar(ByVal id As String)
+        Dim res As Boolean
         Dim db As New D_db_operaciones(tabla)
+        Dim db_fce As New N_Formato_campo_egreso
+        Dim db_fci As New N_Formato_campo_ingreso
+        Dim db_fc As New N_Formato_campos
+        Dim db_fg As New N_Formato_global
 
-        Return db.Eliminar(id)
+        res = db.Eliminar("id_formato", id)
 
+        db_fce.Eliminar(id)
+        db_fci.Eliminar(id)
+        db_fc.Eliminar(id)
+        db_fg.Eliminar(id)
+
+        Return res
     End Function
 
 #End Region
