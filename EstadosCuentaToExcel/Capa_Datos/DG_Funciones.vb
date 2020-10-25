@@ -123,12 +123,28 @@ Module DG_Funciones
 
     Public Function jsonGetString(ByVal obj As Object) As String
         Dim cadena As String = JsonConvert.SerializeObject(obj)
+        Dim indice As Integer
+        Dim subcadena, aux As String
 
+        subcadena = ""
         cadena = cadena.Replace(":", "=")
         cadena = cadena.Replace("{", "")
         cadena = cadena.Replace("}", "")
 
-        Return cadena
+        'PROCESO ------------------------------------
+        While cadena.Length > 0
+            indice = cadena.IndexOf("=")
+            If indice > 0 Then
+                aux = cadena.Substring(0, indice)
+                aux = aux.Replace("'", "")
+                subcadena += aux
+                cadena = cadena.Substring(indice)
+            Else
+                cadena = ""
+            End If
+        End While
+
+        Return subcadena
     End Function
 
     Public Function jsonGetId(ByVal obj As Object) As String

@@ -82,8 +82,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="N_conexion.vb" />
-    <Compile Include="N_configuracion.vb" />
+    <Compile Include="N_Conexion.vb" />
+    <Compile Include="N_Configuracion.vb" />
+    <Compile Include="N_Formato.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

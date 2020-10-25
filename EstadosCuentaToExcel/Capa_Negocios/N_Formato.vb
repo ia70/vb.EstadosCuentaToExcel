@@ -1,15 +1,21 @@
 ﻿Imports Capa_Datos
 Imports Capa_Identidad
+Public Class N_Formato
+    Private tabla As String = "formato"
 
-Public Class N_Configuracion
-    Private tabla As String = "configuracion"
-
-    Public Function Consultar() As I_configuracion
+    Public Function Lista() As DataTable
         Dim db As New D_db_operaciones(tabla)
-        Dim iden_config As New I_configuracion
+
+        Return db.Lista
+
+    End Function
+
+    Public Function Consultar(ByVal id As String) As I_formato
+        Dim db As New D_db_operaciones(tabla)
+        Dim iden_config As New I_formato
         Dim res As DataTable
 
-        res = db.Consulta("1")
+        res = db.Consulta(id)
 
         With iden_config
             .Id = res.Rows(0).Item(0)
@@ -20,19 +26,18 @@ Public Class N_Configuracion
         Return iden_config
     End Function
 
-    Public Function Editar(ByVal obj As I_configuracion) As Boolean
+    Public Function Editar(ByVal obj As I_formato) As Boolean
         Dim db As New D_db_operaciones(tabla)
-        Eliminar()
+
 
         Return db.Insertar(obj)
 
     End Function
 
-    Private Function Eliminar()
+    Public Function Eliminar()
         Dim db As New D_db_operaciones(tabla)
 
         Return db.Eliminar(1)
 
     End Function
-
 End Class

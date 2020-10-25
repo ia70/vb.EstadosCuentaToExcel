@@ -14,7 +14,11 @@ Public Class GUI_Configuracion
     Private Sub Inicializar()
         Dim db_conexion As New N_conexion
         Dim iden_conexion As I_Conexion
+        Dim db_config As New N_Configuracion
+        Dim iden_config As I_configuracion
+        Dim db_formato As New N_Formato
 
+        'GET CONECCION INFO -----------------------------
         iden_conexion = db_conexion.getConexionInfo
 
         If Not IsNothing(iden_conexion) Then
@@ -23,6 +27,18 @@ Public Class GUI_Configuracion
             txtPassword.Text = iden_conexion.Password
             txtDataBase.Text = iden_conexion.Database
         End If
+
+        'GET CONFIGURACION INFO -------------------------
+        iden_config = db_config.Consultar
+        If Not IsNothing(iden_config) Then
+            txtFolderIn.Text = iden_config.Folder_in
+            txtFolderOut.Text = iden_config.Folder_out
+        End If
+
+        'GET FORMATOS -----------------------------------
+        On Error Resume Next
+        dgTabla.DataSource = db_formato.Lista
+
 
     End Sub
 
@@ -64,9 +80,9 @@ Public Class GUI_Configuracion
     End Sub
 
     Private Sub BtnPruebas_Click(sender As Object, e As EventArgs) Handles btnPruebas.Click
-        Dim db As New N_configuracion
+        Dim db As New N_Configuracion
         Dim iden As I_configuracion
-        iden = db.getConfiguracion()
+        iden = db.Consultar()
     End Sub
 
     Private Sub BtnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
@@ -91,7 +107,7 @@ Public Class GUI_Configuracion
                 .Folder_out = txtFolderOut.Text
             End With
 
-            If db.setConfiguracion(iden_config) Then
+            If db.Editar(iden_config) Then
                 msg("¡Configuración guardada!")
             Else
                 msg("¡Error!", 3)

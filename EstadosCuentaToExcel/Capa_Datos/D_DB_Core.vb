@@ -69,7 +69,6 @@ Public Class D_DB_Core
             End If
             Return False
         Catch ex As Exception
-            MsgBox(ex.Message)
             Return False
         End Try
     End Function
@@ -88,7 +87,6 @@ Public Class D_DB_Core
             da.Fill(dt)
             Return dt
         Catch ex As Exception
-            MsgBox(ex.Message)
             Return Nothing
         End Try
 

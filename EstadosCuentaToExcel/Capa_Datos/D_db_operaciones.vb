@@ -79,7 +79,7 @@
     ''' </summary>
     ''' <param name="id">Clave Primaria</param>
     ''' <returns>True - Si exitoso</returns>
-    Public Function Eliminar(ByVal id As Integer) As Boolean
+    Public Function Eliminar(ByVal id As String) As Boolean
         Dim DB As New D_DB_Core
         Dim sql As String
         Dim res As Boolean
