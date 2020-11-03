@@ -2,6 +2,7 @@
 Imports Capa_Identidad
 Public Class N_Formato_global
     Private tabla As String = "formato_global"
+    Private i As Integer
 
 #Region "FUNCIONES PUBLICAS"
 
@@ -27,28 +28,53 @@ Public Class N_Formato_global
         Dim res As DataTable
 
         res = db.Consulta("id_formato", id)
+        i = 0
 
         With iden
-            .Id = res.Rows(0).Item(0)
-            .Id_formato = res.Rows(0).Item(1)
-            .Rfc_ini = res.Rows(0).Item(2)
-            .Rfc_fin = res.Rows(0).Item(3)
-            .Saldo_inicial_ini = res.Rows(0).Item(4)
-            .Saldo_inicial_fin = res.Rows(0).Item(5)
-            .Mes_ini = res.Rows(0).Item(6)
-            .Mes_fin = res.Rows(0).Item(7)
-            .Anio_ini = res.Rows(0).Item(8)
-            .Anio_fin = res.Rows(0).Item(9)
-            .Cuenta_ini = res.Rows(0).Item(10)
-            .Cuenta_fin = res.Rows(0).Item(11)
-            .Algoritmo_nueva_linea = res.Rows(0).Item(12)
-            .Separador_linea = res.Rows(0).Item(13)
-            .Ignora_parcial_ini = res.Rows(0).Item(14)
-            .Ignora_parcial_fin = res.Rows(0).Item(15)
-            .Ignora_total = res.Rows(0).Item(16)
+
+            .Id = res.Rows(0).Item(getIn)
+            .Id_formato = res.Rows(0).Item(getIn)
+            .Rfc_ini = res.Rows(0).Item(getIn)
+            .Rfc_fin = res.Rows(0).Item(getIn)
+            .Fecha_general_ini = res.Rows(0).Item(getIn)
+            .Fecha_general_fin = res.Rows(0).Item(getIn)
+            .Fecha_general_separador = res.Rows(0).Item(getIn)
+            .No_cuenta_ini = res.Rows(0).Item(getIn)
+            .No_cuenta_fin = res.Rows(0).Item(getIn)
+            .Saldo_anterior_ini = res.Rows(0).Item(getIn)
+            .Saldo_anterior_fin = res.Rows(0).Item(getIn)
+            .Detalles_saldo_ini = res.Rows(0).Item(getIn)
+            .Detalles_saldo_fin = res.Rows(0).Item(getIn)
+
+            .Fecha_operacion_activo = res.Rows(0).Item(getIn)
+            .Fecha_operacion_ini = res.Rows(0).Item(getIn)
+            .Fecha_operacion_fin = res.Rows(0).Item(getIn)
+            .Fecha_operacion_dia_length = res.Rows(0).Item(getIn)
+            .Fecha_operacion_mes_length = res.Rows(0).Item(getIn)
+            .Fecha_operacion_anio_length = res.Rows(0).Item(getIn)
+            .Fecha_operacion_separador_dia_mes = res.Rows(0).Item(getIn)
+
+            .Fecha_liquidacion_activo = res.Rows(0).Item(getIn)
+            .Fecha_liquidacion_ini = res.Rows(0).Item(getIn)
+            .Fecha_liquidacion_fin = res.Rows(0).Item(getIn)
+            .Fecha_liquidacion_dia_length = res.Rows(0).Item(getIn)
+            .Fecha_liquidacion_mes_length = res.Rows(0).Item(getIn)
+            .Fecha_liquidacion_anio_length = res.Rows(0).Item(getIn)
+            .Fecha_liquidacion_separador_dia_mes = res.Rows(0).Item(getIn)
+
+            .Ignora_parcial_ini = res.Rows(0).Item(getIn)
+            .Ignora_parcial_fin = res.Rows(0).Item(getIn)
+
         End With
 
         Return iden
+    End Function
+
+    Private Function getIn() As Integer
+        Dim aux As Integer
+        aux = i
+        i += 1
+        Return aux
     End Function
 
     ''' <summary>

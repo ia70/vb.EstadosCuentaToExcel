@@ -64,6 +64,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="I_Archivo.vb" />
     <Compile Include="I_Conexion.vb" />
     <Compile Include="I_configuracion.vb" />
     <Compile Include="I_ficheros_procesados.vb" />

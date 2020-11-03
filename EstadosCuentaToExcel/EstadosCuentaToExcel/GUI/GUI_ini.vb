@@ -6,7 +6,9 @@ Public Class GUI_ini
         Dim db As New N_conexion
 
         If db.InicializarDB Then
+            'iniciarProceso()
             GUI_Configuracion.Show()
+            'Test.Show()
         Else
             GUI_Configuracion.Show()
         End If

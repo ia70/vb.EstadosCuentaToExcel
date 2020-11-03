@@ -4,7 +4,7 @@ Imports Capa_Identidad
 Imports Newtonsoft.Json
 
 Public Class N_Formato
-    Private tabla As String = "formato"
+    Private ReadOnly tabla As String = "formato"
 
 #Region "FUNCIONES PUBLICAS"
 
@@ -30,7 +30,6 @@ Public Class N_Formato
 
     Public Function Insertar(ByVal ruta As String) As Boolean
         Dim iden_formato As I_formato
-        Dim dtabla As DataTable
         Dim f_simple As New I_Formato_simple
         Dim db_f As New D_db_operaciones(tabla)
         Dim db_fce As New N_Formato_campo_egreso
@@ -39,7 +38,7 @@ Public Class N_Formato
         Dim db_fg As New N_Formato_global
 
         Try
-            iden_formato = leerFichero(ruta)
+            iden_formato = LeerFichero(ruta)
             With iden_formato
                 f_simple.Id_formato = .Id_formato
                 f_simple.Banco = .Banco
@@ -163,7 +162,7 @@ Public Class N_Formato
 
 #Region "FUNCIONES PRIVADAS"
 
-    Private Function leerFichero(ByVal fichero As String) As I_formato
+    Private Function LeerFichero(ByVal fichero As String) As I_formato
         Dim texto As String = ""
 
         Try
@@ -174,14 +173,14 @@ Public Class N_Formato
         End Try
 
         If texto.Length > 0 Then
-            Return textToObj(texto)
+            Return TextToObj(texto)
         Else
             Return Nothing
         End If
 
     End Function
 
-    Private Function textToObj(ByVal cadena As String) As I_formato
+    Private Function TextToObj(ByVal cadena As String) As I_formato
         Try
             Return JsonConvert.DeserializeObject(Of I_formato)(cadena)
         Catch ex As Exception

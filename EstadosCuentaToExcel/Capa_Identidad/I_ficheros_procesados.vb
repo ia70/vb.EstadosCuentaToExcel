@@ -4,7 +4,12 @@
 
     Public Sub New()
     End Sub
-    Public Sub New(id As Integer, nombre As String)
+
+    Public Sub New(ByVal nombre As String)
+        _nombre = nombre
+    End Sub
+
+    Public Sub New(ByVal id As Integer, ByVal nombre As String)
         _id = id
         _nombre = nombre
     End Sub

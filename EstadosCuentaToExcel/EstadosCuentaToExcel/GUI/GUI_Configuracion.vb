@@ -125,7 +125,7 @@ Public Class GUI_Configuracion
     End Sub
 
     Private Sub BtnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
-        Dim lineas As Integer = 0
+        Dim lineas As Integer
         Dim indice As Integer
         Dim opcion As Integer
         Dim id As String

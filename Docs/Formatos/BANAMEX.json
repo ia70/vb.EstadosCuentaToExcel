@@ -6,23 +6,23 @@
     "formato_campos": [
         {
             "nombre": "Fecha",
-            "tipo": "fecha"
+            "tipo": "DateTime"
         },
         {
             "nombre": "Concepto",
-            "tipo": "texto"
+            "tipo": "String"
         },
         {
             "nombre": "Retiros",
-            "tipo": "numero"
+            "tipo": "Decimal"
         },
         {
             "nombre": "Depósitos",
-            "tipo": "numero"
+            "tipo": "Decimal"
         },
         {
             "nombre": "Saldo",
-            "tipo": "numero"
+            "tipo": "Decimal"
         }
     ],
     "formato_campo_ingreso": [
@@ -49,19 +49,34 @@
     ],
     "formato_global": {
         "rfc_ini": "Registro Federal de Contribuyentes: ",
-        "rfc_fin": "\r",
-        "saldo_inicial_ini": "SALDO ANTERIOR  ",
-        "saldo_inicial_fin": "\r",
-        "mes_ini": "",
-        "mes_fin": "",
-        "anio_ini": "",
-        "anio_fin": "",
-        "cuenta_ini": "",
-        "cuenta_fin": "",
-        "algoritmo_nueva_linea": "1",
-        "separador_linea": "\r",
-        "ignora_parcial_ini": "AAAA",
-        "ignora_parcial_fin": "BBBB",
-        "ignora_total": "CCCC"
+        "rfc_fin": "\n",
+        "fecha_general_ini": "CONTRATO SALDO ANTERIOR SALDO AL ",
+        "fecha_general_fin": "\n",
+        "fecha_general_separador": "/",
+        "no_cuenta_ini": "Cuenta de Cheques Moneda\nNacional ",
+        "no_cuenta_fin": " ",
+        "saldo_anterior_ini": "SALDO ANTERIOR  ",
+        "saldo_anterior_fin": "\n",
+        "detalles_saldo_ini": "FECHA CONCEPTO RETIROS DEPOSITOS SALDO\n",
+        "detalles_saldo_fin": "SALDO MINIMO REQUERIDO\n",
+
+        "fecha_operacion_activo": true,
+        "fecha_operacion_ini": "\n",
+        "fecha_operacion_fin": "0",
+        "fecha_operacion_dia_length": 2,
+        "fecha_operacion_mes_length": 3,
+        "fecha_operacion_anio_length": 0,
+        "fecha_operacion_separador_dia_mes": " ",
+        
+        "fecha_liquidacion_activo": false,
+        "fecha_liquidacion_ini": "",
+        "fecha_liquidacion_fin": "",
+        "fecha_liquidacion_dia_length": 0,
+        "fecha_liquidacion_mes_length": 0,
+        "fecha_liquidacion_anio_length": 0,
+        "fecha_liquidacion_separador_dia_mes": "",
+ 
+        "ignora_parcial_ini": "000180.",
+        "ignora_parcial_fin": "FECHA CONCEPTO RETIROS DEPOSITOS SALDO\n"
     }
 }
