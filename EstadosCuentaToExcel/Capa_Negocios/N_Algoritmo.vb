@@ -43,7 +43,7 @@ Public MustInherit Class N_Algoritmo
         GetDatos()
     End Sub
 
-    Protected MustOverride Function GetLinea(ByVal cadena As String) As List(Of String)
+    Protected MustOverride Function GetLinea(ByVal cadena As String) As String
 
     Protected MustOverride Sub GetDatos()
 
