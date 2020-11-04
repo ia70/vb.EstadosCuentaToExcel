@@ -1,4 +1,4 @@
-﻿Public Class I_formato_campo_egreso
+﻿Public Class I_Formato_campo_egreso
     Private _id As Integer
     Private _cadena As String
     Private _id_formato As String

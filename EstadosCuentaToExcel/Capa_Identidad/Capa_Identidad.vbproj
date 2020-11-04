@@ -66,13 +66,13 @@
   <ItemGroup>
     <Compile Include="I_Archivo.vb" />
     <Compile Include="I_Conexion.vb" />
-    <Compile Include="I_configuracion.vb" />
-    <Compile Include="I_ficheros_procesados.vb" />
-    <Compile Include="I_formato.vb" />
-    <Compile Include="I_formato_campos.vb" />
-    <Compile Include="I_formato_campo_egreso.vb" />
-    <Compile Include="I_formato_campo_ingreso.vb" />
-    <Compile Include="I_formato_global.vb" />
+    <Compile Include="I_Configuracion.vb" />
+    <Compile Include="I_Ficheros_procesados.vb" />
+    <Compile Include="I_Formato.vb" />
+    <Compile Include="I_Formato_campos.vb" />
+    <Compile Include="I_Formato_campo_egreso.vb" />
+    <Compile Include="I_Formato_campo_ingreso.vb" />
+    <Compile Include="I_Formato_global.vb" />
     <Compile Include="I_Formato_simple.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

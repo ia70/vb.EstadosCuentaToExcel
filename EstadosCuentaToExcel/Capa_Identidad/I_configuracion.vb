@@ -1,4 +1,4 @@
-﻿Public Class I_configuracion
+﻿Public Class I_Configuracion
     Private _id As Integer = 1
     Private _folder_in As String
     Private _folder_out As String

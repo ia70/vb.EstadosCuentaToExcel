@@ -1,4 +1,4 @@
-﻿Public Class I_formato_global
+﻿Public Class I_Formato_global
 
     Private _id As Integer
     Private _id_formato As String

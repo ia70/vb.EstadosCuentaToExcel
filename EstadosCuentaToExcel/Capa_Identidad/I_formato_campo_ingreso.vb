@@ -1,4 +1,4 @@
-﻿Public Class I_formato_campo_ingreso
+﻿Public Class I_Formato_campo_ingreso
     Private _id As Integer
     Private _id_formato As String
     Private _cadena As String

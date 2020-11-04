@@ -1,6 +1,6 @@
 ﻿Imports Capa_Identidad
 
-Public Class I_formato
+Public Class I_Formato
 
     Private _id_formato As String
     Private _banco As String

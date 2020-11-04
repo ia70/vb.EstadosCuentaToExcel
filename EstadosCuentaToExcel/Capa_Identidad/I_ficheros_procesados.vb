@@ -1,4 +1,4 @@
-﻿Public Class I_ficheros_procesados
+﻿Public Class I_Ficheros_procesados
     Private _id As Integer
     Private _nombre As String
 
