@@ -35,14 +35,17 @@ Public MustInherit Class N_Algoritmo
 
 #Region "FUNCIONES"
     Protected Sub ProcesarInfo()
+        Try
+            _cadena = LimpiarTexto(_cadena)
+        Catch ex As Exception
+
+        End Try
         GetDatos()
     End Sub
 
     Protected MustOverride Function GetLinea(ByVal cadena As String) As List(Of String)
 
     Protected MustOverride Sub GetDatos()
-
-    Protected MustOverride Function LimpiarTexto(ByVal cadena As String) As String
 
     Protected Function GetRFC() As String
         Return GetCampo(_formato.Formato_global.Rfc_ini, _formato.Formato_global.Rfc_fin)
@@ -113,6 +116,60 @@ Public MustInherit Class N_Algoritmo
         End Try
 
         Return noCuenta
+    End Function
+
+    ''' <summary>
+    ''' Se encarga de quitar todo lo que no es el cuerpo del estado de cuenta
+    ''' </summary>
+    ''' <param name="cadena">cadena a limpiar</param>
+    ''' <returns></returns>
+    Protected Function LimpiarTexto(ByVal cadena As String) As String
+        Dim ig_ini, ig_fin, ig_total_ini, ig_total_fin As String
+        Dim aux, aux2 As String
+        Dim indice As Integer
+
+        'CARGAR VARIABLES
+        ig_ini = _formato.Formato_global.Ignora_parcial_ini
+        ig_fin = _formato.Formato_global.Ignora_parcial_fin
+        ig_total_ini = _formato.Formato_global.Detalles_saldo_ini
+        ig_total_fin = _formato.Formato_global.Detalles_saldo_fin
+
+        Try
+            'RECUPERAR DATOS GLOBALES
+            With _archivo
+                .Rfc = GetRFC()
+                .Fecha = GetFecha()
+                .Saldo_inicial = GetSaldoInicial()
+                .No_cuenta = GetNoCuenta()
+            End With
+        Catch ex As Exception
+        End Try
+
+        Try
+            'QUITAR ENCABEZADO
+            indice = cadena.IndexOf(ig_total_ini)
+            cadena = cadena.Substring(indice + ig_total_ini.Length)
+
+            'QUITAR PIE
+            indice = cadena.IndexOf(ig_total_fin)
+            cadena = cadena.Substring(0, indice)
+
+            'QUITAR PARCIAL
+            While cadena.IndexOf(ig_ini) >= 0
+                indice = cadena.IndexOf(ig_ini)
+                'indice2 = cadena.IndexOf(ig_fin)
+
+                aux = cadena.Substring(0, indice)
+                indice = cadena.IndexOf(ig_fin)
+
+                aux2 = cadena.Substring(indice + ig_fin.Length)
+                cadena = aux + aux2
+            End While
+
+        Catch ex As Exception
+        End Try
+
+        Return cadena
     End Function
 
     ''' <summary>

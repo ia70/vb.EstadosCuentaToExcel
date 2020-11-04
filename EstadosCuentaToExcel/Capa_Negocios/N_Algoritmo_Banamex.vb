@@ -14,7 +14,7 @@ Public Class N_Algoritmo_Banamex
     Protected Overrides Sub GetDatos()
         Dim cadena As String = _cadena
 
-        cadena = LimpiarTexto(cadena)
+
 
 
     End Sub
@@ -23,37 +23,5 @@ Public Class N_Algoritmo_Banamex
 
     End Function
 
-    Protected Overrides Function LimpiarTexto(ByVal cadena As String) As String
-        Dim ig_ini, ig_fin, ig_total As String
-        Dim aux As String
-        Dim indice As Integer
-
-        'CARGAR VARIABLES
-        ig_ini = _formato.Formato_global.Ignora_parcial_ini
-        ig_fin = _formato.Formato_global.Ignora_parcial_fin
-        'ig_total = _formato.Formato_global.Ignora_total
-
-        Try
-            'RECUPERAR DATOS GLOBALES
-            With _archivo
-                .Rfc = GetRFC()
-                .Fecha = GetFecha()
-                .Saldo_inicial = GetSaldoInicial()
-                .No_cuenta = GetNoCuenta()
-            End With
-        Catch ex As Exception
-        End Try
-
-        Try
-            'INNORA TOTAL
-            indice = cadena.IndexOf(ig_total)
-            cadena = cadena.Substring(0, indice)
-
-        Catch ex As Exception
-
-        End Try
-
-        Return cadena
-    End Function
 
 End Class
