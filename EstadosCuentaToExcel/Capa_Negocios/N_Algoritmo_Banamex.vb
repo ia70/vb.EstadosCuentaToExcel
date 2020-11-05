@@ -33,12 +33,10 @@ Public Class N_Algoritmo_Banamex
     End Sub
 
     Protected Overrides Function GetLinea(cadena As String) As String
-        Dim separador, fecha As String
-        Dim sep_tipo As Integer
-        Dim size As Integer
-        Dim in1, in2 As Integer
+        Dim size, in1, in2 As Integer
+        Dim copy As String
 
-
+        copy = cadena
 
         With _formato.Formato_global
 
@@ -49,19 +47,44 @@ Public Class N_Algoritmo_Banamex
             If .Fecha_operacion_anio_length > 0 Then
                 size += .Fecha_operacion_separador_dia_mes.Length
             End If
-
-
-
         End With
 
-        separador = _formato.Formato_global.Fecha_operacion_separador_dia_mes
+        in1 = GetFechaIndice(cadena, size)
+        If in1 >= 0 Then
+            cadena = cadena.Substring(in1 + size + 1)
+            in2 = GetFechaIndice(cadena, size)
+            If in2 >= 0 Then
+                cadena = copy.Substring(in1, in2 + size)
+                Return cadena
+            Else
+                Return ""
+            End If
+        Else
+            Return ""
+        End If
 
-        For Each mes As String In _mesesAbr
-            'in1 = cadena.IndexOf()
-        Next
+    End Function
 
+    Private Function GetFechaIndice(ByVal cadena As String, ByVal size As Integer) As Integer
+        Dim indice As Integer
+        Dim aux, copy As String
 
+        copy = cadena
+        aux = cadena.Substring(0, size)
+        Do
+            If VerificarFecha(aux) Then
+                indice = copy.IndexOf(aux)
+                Return indice
+            End If
 
+            indice = cadena.IndexOf(vbLf)
+            If indice >= 0 Then
+                cadena = cadena.Substring(indice + 1)
+                aux = cadena.Substring(0, size)
+            End If
+        Loop While indice >= 0
+
+        Return -1
     End Function
 
     Private Function VerificarFecha(ByVal cadena As String) As Boolean
@@ -86,7 +109,7 @@ Public Class N_Algoritmo_Banamex
                                 Case 2
                                     veri = IsNumeric(aux)
                                 Case 3
-                                    veri = GetMesNombre(aux).Length > 3
+                                    veri = GetMesNum(aux).Length > 0
                                 Case >= 4
                                     veri = GetMesNum(aux).Length > 0
                             End Select
@@ -144,6 +167,9 @@ Public Class N_Algoritmo_Banamex
     End Function
 
     Private Function ProcesarLinea(ByVal cadena As String) As List(Of String)
+
+
+
 
     End Function
 

@@ -278,7 +278,7 @@ Public MustInherit Class N_Algoritmo
     ''' <param name="num">Número de mes</param>
     ''' <returns></returns>
     Protected Function GetMesNombre(ByVal num As String) As String
-        Return GetMesNombre(num.ToString)
+        Return GetMesNombre(Convert.ToInt32(num))
     End Function
 
     ''' <summary>
