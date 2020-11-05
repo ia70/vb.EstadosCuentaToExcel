@@ -1,7 +1,7 @@
 ﻿Imports Capa_Datos
 Imports Capa_Identidad
 Public Class N_Formato_global
-    Private tabla As String = "formato_global"
+    Private ReadOnly tabla As String = "formato_global"
     Private i As Integer
 
 #Region "FUNCIONES PUBLICAS"
@@ -70,7 +70,7 @@ Public Class N_Formato_global
         Return iden
     End Function
 
-    Private Function getIn() As Integer
+    Private Function GetIn() As Integer
         Dim aux As Integer
         aux = i
         i += 1

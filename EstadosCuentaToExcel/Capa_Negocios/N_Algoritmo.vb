@@ -3,7 +3,6 @@ Public MustInherit Class N_Algoritmo
     Protected _cadena As String
     Protected _archivo As I_Archivo
     Protected _formato As I_Formato
-    Protected _mesesAbr As New List(Of String)
 
 #Region "CONSTRUCTOR/PROPIEDAD"
     Public Sub New()
@@ -75,10 +74,6 @@ Public MustInherit Class N_Algoritmo
                 .Saldo_inicial = GetSaldoInicial()
                 .No_cuenta = GetNoCuenta()
             End With
-
-            _mesesAbr.Add(GetMesAbreviacion(_archivo.Fecha.Month - 1))
-            _mesesAbr.Add(GetMesAbreviacion(_archivo.Fecha.Month))
-            _mesesAbr.Add(GetMesAbreviacion(_archivo.Fecha.Month + 1))
 
         Catch ex As Exception
         End Try
