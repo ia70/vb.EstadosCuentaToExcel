@@ -194,6 +194,10 @@ Public Class N_Algoritmo_Banamex
     Private Function ProcesarLinea(ByVal cadena As String) As List(Of String)
         Dim numeros As New List(Of String)
         Dim fechas As New List(Of String)
+        Dim operacion As String
+        Dim descripcion As String
+        Dim respuesta As New List(Of String)
+
         Dim numero, copy, aux As String
         Dim i, indice As Integer
 
@@ -240,10 +244,58 @@ Public Class N_Algoritmo_Banamex
         cadena = cadena.Replace(vbLf, " ")
         cadena = cadena.Replace("   ", " ")
         cadena = cadena.Replace("  ", " ")
+        descripcion = cadena
+
+        'DEFINE TIPO DE TRANSACCION INGRESO/EGRESO
+        operacion = GetOperacion(descripcion)
 
         'MANEJAR LA INFORMACION
+        For Each campo As I_Formato_campos In _formato.Formato_campos
 
-        Return numeros
+            Select Case campo.Tipo.ToUpper
+                Case "DATETIME"
+                    respuesta.Add(fechas(0))
+                    fechas.RemoveAt(0)
+                Case "STRING"
+                    respuesta.Add(descripcion)
+                Case "DECIMAL"
+                    respuesta.Add(fechas(0))
+                    fechas.RemoveAt(0)
+            End Select
+
+
+
+
+
+        Next
+
+        Return respuesta
+    End Function
+
+    Private Function GetOperacion(ByVal cadena As String) As String
+
+        Try
+            For Each campo As I_Formato_campo_ingreso In _formato.Formato_campo_ingreso
+                If cadena.Contains(campo.Cadena) Then
+                    Return "Ingreso"
+                End If
+            Next
+        Catch ex As Exception
+
+        End Try
+
+        Try
+            For Each campo As I_Formato_campo_egreso In _formato.Formato_campo_egreso
+                If cadena.Contains(campo.Cadena) Then
+                    Return "Egreso"
+                End If
+            Next
+        Catch ex As Exception
+
+        End Try
+
+        Return ""
+
     End Function
 
     Private Function GetCantidad(ByVal cadena As String) As String

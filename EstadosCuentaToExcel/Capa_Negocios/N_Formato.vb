@@ -110,6 +110,7 @@ Public Class N_Formato
             .Banco = res.Rows(0).Item(1)
             .Algoritmo = res.Rows(0).Item(2)
             .Cadena = res.Rows(0).Item(3)
+            .Idcamposdescripcion = res.Rows(0).Item(4)
             .Formato_campos = db_fc.Consultar(id)
             .Formato_campo_egreso = db_fce.Consultar(id)
             .Formato_campo_ingreso = db_fci.Consultar(id)

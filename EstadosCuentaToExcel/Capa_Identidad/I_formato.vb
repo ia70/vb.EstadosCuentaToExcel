@@ -6,6 +6,7 @@ Public Class I_Formato
     Private _banco As String
     Private _algoritmo As String
     Private _cadena As String
+    Private _idcamposdescripcion As String
     Private _formato_campos As List(Of I_formato_campos)
     Private _formato_campo_ingreso As List(Of I_formato_campo_ingreso)
     Private _formato_campo_egreso As List(Of I_formato_campo_egreso)
@@ -16,11 +17,12 @@ Public Class I_Formato
     Public Sub New()
     End Sub
 
-    Public Sub New(id_formato As String, banco As String, algoritmo As String, cadena As String, formato_campos As List(Of I_formato_campos), formato_campo_ingreso As List(Of I_formato_campo_ingreso), formato_campo_egreso As List(Of I_formato_campo_egreso), formato_global As I_formato_global)
+    Public Sub New(id_formato As String, banco As String, algoritmo As String, cadena As String, idcamposdescripcion As String, formato_campos As List(Of I_Formato_campos), formato_campo_ingreso As List(Of I_Formato_campo_ingreso), formato_campo_egreso As List(Of I_Formato_campo_egreso), formato_global As I_Formato_global)
         _id_formato = id_formato
         _banco = banco
         _algoritmo = algoritmo
         _cadena = cadena
+        _idcamposdescripcion = idcamposdescripcion
         _formato_campos = formato_campos
         _formato_campo_ingreso = formato_campo_ingreso
         _formato_campo_egreso = formato_campo_egreso
@@ -99,6 +101,15 @@ Public Class I_Formato
         End Get
         Set(value As I_formato_global)
             _formato_global = value
+        End Set
+    End Property
+
+    Public Property Idcamposdescripcion As String
+        Get
+            Return _idcamposdescripcion
+        End Get
+        Set(value As String)
+            _idcamposdescripcion = value
         End Set
     End Property
 

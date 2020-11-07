@@ -3,16 +3,18 @@
     Private _id_formato As String
     Private _nombre As String
     Private _tipo As String
+    Private _idcampo As String
 
 #Region "CONSTRUCTOR"
     Public Sub New()
     End Sub
 
-    Public Sub New(id As Integer, id_formato As String, nombre As String, tipo As String)
+    Public Sub New(id As Integer, id_formato As String, nombre As String, tipo As String, idcampo As String)
         _id = id
         _id_formato = id_formato
         _nombre = nombre
         _tipo = tipo
+        _idcampo = idcampo
     End Sub
 
 
@@ -51,6 +53,15 @@
         End Get
         Set(value As String)
             _tipo = value
+        End Set
+    End Property
+
+    Public Property Idcampo As String
+        Get
+            Return _idcampo
+        End Get
+        Set(value As String)
+            _idcampo = value
         End Set
     End Property
 

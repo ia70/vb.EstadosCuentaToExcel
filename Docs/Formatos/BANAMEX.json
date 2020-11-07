@@ -1,28 +1,34 @@
 {
     "id_formato": "F001",
-    "cadena": "Banamex Resuelve",
     "banco": "CITIBANAMEX",
     "algoritmo": "1",
+    "cadena": "Banamex Resuelve",
+    "IdCamposDescripcion": "FechaOperacion, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
     "formato_campos": [
         {
             "nombre": "Fecha",
-            "tipo": "DateTime"
+            "tipo": "DateTime",
+            "IdCampo":"FechaOperacion"
         },
         {
             "nombre": "Concepto",
-            "tipo": "String"
+            "tipo": "String",
+            "IdCampo":"Concepto"
         },
         {
             "nombre": "Retiros",
-            "tipo": "Decimal"
+            "tipo": "Decimal",
+            "IdCampo":"Retiro"
         },
         {
             "nombre": "Depósitos",
-            "tipo": "Decimal"
+            "tipo": "Decimal",
+            "IdCampo":"Deposito"
         },
         {
             "nombre": "Saldo",
-            "tipo": "Decimal"
+            "tipo": "Decimal",
+            "IdCampo":"SaldoOperacion"
         }
     ],
     "formato_campo_ingreso": [
