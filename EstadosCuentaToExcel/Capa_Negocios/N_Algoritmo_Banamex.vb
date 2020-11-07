@@ -23,10 +23,13 @@ Public Class N_Algoritmo_Banamex
         aux = GetLinea(cadena)
         Do
             Try
-
-                Archivo.agregarFila(ProcesarLinea(aux))
+                If aux.Length > 0 Then
+                    Archivo.agregarFila(ProcesarLinea(aux))
+                Else
+                    Exit Do
+                End If
                 indice = cadena.IndexOf(aux)
-                cadena = cadena.Substring(indice + aux.Length)
+                cadena = cadena.Substring(indice + 1 + aux.Length)
                 aux = GetLinea(cadena)
             Catch ex As Exception
                 aux = ""
@@ -63,7 +66,7 @@ Public Class N_Algoritmo_Banamex
                 cadena = copy.Substring(in1, in2 + size)
                 Return cadena
             Else
-                Return ""
+                Return copy
             End If
         Else
             Return ""
@@ -85,8 +88,12 @@ Public Class N_Algoritmo_Banamex
 
             indice = cadena.IndexOf(vbLf)
             If indice >= 0 Then
-                cadena = cadena.Substring(indice + 1)
-                aux = cadena.Substring(0, size)
+                Try
+                    cadena = cadena.Substring(indice + 1)
+                    aux = cadena.Substring(0, size)
+                Catch ex As Exception
+                    Return -1
+                End Try
             End If
         Loop While indice >= 0
 
@@ -192,10 +199,21 @@ Public Class N_Algoritmo_Banamex
     End Sub
 
     Private Function ProcesarLinea(ByVal cadena As String) As List(Of String)
-        Dim numeros As New List(Of String)
+        Dim cifras As New List(Of String)
         Dim fechas As New List(Of String)
+        Dim cadenas As New List(Of String)
         Dim operacion As String
-        Dim descripcion As String
+
+        'VARIABLES --------------------
+        Dim Fecha_Operacion As String
+        Dim Fecha_Liquidacion As String = ""
+        Dim Concepto As String
+        Dim Referencia As String = ""
+        Dim Retiro As String = ""
+        Dim Deposito As String = ""
+        Dim Saldo_Operacion As String
+        Dim Saldo_Liquidacion As String = ""
+
         Dim respuesta As New List(Of String)
 
         Dim numero, copy, aux As String
@@ -207,7 +225,7 @@ Public Class N_Algoritmo_Banamex
             Do
                 numero = GetCantidad(cadena)
                 If numero.Length > 0 Then
-                    numeros.Add(numero)
+                    cifras.Add(numero)
                     indice = cadena.IndexOf(numero)
                     cadena = cadena.Remove(indice, numero.Length)
                     i += 1
@@ -226,7 +244,7 @@ Public Class N_Algoritmo_Banamex
         cadena = copy
 
         'QUITAR CIFRAS DE CADENA --------------------------------------
-        For Each linea As String In numeros
+        For Each linea As String In cifras
             indice = cadena.IndexOf(linea)
             If indice >= 0 Then
                 cadena = cadena.Remove(indice, linea.Length)
@@ -244,29 +262,65 @@ Public Class N_Algoritmo_Banamex
         cadena = cadena.Replace(vbLf, " ")
         cadena = cadena.Replace("   ", " ")
         cadena = cadena.Replace("  ", " ")
-        descripcion = cadena
+
+        'OBTIENE CADENAS --------------------------------------------
+        cadenas.Add(cadena)
 
         'DEFINE TIPO DE TRANSACCION INGRESO/EGRESO
-        operacion = GetOperacion(descripcion)
+        operacion = GetOperacion(cadena)
+
+        'ORDENAMIENTO DE CAMPOS OBTENIDOS --------------------------
+
+        'Fechas
+        Fecha_Operacion = fechas(0)
+        If fechas.Count = 2 Then
+            Fecha_Liquidacion = fechas(1)
+        End If
+
+        'Cadenas
+        Concepto = cadenas(0)
+        If cadenas.Count = 2 Then
+            Referencia = cadenas(1)
+        End If
+
+        'Cifras
+        If operacion = "Deposito" Then
+            Deposito = cifras(0)
+        Else
+            Retiro = cifras(0)
+        End If
+
+
+        If cifras.Count = 2 Then
+            Saldo_Operacion = cifras(1)
+        ElseIf cifras.Count = 3 Then
+            Saldo_Liquidacion = cifras(2)
+        End If
+
 
         'MANEJAR LA INFORMACION
         For Each campo As I_Formato_campos In _formato.Formato_campos
 
-            Select Case campo.Tipo.ToUpper
-                Case "DATETIME"
-                    respuesta.Add(fechas(0))
-                    fechas.RemoveAt(0)
-                Case "STRING"
-                    respuesta.Add(descripcion)
-                Case "DECIMAL"
-                    respuesta.Add(fechas(0))
-                    fechas.RemoveAt(0)
+            Select Case campo.Idcampo.ToUpper
+                Case "FECHAOPERACION"
+                    respuesta.Add(Fecha_Operacion)
+                Case "FECHALIQUIDACION"
+                    respuesta.Add(Fecha_Liquidacion)
+                Case "CONCEPTO"
+                    respuesta.Add(Concepto)
+                Case "REFERENCIA"
+                    respuesta.Add(Referencia)
+                Case "RETIRO"
+                    respuesta.Add(Retiro)
+                Case "DEPOSITO"
+                    respuesta.Add(Deposito)
+                Case "SALDOOPERACION"
+                    respuesta.Add(Saldo_Operacion)
+                Case "SALDOLIQUIDACION"
+                    respuesta.Add(Saldo_Liquidacion)
+                Case Else
+                    respuesta.Add("")
             End Select
-
-
-
-
-
         Next
 
         Return respuesta
@@ -277,7 +331,7 @@ Public Class N_Algoritmo_Banamex
         Try
             For Each campo As I_Formato_campo_ingreso In _formato.Formato_campo_ingreso
                 If cadena.Contains(campo.Cadena) Then
-                    Return "Ingreso"
+                    Return "Deposito"
                 End If
             Next
         Catch ex As Exception
@@ -287,7 +341,7 @@ Public Class N_Algoritmo_Banamex
         Try
             For Each campo As I_Formato_campo_egreso In _formato.Formato_campo_egreso
                 If cadena.Contains(campo.Cadena) Then
-                    Return "Egreso"
+                    Return "Retiro"
                 End If
             Next
         Catch ex As Exception

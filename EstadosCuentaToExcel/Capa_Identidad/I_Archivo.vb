@@ -22,7 +22,8 @@
 
         Try
             For Each campo As I_formato_campos In campos
-                Tabla.Columns.Add(campo.Nombre, Type.GetType("System." & campo.Tipo))
+                'Tabla.Columns.Add(campo.Nombre, Type.GetType("System." & campo.Tipo))
+                Tabla.Columns.Add(campo.Nombre, Type.GetType("System.String"))
             Next
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -49,6 +50,10 @@
         End Try
 
         Return True
+    End Function
+
+    Public Function crearExcel() As Boolean
+
     End Function
 #End Region
 #Region "PROPIEDADES"
