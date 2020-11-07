@@ -1,7 +1,7 @@
 ﻿Public Class I_Formato_campo_egreso
     Private _id As Integer
-    Private _cadena As String
     Private _id_formato As String
+    Private _cadena As String
 
     Public Sub New()
     End Sub
@@ -11,9 +11,10 @@
         Me.Cadena = cadena
     End Sub
 
-    Public Sub New(id As Integer, cadena As String, id_formato As String)
-        Me.New(id, cadena)
+    Public Sub New(id As Integer, id_formato As String, cadena As String)
+        _id = id
         _id_formato = id_formato
+        _cadena = cadena
     End Sub
 
     Public Property Id As Integer
@@ -22,6 +23,15 @@
         End Get
         Set(value As Integer)
             _id = value
+        End Set
+    End Property
+
+    Public Property Id_formato As String
+        Get
+            Return _id_formato
+        End Get
+        Set(value As String)
+            _id_formato = value
         End Set
     End Property
 
@@ -34,12 +44,4 @@
         End Set
     End Property
 
-    Public Property Id_formato As String
-        Get
-            Return _id_formato
-        End Get
-        Set(value As String)
-            _id_formato = value
-        End Set
-    End Property
 End Class

@@ -84,8 +84,8 @@ Module DG_Funciones
             cadena = cadena.Replace("}", "")
 
 
-            While cadena.Length > 0
-                indice = cadena.IndexOf(",")
+            While cadena.Length > 1
+                indice = cadena.IndexOf(",*")
                 If indice > 0 Then
                     subcadena = cadena.Substring(0, indice)
                     cadena = cadena.Substring(indice + 1)
@@ -107,7 +107,7 @@ Module DG_Funciones
                 Else
                     indice = cadena.IndexOf(":")
                     If indice > 0 Then
-                        cadena &= ","
+                        cadena &= ",*"
                     Else
                         Exit While
                     End If

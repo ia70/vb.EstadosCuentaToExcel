@@ -44,6 +44,7 @@ Public Class N_Formato
                 f_simple.Banco = .Banco
                 f_simple.Algoritmo = .Algoritmo
                 f_simple.Cadena = .Cadena
+                f_simple.Idcamposdescripcion = .Idcamposdescripcion
             End With
         Catch ex As Exception
             iden_formato = New I_formato
