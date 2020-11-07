@@ -10,8 +10,8 @@ Public Class N_Algoritmo_Banamex
     Public Sub New()
     End Sub
 
-    Public Sub New(cadena As String, formato As I_formato)
-        MyBase.New(cadena, formato)
+    Public Sub New(cadena As String, formato As I_Formato, ByVal ruta_ As String)
+        MyBase.New(cadena, formato, ruta_)
     End Sub
 
     Protected Overrides Sub GetDatos()
@@ -36,6 +36,15 @@ Public Class N_Algoritmo_Banamex
             End Try
 
         Loop While aux.Length >= 0
+
+        Try
+            Dim Exportar As New N_ExportarExcel()
+            If Exportar.Exportar(_archivo.Tabla, Ruta) Then
+                MsgBox("SI")
+            End If
+        Catch ex As Exception
+            MsgBox(ex.StackTrace.ToString)
+        End Try
 
     End Sub
 
@@ -211,7 +220,7 @@ Public Class N_Algoritmo_Banamex
         Dim Referencia As String = ""
         Dim Retiro As String = ""
         Dim Deposito As String = ""
-        Dim Saldo_Operacion As String
+        Dim Saldo_Operacion As String = ""
         Dim Saldo_Liquidacion As String = ""
 
         Dim respuesta As New List(Of String)

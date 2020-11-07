@@ -142,7 +142,7 @@ Module mAutomatizacion
         Dim algoritmo As N_Algoritmo_Banamex
 
         Try
-            algoritmo = New N_Algoritmo_Banamex(cadena, formato)
+            algoritmo = New N_Algoritmo_Banamex(cadena, formato, G_Folder_Out)
         Catch ex As Exception
 
         End Try

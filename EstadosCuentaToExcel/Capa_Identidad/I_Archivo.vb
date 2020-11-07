@@ -21,9 +21,12 @@
         _campos = campos
 
         Try
-            For Each campo As I_formato_campos In campos
-                'Tabla.Columns.Add(campo.Nombre, Type.GetType("System." & campo.Tipo))
-                Tabla.Columns.Add(campo.Nombre, Type.GetType("System.String"))
+            For Each campo As I_Formato_campos In campos
+                If Not campo.Tipo.ToUpper = "DATETIME" Then
+                    Tabla.Columns.Add(campo.Nombre, Type.GetType("System." & campo.Tipo))
+                Else
+                    Tabla.Columns.Add(campo.Nombre, Type.GetType("System.String"))
+                End If
             Next
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -52,9 +55,6 @@
         Return True
     End Function
 
-    Public Function crearExcel() As Boolean
-
-    End Function
 #End Region
 #Region "PROPIEDADES"
 

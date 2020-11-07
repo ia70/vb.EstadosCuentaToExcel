@@ -3,6 +3,7 @@ Public MustInherit Class N_Algoritmo
     Protected _cadena As String
     Protected _archivo As I_Archivo
     Protected _formato As I_Formato
+    Private _ruta As String
 
 #Region "CONSTRUCTOR/PROPIEDAD"
     Public Sub New()
@@ -13,8 +14,9 @@ Public MustInherit Class N_Algoritmo
     ''' </summary>
     ''' <param name="cadena">PDF en texto plano</param>
     ''' <param name="formato">Identidad del formato</param>
-    Public Sub New(ByVal cadena As String, ByVal formato As I_Formato)
+    Public Sub New(ByVal cadena As String, ByVal formato As I_Formato, ByVal ruta_ As String)
         _cadena = cadena
+        _ruta = ruta_
         _archivo = New I_Archivo(formato.Formato_campos)
         _formato = formato
 
@@ -31,6 +33,24 @@ Public MustInherit Class N_Algoritmo
         End Get
         Set(value As I_Archivo)
             _archivo = value
+        End Set
+    End Property
+
+    Protected Property Ruta As String
+        Get
+            Return _ruta
+        End Get
+        Set(value As String)
+            _ruta = value
+        End Set
+    End Property
+
+    Public Property Ruta1 As String
+        Get
+            Return _ruta
+        End Get
+        Set(value As String)
+            _ruta = value
         End Set
     End Property
 
