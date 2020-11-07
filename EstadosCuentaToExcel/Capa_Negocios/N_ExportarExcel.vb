@@ -8,8 +8,8 @@ Public Class N_ExportarExcel
     Private Hoja As Excel.Worksheet
     Private Rango As Excel.Range
 
-    'Private indice As Integer = 2
-    'Private Total As Integer
+    Private _info As I_Archivo
+    Private _campos As List(Of I_Formato_campos)
     Private _tabla As DataTable
     Private _ruta As String
 
@@ -33,21 +33,42 @@ Public Class N_ExportarExcel
         End Set
     End Property
 
+    Public Property Campos As List(Of I_Formato_campos)
+        Get
+            Return _campos
+        End Get
+        Set(value As List(Of I_Formato_campos))
+            _campos = value
+        End Set
+    End Property
+
+    Public Property Info As I_Archivo
+        Get
+            Return _info
+        End Get
+        Set(value As I_Archivo)
+            _info = value
+        End Set
+    End Property
+
 #End Region
 #Region "Constructor"
     Public Sub New()
     End Sub
-    Public Sub New(ByVal datos As DataTable, ByVal ruta_ As String)
+    Public Sub New(ByVal datos As DataTable, ByVal campos_ As List(Of I_Formato_campos), ByVal ruta_ As String, ByVal info_ As I_Archivo)
         Tabla = datos
         Ruta = ruta_
-        Exportar(Tabla, _ruta)
+        Campos = campos_
+        Exportar(Tabla, Campos, _ruta, info_)
     End Sub
 #End Region
 #Region "Funciones"
     '----- EXPORTACION MAIN ----------------------------------------
-    Public Function Exportar(ByVal datos As DataTable, ByVal ruta_ As String) As Boolean
+    Public Function Exportar(ByVal datos As DataTable, ByVal campos_ As List(Of I_Formato_campos), ByVal ruta_ As String, ByVal info_ As I_Archivo) As Boolean
         Tabla = datos
         Ruta = ruta_
+        Campos = campos_
+        Info = info_
 
         ExcelHeader()
         ExcelBody()
@@ -77,9 +98,9 @@ Public Class N_ExportarExcel
             For Each columna As DataColumn In Tabla.Columns
                 i += 1
                 Hoja.Cells(1, i).Value = columna.ColumnName
-                tipo = columna.DataType.ToString
-                If tipo = "System.Decimal" Then
-                    Hoja.Columns(i).NumberFormat = "#,###,###.00"
+                tipo = Campos(i - 1).Tipo
+                If tipo = "Decimal" Then
+                    Hoja.Columns(i).NumberFormat = "###,###,###,##0.00"
                 End If
             Next
 
@@ -90,17 +111,28 @@ Public Class N_ExportarExcel
 
     '----- CUERPO -------------------------------------------------
     Private Sub ExcelBody()
+        Dim tipo As String
         Dim X, Y As Integer
 
         Try
 
             Y = 2
             For Each Linea As DataRow In Tabla.Rows
-                X = 1
+                X = 0
                 ' Cargamos la información en el excel
 
-                For Each campo As String In Linea.ItemArray
-                    Hoja.Cells(Y, X).Value = campo
+                For Each campo As Object In Linea.ItemArray
+                    tipo = Campos(X).Tipo
+                    X += 1
+                    If tipo = "Decimal" Then
+                        Try
+                            Hoja.Cells(Y, X).Value = Convert.ToDecimal(campo)
+                        Catch ex As Exception
+                            Hoja.Cells(Y, X).Value = ""
+                        End Try
+                    Else
+                        Hoja.Cells(Y, X).Value = Convert.ToString(campo)
+                    End If
                 Next
                 Y += 1
             Next
@@ -111,14 +143,20 @@ Public Class N_ExportarExcel
 
     '----- FORMATO FINAL -----------------------------------------
     Private Sub ExcelFormato()
+        Dim col, lin As Integer
+        col = Tabla.Columns.Count
+        lin = Tabla.Rows.Count + 1
+
         Try
             'ANCHO DE COLUMNAS
-            Hoja.Range("A1:X" & Tabla.Rows.Count.ToString).Columns.AutoFit()
+            Hoja.Range("A1:" & GetLetraAbc(col) & lin).Columns.AutoFit()
+            Hoja.Range("B1:B" & lin).ColumnWidth = 105
 
-            Hoja.ListObjects.AddEx(Excel.XlListObjectSourceType.xlSrcRange, Hoja.Range("A1:X" & Tabla.Rows.Count.ToString),, Excel.XlYesNoGuess.xlYes)
+            Hoja.ListObjects.AddEx(Excel.XlListObjectSourceType.xlSrcRange, Hoja.Range("A1:" & GetLetraAbc(col) & lin),, Excel.XlYesNoGuess.xlYes)
             Hoja.ListObjects("Tabla1").TableStyle = "TableStyleMedium7"
 
-            Hoja.Range("A1:X" & Tabla.Rows.Count.ToString).HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft
+            Hoja.Range("A1:" & GetLetraAbc(col) & lin).HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft
+            Hoja.Range("A1:" & GetLetraAbc(col) & lin).VerticalAlignment = Excel.XlHAlign.xlHAlignCenter
         Catch ex As Exception
 
         End Try
@@ -127,9 +165,11 @@ Public Class N_ExportarExcel
 
     'GUARDAR EXCEL
     Private Sub ExcelGuardar()
+        Dim nom As String
         Try
+            nom = GetNombreFichero()
             ' Guardamos el excel en la ruta que ha especificado el usuario
-            Libro.SaveAs(Ruta)
+            Libro.SaveAs(nom)
             ' Cerramos el workbook
             Archivo.Workbooks.Close()
             ' Eliminamos el objeto excel
@@ -139,6 +179,27 @@ Public Class N_ExportarExcel
         End Try
 
     End Sub
+
+    Private Function GetNombreFichero() As String
+        Dim nom As String
+        Dim res As String
+
+        nom = Info.Rfc + " - " + Format(Info.Fecha, "yyyy-MM")
+
+        res = Ruta + "\" + nom
+
+        Return res
+    End Function
+
+    Private Function GetLetraAbc(ByVal num As Integer) As String
+        Dim Letra As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        Try
+            Return Letra(num - 1)
+        Catch ex As Exception
+            Return ""
+        End Try
+
+    End Function
 #End Region
 
 End Class

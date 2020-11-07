@@ -22,11 +22,8 @@
 
         Try
             For Each campo As I_Formato_campos In campos
-                If Not campo.Tipo.ToUpper = "DATETIME" Then
-                    Tabla.Columns.Add(campo.Nombre, Type.GetType("System." & campo.Tipo))
-                Else
-                    Tabla.Columns.Add(campo.Nombre, Type.GetType("System.String"))
-                End If
+                'Tabla.Columns.Add(campo.Nombre, Type.GetType("System." & campo.Tipo))
+                Tabla.Columns.Add(campo.Nombre, Type.GetType("System.String"))
             Next
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -134,6 +131,15 @@
         End Get
         Set(value As String)
             _dia = value
+        End Set
+    End Property
+
+    Public Property Fecha1 As Date
+        Get
+            Return _fecha
+        End Get
+        Set(value As Date)
+            _fecha = value
         End Set
     End Property
 

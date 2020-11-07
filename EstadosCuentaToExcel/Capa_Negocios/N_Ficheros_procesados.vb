@@ -23,9 +23,12 @@ Public Class N_Ficheros_procesados
     ''' <returns>Lista de objetos</returns>
     Public Function Existe(ByVal id As String) As Boolean
         Dim db As New D_db_operaciones(tabla)
+        Dim obj As New I_Ficheros_procesados()
         Dim res As DataTable
 
-        res = db.Consulta("nombre", id)
+        obj.Nombre = id
+
+        res = db.Consulta("nombre", "'" + obj.Nombre + "'")
 
         Try
             If res.Rows.Count > 0 Then

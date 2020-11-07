@@ -6,7 +6,8 @@
     End Sub
 
     Public Sub New(ByVal nombre As String)
-        _nombre = nombre
+        _nombre = nombre.Substring(4)
+        _nombre = _nombre.Replace("\", "^")
     End Sub
 
     Public Sub New(ByVal id As Integer, ByVal nombre As String)
@@ -28,7 +29,8 @@
             Return _nombre
         End Get
         Set(value As String)
-            _nombre = value
+            _nombre = value.Substring(4)
+            _nombre = _nombre.Replace("\", "^")
         End Set
     End Property
 End Class

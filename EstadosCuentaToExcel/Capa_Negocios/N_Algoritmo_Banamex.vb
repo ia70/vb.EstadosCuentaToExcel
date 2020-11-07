@@ -39,9 +39,7 @@ Public Class N_Algoritmo_Banamex
 
         Try
             Dim Exportar As New N_ExportarExcel()
-            If Exportar.Exportar(_archivo.Tabla, Ruta) Then
-                MsgBox("SI")
-            End If
+            Exportar.Exportar(_archivo.Tabla, _formato.Formato_campos, Ruta, _archivo)
         Catch ex As Exception
             MsgBox(ex.StackTrace.ToString)
         End Try
@@ -271,6 +269,7 @@ Public Class N_Algoritmo_Banamex
         cadena = cadena.Replace(vbLf, " ")
         cadena = cadena.Replace("   ", " ")
         cadena = cadena.Replace("  ", " ")
+        cadena = InsertarSaltoslinea(cadena, 100)
 
         'OBTIENE CADENAS --------------------------------------------
         cadenas.Add(cadena)
@@ -415,6 +414,37 @@ Public Class N_Algoritmo_Banamex
             Return ""
         End Try
 
+    End Function
+
+    Private Function InsertarSaltoslinea(ByVal cadena As String, ByVal salto As Integer) As String
+        Dim copy, aux As String
+        Dim i As Integer
+        Dim res As String
+        copy = cadena
+
+        res = ""
+        If salto > 10 Then
+            Try
+                While cadena.Length > salto
+                    i = salto
+                    For i = salto To 10 Step -1
+                        aux = cadena(i)
+                        If aux = " " Then
+                            res += cadena.Substring(0, i) + vbLf
+                            cadena = cadena.Substring(i + 1)
+                            Exit For
+                        End If
+                    Next
+
+                End While
+                res += cadena
+            Catch ex As Exception
+                Return copy
+            End Try
+            Return res
+        Else
+            Return cadena
+        End If
     End Function
 
 End Class
