@@ -9,7 +9,7 @@ Imports iTextSharp.text.pdf.parser
 Module mAutomatizacion
 #Region "VARIABLES"
 #Region "GENERAL"
-
+    Public WithEvents FSWC As FileSystemWatcher
     Public PROCESO_CORE As Thread                           'Proceso principal que siempre estará ejecutandose
 
 #End Region
@@ -22,7 +22,16 @@ Module mAutomatizacion
 #End Region
     '----------------------------------------------------------------------------------------------------
 #Region "PRINCIPAL"
+    Public Sub DetenerProcesos()
+        PROCESOS_TERMINAR()
+        G_Proceso_Activo = False
+        FSWC.EnableRaisingEvents = False
+        Try
+            PROCESO_BUSQUEDA.Abort()
+        Catch ex As Exception
 
+        End Try
+    End Sub
     ''' <summary>
     ''' Termina los subprocesos globales abiertos
     ''' </summary>
@@ -31,13 +40,15 @@ Module mAutomatizacion
         PROCESO_CORE.Abort()
         On Error Resume Next
         PROCESO_CORE.Join()
-        On Error Resume Next
-        PROCESO_BUSQUEDA.Abort()
-        End
+    End Sub
+
+    Public Sub ActivarMonitor()
+        G_Proceso_Activo = True
+        IniciarMonitor()
+        IniciarBusqueda()
     End Sub
 
     Public Sub IniciarBusqueda()
-
         Try
             PROCESO_BUSQUEDA = New Thread(AddressOf Buscararchivos) 'Proceso que buscará archivos
             PROCESO_BUSQUEDA.Start()
@@ -65,9 +76,8 @@ Module mAutomatizacion
         Try
             PROCESOS_TERMINAR()
         Catch ex As Exception
-            'X(ex)
+            X(ex)
         End Try
-
     End Sub
 
     Private Sub AnalizarCarpeta(ByVal sDir As String, ByVal CarpetaRaiz As String)
@@ -151,5 +161,22 @@ Module mAutomatizacion
 
 
 #End Region
+#Region "MONITOR DE ARCHIVOS"
+    Public Sub IniciarMonitor()
+        FSWC = New FileSystemWatcher(G_Folder_In)
+        FSWC.IncludeSubdirectories = True
+        FSWC.EnableRaisingEvents = True
+    End Sub
 
+    Private Sub FSWC_Created(sender As Object, e As FileSystemEventArgs) Handles FSWC.Created
+        Try
+            If ProcesarArchivo(e.FullPath) Then
+                DB_FICHEROS_PROCESADOS.Insertar(New I_Ficheros_procesados(e.FullPath))
+            End If
+        Catch ex As Exception
+            X(ex)
+        End Try
+    End Sub
+
+#End Region
 End Module

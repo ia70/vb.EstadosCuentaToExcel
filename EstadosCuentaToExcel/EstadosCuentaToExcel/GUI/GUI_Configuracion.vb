@@ -4,11 +4,27 @@ Imports Capa_Negocios
 Public Class GUI_Configuracion
 
     Private Sub GUI_Configuracion_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Inicializar()
+        If Not G_Proceso_Activo Then
+            G_Proceso_Activo = True
+            Inicializar()
+            Me.WindowState = FormWindowState.Minimized
+            ActivarMonitor()
+        Else
+            Inicializar()
+        End If
+
     End Sub
 
     Private Sub BtnIniciarProceso_Click(sender As Object, e As EventArgs) Handles btnIniciarProceso.Click
-        Dim db As New N_conexion
+        If G_Proceso_Activo Then
+            DetenerProcesos()
+            Msg("Proceso detenido!", 2)
+        Else
+            ActivarMonitor()
+            Msg("Proceso iniciado!")
+        End If
+
+        Inicializar()
     End Sub
 
     Private Sub Inicializar()
@@ -41,6 +57,15 @@ Public Class GUI_Configuracion
         Catch ex As Exception
             X(ex)
         End Try
+
+        'BOTON INICIAR PROCESO --------------------------
+        If G_Proceso_Activo Then
+            btnIniciarProceso.BackColor = Color.OrangeRed
+            btnIniciarProceso.Text = "Detener Proceso"
+        Else
+            btnIniciarProceso.BackColor = Color.DodgerBlue
+            btnIniciarProceso.Text = "Iniciar Proceso"
+        End If
 
     End Sub
 
@@ -150,5 +175,19 @@ Public Class GUI_Configuracion
         Catch ex As Exception
 
         End Try
+    End Sub
+
+
+    Private Sub Notificacion_MouseClick(sender As Object, e As MouseEventArgs) Handles Notificacion.MouseClick
+        Try
+            If Me.WindowState = FormWindowState.Minimized Then
+                WindowState = FormWindowState.Normal
+            Else
+                WindowState = FormWindowState.Minimized
+            End If
+        Catch ex As Exception
+
+        End Try
+
     End Sub
 End Class

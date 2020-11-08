@@ -8,6 +8,7 @@ Module mGeneral
     Public G_EmpresaNombre As String = "13 Ponientes analistas"
     Public G_MostrarErrores As Boolean = True
     Public G_ErrorLog As Boolean = False
+    Public G_DB_Inicializada As Boolean = False
 
     Public G_Folder_In As String = ""
     Public G_Folder_Out As String = ""
@@ -32,7 +33,6 @@ Module mGeneral
                 G_Folder_In = obj.Folder_in
                 G_Folder_Out = obj.Folder_out
                 G_Formatos = db_formato.ListaCompleta
-                IniciarBusqueda()
                 Return True
             End If
             Return False
