@@ -32,7 +32,7 @@ Module mAutomatizacion
     '----------------------------------------------------------------------------------------------------
 #Region "PRINCIPAL"
 
-    Public Function iniciarProceso() As Boolean
+    Public Function CargarVariablesGlobales() As Boolean
         Dim db As New N_Configuracion
         Dim db_formato As New N_Formato
         Dim db_conexion As New N_conexion
@@ -89,11 +89,12 @@ Module mAutomatizacion
 
     End Sub
 #End Region
-
-
 #Region "BUSCAR ARCHIVOS"
 
-    Public Sub Buscararchivos()
+    ''' <summary>
+    ''' Recorre Todos los archivos de una carpeta
+    ''' </summary>
+    Private Sub Buscararchivos()
         DB_FICHEROS_PROCESADOS = New N_Ficheros_procesados
 
         'Documentación
@@ -111,6 +112,11 @@ Module mAutomatizacion
         End Try
     End Sub
 
+    ''' <summary>
+    ''' Funcion recursiva para recorrer archivos de carpeta
+    ''' </summary>
+    ''' <param name="sDir"></param>
+    ''' <param name="CarpetaRaiz"></param>
     Private Sub AnalizarCarpeta(ByVal sDir As String, ByVal CarpetaRaiz As String)
         Dim d As String
         Dim f As String
@@ -138,9 +144,12 @@ Module mAutomatizacion
     End Sub
 
 #End Region
-
 #Region "PROCESAR ARCHIVOS"
-
+    ''' <summary>
+    ''' convierte el pdf en texto
+    ''' </summary>
+    ''' <param name="archivo">Patch</param>
+    ''' <returns></returns>
     Public Function ProcesarArchivo(ByVal archivo As String) As Boolean
         Try
             If File.Exists(archivo) Then
@@ -160,14 +169,10 @@ Module mAutomatizacion
                 For Each formato As I_formato In G_Formatos
                     If Cadena.Contains(formato.Cadena) Then
                         ProcesarFormato(Cadena, G_Formatos(indice))
-                        Exit For
+                        Return True
                     End If
                     indice += 1
                 Next
-
-
-
-                Return True
             End If
         Catch ex As Exception
             X(ex)
@@ -196,15 +201,28 @@ Module mAutomatizacion
 #Region "MONITOR DE ARCHIVOS"
     Public Sub IniciarMonitor()
         Try
-            FSWC = New FileSystemWatcher(G_Folder_In)
-            FSWC.IncludeSubdirectories = True
-            FSWC.EnableRaisingEvents = True
+            FSWC = New FileSystemWatcher(G_Folder_In) With {
+                .IncludeSubdirectories = True,
+                .EnableRaisingEvents = True
+            }
         Catch ex As Exception
             X(ex)
         End Try
 
     End Sub
 
+
+
+#End Region
+
+#Region "FUNCIONES PRIVADAS"
+
+    ''' <summary>
+    ''' Evento que se dispara cuando se crea un nuevo archivo en la carpeta
+    ''' monitoreada
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub FSWC_Created(sender As Object, e As FileSystemEventArgs) Handles FSWC.Created
         Try
             If ProcesarArchivo(e.FullPath) Then
@@ -214,6 +232,5 @@ Module mAutomatizacion
             X(ex)
         End Try
     End Sub
-
 #End Region
 End Module

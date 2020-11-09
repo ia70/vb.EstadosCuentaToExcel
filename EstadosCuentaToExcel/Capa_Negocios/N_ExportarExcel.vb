@@ -112,26 +112,26 @@ Public Class N_ExportarExcel
     '----- CUERPO -------------------------------------------------
     Private Sub ExcelBody()
         Dim tipo As String
-        Dim X, Y As Integer
+        Dim _X, Y As Integer
 
         Try
 
             Y = 2
             For Each Linea As DataRow In Tabla.Rows
-                X = 0
+                _X = 0
                 ' Cargamos la información en el excel
 
                 For Each campo As Object In Linea.ItemArray
-                    tipo = Campos(X).Tipo
-                    X += 1
+                    tipo = Campos(_X).Tipo
+                    _X += 1
                     If tipo = "Decimal" Then
                         Try
-                            Hoja.Cells(Y, X).Value = Convert.ToDecimal(campo)
+                            Hoja.Cells(Y, _X).Value = Convert.ToDecimal(campo)
                         Catch ex As Exception
-                            Hoja.Cells(Y, X).Value = ""
+                            Hoja.Cells(Y, _X).Value = ""
                         End Try
                     Else
-                        Hoja.Cells(Y, X).Value = Convert.ToString(campo)
+                        Hoja.Cells(Y, _X).Value = Convert.ToString(campo)
                     End If
                 Next
                 Y += 1
