@@ -75,8 +75,9 @@
     <Compile Include="D_DB_Core.vb" />
     <Compile Include="D_Conexion.vb" />
     <Compile Include="D_DB_Operaciones.vb" />
-    <Compile Include="DG_VarGlobal.vb" />
-    <Compile Include="DG_Funciones.vb" />
+    <Compile Include="mDG_VarGlobal.vb" />
+    <Compile Include="mDG_Funciones.vb" />
+    <Compile Include="mGeneral.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

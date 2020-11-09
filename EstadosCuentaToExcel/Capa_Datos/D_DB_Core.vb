@@ -24,6 +24,7 @@ Public Class D_DB_Core
             Conexion.Open()
             Return True
         Catch ex As MySqlException
+            X(ex)
             Return False
         End Try
     End Function
@@ -43,6 +44,7 @@ Public Class D_DB_Core
             da.Fill(dt)
             Return Val(dt.Rows(0).Item(0))
         Catch ex As Exception
+            X(ex)
             Return Nothing
         End Try
 
@@ -69,6 +71,7 @@ Public Class D_DB_Core
             End If
             Return False
         Catch ex As Exception
+            X(ex)
             Return False
         End Try
     End Function
@@ -87,6 +90,7 @@ Public Class D_DB_Core
             da.Fill(dt)
             Return dt
         Catch ex As Exception
+            X(ex)
             Return Nothing
         End Try
 

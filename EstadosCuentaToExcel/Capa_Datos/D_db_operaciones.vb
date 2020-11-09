@@ -26,8 +26,13 @@
         Dim sql As String
         Dim res As DataTable
 
-        sql = "SELECT * FROM " & Tabla & " ORDER BY " + campo + " ASC"
-        res = DB.Query(sql)
+        Try
+            sql = "SELECT * FROM " & Tabla & " ORDER BY " + campo + " ASC"
+            res = DB.Query(sql)
+        Catch ex As Exception
+            X(ex)
+            Return New DataTable
+        End Try
 
         Return res
     End Function
@@ -42,11 +47,15 @@
         Dim sql As String
         Dim res As Boolean
 
-        sql = "INSERT INTO " & Tabla & " (" + jsonGetCampos(Obj) + ") VALUES(" + jsonGetValores(Obj) + ")"
-        res = DB.Update(sql)
+        Try
+            sql = "INSERT INTO " & Tabla & " (" + jsonGetCampos(Obj) + ") VALUES(" + jsonGetValores(Obj) + ")"
+            res = DB.Update(sql)
+        Catch ex As Exception
+            X(ex)
+            Return False
+        End Try
 
         Return res
-
     End Function
 
     ''' <summary>
@@ -71,11 +80,15 @@
         Dim sql As String
         Dim Res As DataTable
 
-        sql = "SELECT * FROM " & Tabla & " WHERE " + campo + "=" & id
-        Res = DB.Query(sql)
+        Try
+            sql = "SELECT * FROM " & Tabla & " WHERE " + campo + "=" & id
+            Res = DB.Query(sql)
+        Catch ex As Exception
+            X(ex)
+            Return New DataTable
+        End Try
 
         Return Res
-
     End Function
 
     ''' <summary>
@@ -88,11 +101,15 @@
         Dim sql As String
         Dim res As Boolean
 
-        sql = "UPDATE " & Tabla & " SET " + jsonGetString(Obj) + " WHERE id=" & jsonGetId(Obj)
-        res = DB.Update(sql)
+        Try
+            sql = "UPDATE " & Tabla & " SET " + jsonGetString(Obj) + " WHERE id=" & jsonGetId(Obj)
+            res = DB.Update(sql)
+        Catch ex As Exception
+            X(ex)
+            Return False
+        End Try
 
         Return res
-
     End Function
 
     ''' <summary>
@@ -117,11 +134,15 @@
         Dim sql As String
         Dim res As Boolean
 
-        sql = "DELETE FROM " & Tabla & " WHERE " + campo + "=" & id
-        res = DB.Update(sql)
+        Try
+            sql = "DELETE FROM " & Tabla & " WHERE " + campo + "=" & id
+            res = DB.Update(sql)
+        Catch ex As Exception
+            X(ex)
+            Return False
+        End Try
 
         Return res
-
     End Function
 
 #End Region

@@ -10,6 +10,7 @@ Public Class D_Conexion
             End If
             ConexionString = ""
         Catch ex As Exception
+            X(ex)
         End Try
 
         Return False
@@ -18,7 +19,6 @@ Public Class D_Conexion
 
     Public Function testConexion(ByVal _conexion As String) As Boolean
         Try
-
             Dim Conexion = New MySqlConnection(_conexion)
             Conexion.Open()
             Dim cmd As New MySqlCommand("SELECT * FROM configuracion", Conexion)
@@ -28,6 +28,7 @@ Public Class D_Conexion
             Conexion.Close()
             Return True
         Catch ex As MySqlException
+            X(ex)
             Return False
         End Try
     End Function

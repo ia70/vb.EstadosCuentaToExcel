@@ -5,7 +5,7 @@ Public MustInherit Class N_Algoritmo
     Protected _formato As I_Formato
     Private _ruta As String
 
-#Region "CONSTRUCTOR/PROPIEDAD"
+#Region "CONSTRUCTORES"
     Public Sub New()
     End Sub
 
@@ -15,6 +15,11 @@ Public MustInherit Class N_Algoritmo
     ''' <param name="cadena">PDF en texto plano</param>
     ''' <param name="formato">Identidad del formato</param>
     Public Sub New(ByVal cadena As String, ByVal formato As I_Formato, ByVal ruta_ As String)
+        Try
+
+        Catch ex As Exception
+
+        End Try
         _cadena = cadena
         _ruta = ruta_
         _archivo = New I_Archivo(formato.Formato_campos)
@@ -22,6 +27,8 @@ Public MustInherit Class N_Algoritmo
 
         ProcesarInfo()
     End Sub
+#End Region
+#Region "PROPIEDADES"
 
     ''' <summary>
     ''' Identidad del archivo
@@ -56,6 +63,7 @@ Public MustInherit Class N_Algoritmo
 
 #End Region
 #Region "FUNCIONES"
+
 #Region "VARIAS"
 
     Protected Sub ProcesarInfo()
@@ -166,12 +174,20 @@ Public MustInherit Class N_Algoritmo
     End Function
 
 #End Region
-#Region "OBTENER CAMPOS"
+#Region "OBTENER CAMPOS GENERALES"
 
+    ''' <summary>
+    ''' Obtiene el RFC de una cadena
+    ''' </summary>
+    ''' <returns></returns>
     Protected Function GetRFC() As String
         Return GetCampo(_formato.Formato_global.Rfc_ini, _formato.Formato_global.Rfc_fin)
     End Function
 
+    ''' <summary>
+    ''' Obtiene el Saldo inicial de un formato
+    ''' </summary>
+    ''' <returns></returns>
     Protected Function GetSaldoInicial() As Decimal
         Dim saldo As String = "0"
 
@@ -185,16 +201,15 @@ Public MustInherit Class N_Algoritmo
     End Function
 
     ''' <summary>
-    ''' Devuelve la fecha del pdf
+    ''' Devuelve la fecha general del formato
+    ''' OUT(Date)
     ''' </summary>
     ''' <returns></returns>
     Protected Function GetFecha() As Date
         Dim vfecha, separador, aux, dia, anio, mes As String
         Dim fecha As Date
 
-
         separador = _formato.Formato_global.Fecha_general_separador
-
         Try
             vfecha = GetCampo(_formato.Formato_global.Fecha_general_ini, _formato.Formato_global.Fecha_general_fin)
 
@@ -224,7 +239,7 @@ Public MustInherit Class N_Algoritmo
     End Function
 
     ''' <summary>
-    ''' Devuelve el número de cuenta del PDF
+    ''' Devuelve el número de cuenta del formato
     ''' </summary>
     ''' <returns></returns>
     Protected Function GetNoCuenta() As String
@@ -243,9 +258,10 @@ Public MustInherit Class N_Algoritmo
 #Region "OPERACIONES CON FECHAS"
 
     ''' <summary>
-    ''' Devuelme el numero correspondiente al mes dado
+    ''' Devuelve número del mes dado.
+    ''' IN ("ENE"|"ENERO") OUT("01") EX("")
     ''' </summary>
-    ''' <param name="cadena">Nombre del mes</param>
+    ''' <param name="cadena">Mes</param>
     ''' <returns></returns>
     Protected Function GetMesNum(ByVal cadena As String) As String
         Dim mes As String
@@ -288,18 +304,20 @@ Public MustInherit Class N_Algoritmo
     End Function
 
     ''' <summary>
-    ''' Devuelve el nombre del mes dado un número
+    ''' Devuelve el nombre del mes dado.
+    ''' IN("01") OUT("Enero") EX("")
     ''' </summary>
-    ''' <param name="num">Número de mes</param>
+    ''' <param name="num">Número de mes STRING</param>
     ''' <returns></returns>
     Protected Function GetMesNombre(ByVal num As String) As String
         Return GetMesNombre(Convert.ToInt32(num))
     End Function
 
     ''' <summary>
-    ''' Devuelve el nombre del mes dado un número
+    ''' Devuelve el nombre del mes dado.
+    ''' IN(01) OUT("Enero") EX("")
     ''' </summary>
-    ''' <param name="num">Número del mes</param>
+    ''' <param name="num">Número del mes INT</param>
     ''' <returns></returns>
     Protected Function GetMesNombre(ByVal num As Integer) As String
         Dim mes As String
@@ -337,7 +355,8 @@ Public MustInherit Class N_Algoritmo
     End Function
 
     ''' <summary>
-    ''' Obtener la abreviación del mes
+    ''' Devuelve la abreviación del mes dado.
+    ''' IN(1) OUT("ENE") EX("")
     ''' </summary>
     ''' <param name="num">Número del mes</param>
     ''' <returns></returns>
@@ -371,13 +390,16 @@ Public MustInherit Class N_Algoritmo
                 mes = "NOV"
             Case 12
                 mes = "DIC"
-            Case Else
+            Case 13
                 mes = "ENE"
+            Case Else
+                mes = ""
         End Select
 
         Return mes
     End Function
 
 #End Region
+
 #End Region
 End Class

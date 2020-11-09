@@ -1,6 +1,6 @@
 ﻿Imports Newtonsoft.Json
 
-Module DG_Funciones
+Module mDG_Funciones
     Public Function jsonGetCampos(ByVal obj As Object) As String
         Try
             Dim cadena As String = JsonConvert.SerializeObject(obj)
@@ -8,6 +8,7 @@ Module DG_Funciones
             res = jsonGetCampos(cadena)
             Return res
         Catch ex As Exception
+            X(ex)
             Return ""
         End Try
     End Function
@@ -19,6 +20,7 @@ Module DG_Funciones
             res = jsonGetValores(cadena)
             Return res
         Catch ex As Exception
+            X(ex)
             Return ""
         End Try
     End Function
@@ -64,6 +66,7 @@ Module DG_Funciones
                 End If
             End While
         Catch ex As Exception
+            X(ex)
             respuesta = ""
             MsgBox(ex.ToString)
         End Try
@@ -114,6 +117,7 @@ Module DG_Funciones
                 End If
             End While
         Catch ex As Exception
+            X(ex)
             respuesta = ""
             MsgBox(ex.ToString)
         End Try
@@ -127,21 +131,29 @@ Module DG_Funciones
         Dim subcadena, aux As String
 
         subcadena = ""
-        cadena = cadena.Replace(":", "=")
-        cadena = cadena.Replace("{", "")
-        cadena = cadena.Replace("}", "")
+        Try
+            cadena = cadena.Replace(":", "=")
+            cadena = cadena.Replace("{", "")
+            cadena = cadena.Replace("}", "")
+        Catch ex As Exception
+            X(ex)
+        End Try
 
         'PROCESO ------------------------------------
         While cadena.Length > 0
-            indice = cadena.IndexOf("=")
-            If indice > 0 Then
-                aux = cadena.Substring(0, indice)
-                aux = aux.Replace("'", "")
-                subcadena += aux
-                cadena = cadena.Substring(indice)
-            Else
-                cadena = ""
-            End If
+            Try
+                indice = cadena.IndexOf("=")
+                If indice > 0 Then
+                    aux = cadena.Substring(0, indice)
+                    aux = aux.Replace("'", "")
+                    subcadena += aux
+                    cadena = cadena.Substring(indice)
+                Else
+                    cadena = ""
+                End If
+            Catch ex As Exception
+                X(ex)
+            End Try
         End While
 
         Return subcadena
@@ -162,6 +174,7 @@ Module DG_Funciones
                 End If
             End If
         Catch ex As Exception
+            X(ex)
             subcadena = ""
         End Try
 
