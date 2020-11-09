@@ -9,6 +9,15 @@ Imports iTextSharp.text.pdf.parser
 Module mAutomatizacion
 #Region "VARIABLES"
 #Region "GENERAL"
+    'Public Formatos As List(Of I_formato)
+    Public G_DB_Inicializada As Boolean = False
+
+    Public G_Folder_In As String = ""
+    Public G_Folder_Out As String = ""
+    Public G_Proceso_Activo As Boolean = False
+
+    'VARIBLE DE FORMATOS --------------------
+    Public G_Formatos As List(Of I_Formato)
     Public WithEvents FSWC As FileSystemWatcher
     Public PROCESO_CORE As Thread                           'Proceso principal que siempre estará ejecutandose
 
@@ -22,6 +31,28 @@ Module mAutomatizacion
 #End Region
     '----------------------------------------------------------------------------------------------------
 #Region "PRINCIPAL"
+
+    Public Function iniciarProceso() As Boolean
+        Dim db As New N_Configuracion
+        Dim db_formato As New N_Formato
+        Dim db_conexion As New N_conexion
+        Dim obj As I_Configuracion
+
+
+        Try
+            If db_conexion.InicializarDB Then
+                obj = db.Consultar
+                G_Folder_In = obj.Folder_in
+                G_Folder_Out = obj.Folder_out
+                G_Formatos = db_formato.ListaCompleta
+                Return True
+            End If
+            Return False
+        Catch ex As Exception
+            Return False
+        End Try
+
+    End Function
     Public Sub DetenerProcesos()
         PROCESOS_TERMINAR()
         G_Proceso_Activo = False
@@ -29,7 +60,7 @@ Module mAutomatizacion
         Try
             PROCESO_BUSQUEDA.Abort()
         Catch ex As Exception
-
+            X(ex)
         End Try
     End Sub
     ''' <summary>
@@ -139,6 +170,7 @@ Module mAutomatizacion
                 Return True
             End If
         Catch ex As Exception
+            X(ex)
         End Try
 
         Return False
@@ -154,7 +186,7 @@ Module mAutomatizacion
         Try
             algoritmo = New N_Algoritmo_Banamex(cadena, formato, G_Folder_Out)
         Catch ex As Exception
-
+            X(ex)
         End Try
 
     End Sub
@@ -163,9 +195,14 @@ Module mAutomatizacion
 #End Region
 #Region "MONITOR DE ARCHIVOS"
     Public Sub IniciarMonitor()
-        FSWC = New FileSystemWatcher(G_Folder_In)
-        FSWC.IncludeSubdirectories = True
-        FSWC.EnableRaisingEvents = True
+        Try
+            FSWC = New FileSystemWatcher(G_Folder_In)
+            FSWC.IncludeSubdirectories = True
+            FSWC.EnableRaisingEvents = True
+        Catch ex As Exception
+            X(ex)
+        End Try
+
     End Sub
 
     Private Sub FSWC_Created(sender As Object, e As FileSystemEventArgs) Handles FSWC.Created

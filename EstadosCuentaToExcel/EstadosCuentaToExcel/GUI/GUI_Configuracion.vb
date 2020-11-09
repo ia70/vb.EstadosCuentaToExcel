@@ -4,27 +4,35 @@ Imports Capa_Negocios
 Public Class GUI_Configuracion
 
     Private Sub GUI_Configuracion_Load(sender As Object, e As EventArgs) Handles Me.Load
-        If Not G_Proceso_Activo Then
-            G_Proceso_Activo = True
-            Inicializar()
-            Me.WindowState = FormWindowState.Minimized
-            ActivarMonitor()
-        Else
-            Inicializar()
-        End If
-
+        Try
+            If Not G_Proceso_Activo Then
+                G_Proceso_Activo = True
+                Inicializar()
+                Me.WindowState = FormWindowState.Minimized
+                ActivarMonitor()
+            Else
+                Inicializar()
+            End If
+        Catch ex As Exception
+            X(ex)
+        End Try
     End Sub
 
     Private Sub BtnIniciarProceso_Click(sender As Object, e As EventArgs) Handles btnIniciarProceso.Click
-        If G_Proceso_Activo Then
-            DetenerProcesos()
-            Msg("Proceso detenido!", 2)
-        Else
-            ActivarMonitor()
-            Msg("Proceso iniciado!")
-        End If
+        Try
+            If G_Proceso_Activo Then
+                DetenerProcesos()
+                Msg("Proceso detenido!", 2)
+            Else
+                ActivarMonitor()
+                Msg("Proceso iniciado!")
+            End If
 
-        Inicializar()
+            Inicializar()
+        Catch ex As Exception
+            X(ex)
+        End Try
+
     End Sub
 
     Private Sub Inicializar()
@@ -35,37 +43,41 @@ Public Class GUI_Configuracion
         Dim db_formato As New N_Formato
 
         'GET CONECCION INFO -----------------------------
-        iden_conexion = db_conexion.getConexionInfo
-
-        If Not IsNothing(iden_conexion) Then
-            txtIP.Text = iden_conexion.Server
-            txtUsuario.Text = iden_conexion.User_id
-            txtPassword.Text = iden_conexion.Password
-            txtDataBase.Text = iden_conexion.Database
-        End If
-
-        'GET CONFIGURACION INFO -------------------------
-        iden_config = db_config.Consultar
-        If Not IsNothing(iden_config) Then
-            txtFolderIn.Text = iden_config.Folder_in
-            txtFolderOut.Text = iden_config.Folder_out
-        End If
-
-        'GET FORMATOS -----------------------------------
         Try
-            dgTabla.DataSource = db_formato.ListaSimple
+            iden_conexion = db_conexion.getConexionInfo
+
+            If Not IsNothing(iden_conexion) Then
+                txtIP.Text = iden_conexion.Server
+                txtUsuario.Text = iden_conexion.User_id
+                txtPassword.Text = iden_conexion.Password
+                txtDataBase.Text = iden_conexion.Database
+            End If
+
+            'GET CONFIGURACION INFO -------------------------
+            iden_config = db_config.Consultar
+            If Not IsNothing(iden_config) Then
+                txtFolderIn.Text = iden_config.Folder_in
+                txtFolderOut.Text = iden_config.Folder_out
+            End If
+
+            'GET FORMATOS -----------------------------------
+            Try
+                dgTabla.DataSource = db_formato.ListaSimple
+            Catch ex As Exception
+                X(ex)
+            End Try
+
+            'BOTON INICIAR PROCESO --------------------------
+            If G_Proceso_Activo Then
+                btnIniciarProceso.BackColor = Color.OrangeRed
+                btnIniciarProceso.Text = "Detener Proceso"
+            Else
+                btnIniciarProceso.BackColor = Color.DodgerBlue
+                btnIniciarProceso.Text = "Iniciar Proceso"
+            End If
         Catch ex As Exception
             X(ex)
         End Try
-
-        'BOTON INICIAR PROCESO --------------------------
-        If G_Proceso_Activo Then
-            btnIniciarProceso.BackColor = Color.OrangeRed
-            btnIniciarProceso.Text = "Detener Proceso"
-        Else
-            btnIniciarProceso.BackColor = Color.DodgerBlue
-            btnIniciarProceso.Text = "Iniciar Proceso"
-        End If
 
     End Sub
 
@@ -73,18 +85,22 @@ Public Class GUI_Configuracion
         Dim db As New N_conexion
         Dim identidad As New I_Conexion
 
-        With identidad
-            .Server = txtIP.Text
-            .User_id = txtUsuario.Text
-            .Password = txtPassword.Text
-            .Database = txtDataBase.Text
-        End With
+        Try
+            With identidad
+                .Server = txtIP.Text
+                .User_id = txtUsuario.Text
+                .Password = txtPassword.Text
+                .Database = txtDataBase.Text
+            End With
 
-        If db.testConexion(identidad) Then
-            msg("¡Conexión exitosa!")
-        Else
-            msg("¡Error de conexión", 3)
-        End If
+            If db.testConexion(identidad) Then
+                Msg("¡Conexión exitosa!")
+            Else
+                Msg("¡Error de conexión", 3)
+            End If
+        Catch ex As Exception
+            X(ex)
+        End Try
 
     End Sub
 
@@ -102,18 +118,24 @@ Public Class GUI_Configuracion
 
     Private Sub BtnImportar_Click(sender As Object, e As EventArgs) Handles btnImportar.Click
         Dim db As New N_Formato
-        If dlgFile.ShowDialog() = DialogResult.OK Then
-            Try
-                If db.Insertar(dlgFile.FileName) Then
-                    Inicializar()
-                    msg("¡Formato guardado!")
-                Else
-                    msg("¡Error al guardar!", 3)
-                End If
-            Catch ex As Exception
 
-            End Try
-        End If
+        Try
+            If dlgFile.ShowDialog() = DialogResult.OK Then
+                Try
+                    If db.Insertar(dlgFile.FileName) Then
+                        Inicializar()
+                        Msg("¡Formato guardado!")
+                    Else
+                        Msg("¡Error al guardar!", 3)
+                    End If
+                Catch ex As Exception
+
+                End Try
+            End If
+        Catch ex As Exception
+            X(ex)
+        End Try
+
     End Sub
 
     Private Sub BtnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
@@ -122,31 +144,34 @@ Public Class GUI_Configuracion
         Dim iden_config As New I_configuracion
         Dim iden_conexion As New I_Conexion
 
-        With iden_conexion
-            .Server = txtIP.Text
-            .User_id = txtUsuario.Text
-            .Password = txtPassword.Text
-            .Database = txtDataBase.Text
-        End With
-
-        ini.setConexionInfo(iden_conexion)
-
-        If ini.InicializarDB() Then
-            With iden_config
-                .Id = 1
-                .Folder_in = txtFolderIn.Text
-                .Folder_out = txtFolderOut.Text
+        Try
+            With iden_conexion
+                .Server = txtIP.Text
+                .User_id = txtUsuario.Text
+                .Password = txtPassword.Text
+                .Database = txtDataBase.Text
             End With
 
-            If db.Editar(iden_config) Then
-                msg("¡Configuración guardada!")
-            Else
-                msg("¡Error!", 3)
-            End If
-        Else
-            msg("¡Error de conexión a la base de datos!", 3)
-        End If
+            ini.setConexionInfo(iden_conexion)
 
+            If ini.InicializarDB() Then
+                With iden_config
+                    .Id = 1
+                    .Folder_in = txtFolderIn.Text
+                    .Folder_out = txtFolderOut.Text
+                End With
+
+                If db.Editar(iden_config) Then
+                    Msg("¡Configuración guardada!")
+                Else
+                    Msg("¡Error!", 3)
+                End If
+            Else
+                Msg("¡Error de conexión a la base de datos!", 3)
+            End If
+        Catch ex As Exception
+            X(ex)
+        End Try
     End Sub
 
     Private Sub BtnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
@@ -173,7 +198,7 @@ Public Class GUI_Configuracion
                 End If
             End If
         Catch ex As Exception
-
+            X(ex)
         End Try
     End Sub
 
@@ -186,7 +211,7 @@ Public Class GUI_Configuracion
                 WindowState = FormWindowState.Minimized
             End If
         Catch ex As Exception
-
+            X(ex)
         End Try
 
     End Sub
