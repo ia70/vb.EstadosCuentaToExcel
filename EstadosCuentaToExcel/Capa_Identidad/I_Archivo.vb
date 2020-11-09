@@ -26,7 +26,7 @@
                 Tabla.Columns.Add(campo.Nombre, Type.GetType("System.String"))
             Next
         Catch ex As Exception
-            MsgBox(ex.Message)
+            X(ex)
         End Try
 
 
@@ -46,6 +46,7 @@
             Next
             Tabla.Rows.Add(dr)
         Catch ex As Exception
+            X(ex)
             Return False
         End Try
 
@@ -102,7 +103,7 @@
                 Mes = Format(_fecha.Month, "00").ToString
                 Anio = Format(_fecha.Year, "0000").ToString
             Catch ex As Exception
-
+                X(ex)
             End Try
         End Set
     End Property
