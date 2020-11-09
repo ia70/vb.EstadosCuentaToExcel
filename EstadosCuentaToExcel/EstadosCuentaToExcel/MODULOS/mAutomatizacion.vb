@@ -186,10 +186,10 @@ Module mAutomatizacion
 #Region "ALGORITMOS DE LOS FORMATOS"
 
     Public Sub ProcesarFormato(ByVal cadena As String, ByVal formato As I_formato)
-        Dim algoritmo As N_Algoritmo_Banamex
+        Dim algoritmo As N_Algoritmo
 
         Try
-            algoritmo = New N_Algoritmo_Banamex(cadena, formato, G_Folder_Out)
+            algoritmo = New N_Algoritmo(cadena, formato, G_Folder_Out)
         Catch ex As Exception
             X(ex)
         End Try
