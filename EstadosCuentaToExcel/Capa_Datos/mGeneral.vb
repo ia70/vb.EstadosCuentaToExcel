@@ -1,9 +1,16 @@
 ﻿Imports System.IO
 
 Module mGeneral
+#Region "VARIABLES GLOBALES"
+
     Public G_EmpresaNombre As String = "13 Ponientes analistas"
     Public G_MostrarErrores As Boolean = True
     Public G_ErrorLog As Boolean = False
+
+#End Region
+
+#Region "FUNCIONES GENERALES"
+
     Public Sub Msg()
         Msg("<..>", 3)
     End Sub
@@ -29,17 +36,25 @@ Module mGeneral
         If (G_MostrarErrores) Then
             Msg(ex.Message, 3)
         End If
-        If G_ErrorLog Then
-            Dim fichero As String = "log.txt"
-            Dim escritor As StreamWriter
+        Try
+            If G_ErrorLog Then
+                Dim fichero As String = "log.txt"
+                Dim escritor As StreamWriter
 
-            escritor = File.AppendText(fichero)
-            escritor.Write(vbCrLf + "///////////////////////////////////////////////////////////////////////////////////" + vbCrLf)
-            escritor.Write(Now.ToString + vbCrLf)
-            escritor.Write(ex.Message + vbCrLf)
-            escritor.Write("-------------------------------------------------------------------------------------" + vbCrLf + vbCrLf)
-            escritor.Flush()
-            escritor.Close()
-        End If
+                escritor = File.AppendText(fichero)
+                escritor.Write(vbCrLf + "///////////////////////////////////////////////////////////////////////////////////" + vbCrLf)
+                escritor.Write(Now.ToString + vbCrLf)
+                escritor.Write(ex.Message + vbCrLf)
+                escritor.Write(ex.StackTrace + vbCrLf)
+                escritor.Write("-------------------------------------------------------------------------------------" + vbCrLf + vbCrLf)
+                escritor.Flush()
+                escritor.Close()
+            End If
+        Catch ex2 As Exception
+            Msg(ex2.Message, 3)
+        End Try
+
     End Sub
+#End Region
+
 End Module
