@@ -27,20 +27,24 @@ Public Class N_Formato_campos
         Dim iden As I_formato_campos
         Dim res As DataTable
 
-        res = db.Consulta("id_formato", id)
+        Try
+            res = db.Consulta("id_formato", id)
 
-        For Each linea As DataRow In res.Rows
-            iden = New I_formato_campos
-            With iden
-                .Id = linea.Item(0)
-                .Id_formato = linea.Item(1)
-                .Nombre = linea.Item(2)
-                .Tipo = linea.Item(3)
-                .Idcampo = linea(4)
-            End With
+            For Each linea As DataRow In res.Rows
+                iden = New I_Formato_campos
+                With iden
+                    .Id = linea.Item(0)
+                    .Id_formato = linea.Item(1)
+                    .Nombre = linea.Item(2)
+                    .Tipo = linea.Item(3)
+                    .Idcampo = linea(4)
+                End With
 
-            campos.Add(iden)
-        Next
+                campos.Add(iden)
+            Next
+        Catch ex As Exception
+            X(ex)
+        End Try
 
         Return campos
     End Function

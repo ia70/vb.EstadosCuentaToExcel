@@ -16,14 +16,13 @@ Public MustInherit Class N_Algoritmo
     ''' <param name="formato">Identidad del formato</param>
     Public Sub New(ByVal cadena As String, ByVal formato As I_Formato, ByVal ruta_ As String)
         Try
-
+            _cadena = cadena
+            _ruta = ruta_
+            _archivo = New I_Archivo(formato.Formato_campos)
+            _formato = formato
         Catch ex As Exception
-
+            X(ex)
         End Try
-        _cadena = cadena
-        _ruta = ruta_
-        _archivo = New I_Archivo(formato.Formato_campos)
-        _formato = formato
 
         ProcesarInfo()
     End Sub
@@ -70,7 +69,7 @@ Public MustInherit Class N_Algoritmo
         Try
             _cadena = LimpiarTexto(_cadena)
         Catch ex As Exception
-
+            X(ex)
         End Try
         GetDatos()
     End Sub
@@ -104,6 +103,7 @@ Public MustInherit Class N_Algoritmo
             End With
 
         Catch ex As Exception
+            X(ex)
         End Try
 
         Try
@@ -128,6 +128,7 @@ Public MustInherit Class N_Algoritmo
             End While
 
         Catch ex As Exception
+            X(ex)
         End Try
 
         Return cadena
@@ -168,6 +169,7 @@ Public MustInherit Class N_Algoritmo
 
             Return cadenaAux
         Catch ex As Exception
+            X(ex)
             Return ""
         End Try
 
@@ -194,7 +196,7 @@ Public MustInherit Class N_Algoritmo
         Try
             saldo = GetCampo(_formato.Formato_global.Saldo_anterior_ini, _formato.Formato_global.Saldo_anterior_fin)
         Catch ex As Exception
-
+            X(ex)
         End Try
 
         Return CDec(saldo)
@@ -232,6 +234,7 @@ Public MustInherit Class N_Algoritmo
 
             fecha = CDate(anio & "/" & mes & "/" & dia)
         Catch ex As Exception
+            X(ex)
             Return Nothing
         End Try
 
@@ -248,7 +251,7 @@ Public MustInherit Class N_Algoritmo
         Try
             noCuenta = GetCampo(_formato.Formato_global.No_cuenta_ini, _formato.Formato_global.No_cuenta_fin)
         Catch ex As Exception
-
+            X(ex)
         End Try
 
         Return noCuenta
@@ -297,6 +300,7 @@ Public MustInherit Class N_Algoritmo
                     mes = ""
             End Select
         Catch ex As Exception
+            X(ex)
             mes = ""
         End Try
 

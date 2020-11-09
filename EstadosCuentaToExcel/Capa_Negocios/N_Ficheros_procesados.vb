@@ -37,6 +37,7 @@ Public Class N_Ficheros_procesados
                 Return False
             End If
         Catch ex As Exception
+            X(ex)
             Return False
         End Try
 

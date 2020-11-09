@@ -18,7 +18,7 @@ Public Class N_Configuracion
                 .Folder_out = res.Rows(0).Item(2)
             End With
         Catch ex As Exception
-
+            X(ex)
         End Try
 
         Return iden

@@ -27,45 +27,49 @@ Public Class N_Formato_global
         Dim iden As New I_formato_global
         Dim res As DataTable
 
-        res = db.Consulta("id_formato", id)
-        i = 0
+        Try
+            res = db.Consulta("id_formato", id)
+            i = 0
 
-        With iden
+            With iden
 
-            .Id = res.Rows(0).Item(getIn)
-            .Id_formato = res.Rows(0).Item(getIn)
-            .Rfc_ini = res.Rows(0).Item(getIn)
-            .Rfc_fin = res.Rows(0).Item(getIn)
-            .Fecha_general_ini = res.Rows(0).Item(getIn)
-            .Fecha_general_fin = res.Rows(0).Item(getIn)
-            .Fecha_general_separador = res.Rows(0).Item(getIn)
-            .No_cuenta_ini = res.Rows(0).Item(getIn)
-            .No_cuenta_fin = res.Rows(0).Item(getIn)
-            .Saldo_anterior_ini = res.Rows(0).Item(getIn)
-            .Saldo_anterior_fin = res.Rows(0).Item(getIn)
-            .Detalles_saldo_ini = res.Rows(0).Item(getIn)
-            .Detalles_saldo_fin = res.Rows(0).Item(getIn)
+                .Id = res.Rows(0).Item(GetIn)
+                .Id_formato = res.Rows(0).Item(GetIn)
+                .Rfc_ini = res.Rows(0).Item(GetIn)
+                .Rfc_fin = res.Rows(0).Item(GetIn)
+                .Fecha_general_ini = res.Rows(0).Item(GetIn)
+                .Fecha_general_fin = res.Rows(0).Item(GetIn)
+                .Fecha_general_separador = res.Rows(0).Item(GetIn)
+                .No_cuenta_ini = res.Rows(0).Item(GetIn)
+                .No_cuenta_fin = res.Rows(0).Item(GetIn)
+                .Saldo_anterior_ini = res.Rows(0).Item(GetIn)
+                .Saldo_anterior_fin = res.Rows(0).Item(GetIn)
+                .Detalles_saldo_ini = res.Rows(0).Item(GetIn)
+                .Detalles_saldo_fin = res.Rows(0).Item(GetIn)
 
-            .Fecha_operacion_activo = res.Rows(0).Item(getIn)
-            .Fecha_operacion_ini = res.Rows(0).Item(getIn)
-            .Fecha_operacion_fin = res.Rows(0).Item(getIn)
-            .Fecha_operacion_dia_length = res.Rows(0).Item(getIn)
-            .Fecha_operacion_mes_length = res.Rows(0).Item(getIn)
-            .Fecha_operacion_anio_length = res.Rows(0).Item(getIn)
-            .Fecha_operacion_separador_dia_mes = res.Rows(0).Item(getIn)
+                .Fecha_operacion_activo = res.Rows(0).Item(GetIn)
+                .Fecha_operacion_ini = res.Rows(0).Item(GetIn)
+                .Fecha_operacion_fin = res.Rows(0).Item(GetIn)
+                .Fecha_operacion_dia_length = res.Rows(0).Item(GetIn)
+                .Fecha_operacion_mes_length = res.Rows(0).Item(GetIn)
+                .Fecha_operacion_anio_length = res.Rows(0).Item(GetIn)
+                .Fecha_operacion_separador_dia_mes = res.Rows(0).Item(GetIn)
 
-            .Fecha_liquidacion_activo = res.Rows(0).Item(getIn)
-            .Fecha_liquidacion_ini = res.Rows(0).Item(getIn)
-            .Fecha_liquidacion_fin = res.Rows(0).Item(getIn)
-            .Fecha_liquidacion_dia_length = res.Rows(0).Item(getIn)
-            .Fecha_liquidacion_mes_length = res.Rows(0).Item(getIn)
-            .Fecha_liquidacion_anio_length = res.Rows(0).Item(getIn)
-            .Fecha_liquidacion_separador_dia_mes = res.Rows(0).Item(getIn)
+                .Fecha_liquidacion_activo = res.Rows(0).Item(GetIn)
+                .Fecha_liquidacion_ini = res.Rows(0).Item(GetIn)
+                .Fecha_liquidacion_fin = res.Rows(0).Item(GetIn)
+                .Fecha_liquidacion_dia_length = res.Rows(0).Item(GetIn)
+                .Fecha_liquidacion_mes_length = res.Rows(0).Item(GetIn)
+                .Fecha_liquidacion_anio_length = res.Rows(0).Item(GetIn)
+                .Fecha_liquidacion_separador_dia_mes = res.Rows(0).Item(GetIn)
 
-            .Ignora_parcial_ini = res.Rows(0).Item(getIn)
-            .Ignora_parcial_fin = res.Rows(0).Item(getIn)
+                .Ignora_parcial_ini = res.Rows(0).Item(GetIn)
+                .Ignora_parcial_fin = res.Rows(0).Item(GetIn)
 
-        End With
+            End With
+        Catch ex As Exception
+            X(ex)
+        End Try
 
         Return iden
     End Function

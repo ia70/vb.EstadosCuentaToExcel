@@ -105,7 +105,7 @@ Public Class N_ExportarExcel
             Next
 
         Catch ex As Exception
-
+            X(ex)
         End Try
     End Sub
 
@@ -137,7 +137,7 @@ Public Class N_ExportarExcel
                 Y += 1
             Next
         Catch ex As Exception
-
+            X(ex)
         End Try
     End Sub
 
@@ -158,7 +158,7 @@ Public Class N_ExportarExcel
             Hoja.Range("A1:" & GetLetraAbc(col) & lin).HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft
             Hoja.Range("A1:" & GetLetraAbc(col) & lin).VerticalAlignment = Excel.XlHAlign.xlHAlignCenter
         Catch ex As Exception
-
+            X(ex)
         End Try
 
     End Sub
@@ -175,7 +175,7 @@ Public Class N_ExportarExcel
             ' Eliminamos el objeto excel
             Archivo.Quit()
         Catch ex As Exception
-            MsgBox("Error al exportar los datos a excel: " & ex.ToString, vbCritical, "Bancos")
+            X(ex)
         End Try
 
     End Sub
@@ -184,9 +184,14 @@ Public Class N_ExportarExcel
         Dim nom As String
         Dim res As String
 
-        nom = Info.Rfc + " - " + Format(Info.Fecha, "yyyy-MM")
+        Try
+            nom = Info.Rfc + " - " + Format(Info.Fecha, "yyyy-MM")
+            res = Ruta + "\" + nom
+        Catch ex As Exception
+            X(ex)
+            res = ""
+        End Try
 
-        res = Ruta + "\" + nom
 
         Return res
     End Function
@@ -196,6 +201,7 @@ Public Class N_ExportarExcel
         Try
             Return Letra(num - 1)
         Catch ex As Exception
+            X(ex)
             Return ""
         End Try
 

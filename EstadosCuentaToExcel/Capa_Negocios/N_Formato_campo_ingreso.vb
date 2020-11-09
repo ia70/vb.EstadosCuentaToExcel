@@ -27,18 +27,22 @@ Public Class N_Formato_campo_ingreso
         Dim iden As I_formato_campo_ingreso
         Dim res As DataTable
 
-        res = db.Consulta("id_formato", id)
+        Try
+            res = db.Consulta("id_formato", id)
 
-        For Each linea As DataRow In res.Rows
-            iden = New I_formato_campo_ingreso
-            With iden
-                .Id = linea.Item(0)
-                .Id_formato = linea.Item(1)
-                .Cadena = linea.Item(2)
-            End With
+            For Each linea As DataRow In res.Rows
+                iden = New I_Formato_campo_ingreso
+                With iden
+                    .Id = linea.Item(0)
+                    .Id_formato = linea.Item(1)
+                    .Cadena = linea.Item(2)
+                End With
 
-            campos.Add(iden)
-        Next
+                campos.Add(iden)
+            Next
+        Catch ex As Exception
+            X(ex)
+        End Try
 
         Return campos
     End Function

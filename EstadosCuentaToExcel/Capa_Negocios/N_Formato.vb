@@ -21,9 +21,13 @@ Public Class N_Formato
 
         lista = ListaSimple()
 
-        For Each linea As DataRow In lista.Rows
-            formatos.Add(Consultar(linea.Item(0)))
-        Next
+        Try
+            For Each linea As DataRow In lista.Rows
+                formatos.Add(Consultar(linea.Item(0)))
+            Next
+        Catch ex As Exception
+            X(ex)
+        End Try
 
         Return formatos
     End Function
@@ -47,33 +51,34 @@ Public Class N_Formato
                 f_simple.Idcamposdescripcion = .Idcamposdescripcion
             End With
         Catch ex As Exception
+            X(ex)
             iden_formato = New I_formato
         End Try
 
-        If Existe(iden_formato.Id_formato) Then
-            Return False
-        End If
-
         Try
+            If Existe(iden_formato.Id_formato) Then
+                Return False
+            End If
+
             If Not db_f.Insertar(f_simple) Then
                 Throw New Exception("Error")
             End If
 
-            For Each ifce As I_formato_campo_egreso In iden_formato.Formato_campo_egreso
+            For Each ifce As I_Formato_campo_egreso In iden_formato.Formato_campo_egreso
                 ifce.Id_formato = iden_formato.Id_formato
                 If Not db_fce.Insertar(ifce) Then
                     Throw New Exception("Error")
                 End If
             Next
 
-            For Each ifci As I_formato_campo_ingreso In iden_formato.Formato_campo_ingreso
+            For Each ifci As I_Formato_campo_ingreso In iden_formato.Formato_campo_ingreso
                 ifci.Id_formato = iden_formato.Id_formato
                 If Not db_fci.Insertar(ifci) Then
                     Throw New Exception("Error")
                 End If
             Next
 
-            For Each ifc As I_formato_campos In iden_formato.Formato_campos
+            For Each ifc As I_Formato_campos In iden_formato.Formato_campos
                 ifc.Id_formato = iden_formato.Id_formato
                 If Not db_fc.Insertar(ifc) Then
                     Throw New Exception("Error")
@@ -87,6 +92,7 @@ Public Class N_Formato
 
             Return True
         Catch ex As Exception
+            X(ex)
             Eliminar(iden_formato.Id_formato)
             Return False
         End Try
@@ -103,20 +109,24 @@ Public Class N_Formato
         Dim db_fc As New N_Formato_campos
         Dim db_fg As New N_Formato_global
 
-        id = "'" + id + "'"
-        res = db.Consulta("id_formato", id)
+        Try
+            id = "'" + id + "'"
+            res = db.Consulta("id_formato", id)
 
-        With iden
-            .Id_formato = res.Rows(0).Item(0)
-            .Banco = res.Rows(0).Item(1)
-            .Algoritmo = res.Rows(0).Item(2)
-            .Cadena = res.Rows(0).Item(3)
-            .Idcamposdescripcion = res.Rows(0).Item(4)
-            .Formato_campos = db_fc.Consultar(id)
-            .Formato_campo_egreso = db_fce.Consultar(id)
-            .Formato_campo_ingreso = db_fci.Consultar(id)
-            .Formato_global = db_fg.Consultar(id)
-        End With
+            With iden
+                .Id_formato = res.Rows(0).Item(0)
+                .Banco = res.Rows(0).Item(1)
+                .Algoritmo = res.Rows(0).Item(2)
+                .Cadena = res.Rows(0).Item(3)
+                .Idcamposdescripcion = res.Rows(0).Item(4)
+                .Formato_campos = db_fc.Consultar(id)
+                .Formato_campo_egreso = db_fce.Consultar(id)
+                .Formato_campo_ingreso = db_fci.Consultar(id)
+                .Formato_global = db_fg.Consultar(id)
+            End With
+        Catch ex As Exception
+            X(ex)
+        End Try
 
         Return iden
     End Function
@@ -125,14 +135,19 @@ Public Class N_Formato
         Dim db As New D_db_operaciones(tabla)
         Dim dtabla As DataTable
 
-        id = "'" + id + "'"
-        dtabla = db.Consulta("id_formato", id)
+        Try
+            id = "'" + id + "'"
+            dtabla = db.Consulta("id_formato", id)
 
-        If dtabla.Rows.Count > 0 Then
-            Return True
-        Else
+            If dtabla.Rows.Count > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            X(ex)
             Return False
-        End If
+        End Try
 
     End Function
 
@@ -171,14 +186,16 @@ Public Class N_Formato
             Dim sr As New StreamReader(fichero)
             texto = sr.ReadToEnd()
             sr.Close()
-        Catch ex As Exception
-        End Try
 
-        If texto.Length > 0 Then
-            Return TextToObj(texto)
-        Else
+            If texto.Length > 0 Then
+                Return TextToObj(texto)
+            Else
+                Return Nothing
+            End If
+        Catch ex As Exception
+            X(ex)
             Return Nothing
-        End If
+        End Try
 
     End Function
 
@@ -186,6 +203,7 @@ Public Class N_Formato
         Try
             Return JsonConvert.DeserializeObject(Of I_formato)(cadena)
         Catch ex As Exception
+            X(ex)
             Return Nothing
         End Try
     End Function

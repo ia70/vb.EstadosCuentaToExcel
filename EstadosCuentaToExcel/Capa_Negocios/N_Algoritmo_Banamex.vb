@@ -32,6 +32,7 @@ Public Class N_Algoritmo_Banamex
                 cadena = cadena.Substring(indice + 1 + aux.Length)
                 aux = GetLinea(cadena)
             Catch ex As Exception
+                X(ex)
                 aux = ""
             End Try
 
@@ -41,7 +42,7 @@ Public Class N_Algoritmo_Banamex
             Dim Exportar As New N_ExportarExcel()
             Exportar.Exportar(_archivo.Tabla, _formato.Formato_campos, Ruta, _archivo)
         Catch ex As Exception
-            MsgBox(ex.StackTrace.ToString)
+            X(ex)
         End Try
 
     End Sub
@@ -51,33 +52,37 @@ Public Class N_Algoritmo_Banamex
         Dim copy As String
 
         copy = cadena
+        Try
+            With _formato.Formato_global
 
-        With _formato.Formato_global
+                size = .Fecha_operacion_dia_length + .Fecha_operacion_mes_length + .Fecha_operacion_anio_length
+                If .Fecha_operacion_mes_length > 0 Then
+                    size += .Fecha_operacion_separador_dia_mes.Length
+                End If
+                If .Fecha_operacion_anio_length > 0 Then
+                    size += .Fecha_operacion_separador_dia_mes.Length
+                End If
+            End With
 
-            size = .Fecha_operacion_dia_length + .Fecha_operacion_mes_length + .Fecha_operacion_anio_length
-            If .Fecha_operacion_mes_length > 0 Then
-                size += .Fecha_operacion_separador_dia_mes.Length
-            End If
-            If .Fecha_operacion_anio_length > 0 Then
-                size += .Fecha_operacion_separador_dia_mes.Length
-            End If
-        End With
+            size_fecha = size
 
-        size_fecha = size
-
-        in1 = GetFechaIndice(cadena, size)
-        If in1 >= 0 Then
-            cadena = cadena.Substring(in1 + size + 1)
-            in2 = GetFechaIndice(cadena, size)
-            If in2 >= 0 Then
-                cadena = copy.Substring(in1, in2 + size)
-                Return cadena
+            in1 = GetFechaIndice(cadena, size)
+            If in1 >= 0 Then
+                cadena = cadena.Substring(in1 + size + 1)
+                in2 = GetFechaIndice(cadena, size)
+                If in2 >= 0 Then
+                    cadena = copy.Substring(in1, in2 + size)
+                    Return cadena
+                Else
+                    Return copy
+                End If
             Else
-                Return copy
+                Return ""
             End If
-        Else
+        Catch ex As Exception
+            X(ex)
             Return ""
-        End If
+        End Try
 
     End Function
 
@@ -86,25 +91,31 @@ Public Class N_Algoritmo_Banamex
         Dim aux, copy As String
 
         copy = cadena
-        aux = cadena.Substring(0, size)
-        Do
-            If VerificarFecha(aux) Then
-                indice = copy.IndexOf(aux)
-                Return indice
-            End If
+        Try
+            aux = cadena.Substring(0, size)
+            Do
+                If VerificarFecha(aux) Then
+                    indice = copy.IndexOf(aux)
+                    Return indice
+                End If
 
-            indice = cadena.IndexOf(vbLf)
-            If indice >= 0 Then
-                Try
-                    cadena = cadena.Substring(indice + 1)
-                    aux = cadena.Substring(0, size)
-                Catch ex As Exception
-                    Return -1
-                End Try
-            End If
-        Loop While indice >= 0
+                indice = cadena.IndexOf(vbLf)
+                If indice >= 0 Then
+                    Try
+                        cadena = cadena.Substring(indice + 1)
+                        aux = cadena.Substring(0, size)
+                    Catch ex As Exception
+                        Return -1
+                    End Try
+                End If
+            Loop While indice >= 0
 
-        Return -1
+            Return -1
+        Catch ex As Exception
+            X(ex)
+            Return -1
+        End Try
+
     End Function
 
     Private Function VerificarFecha(ByVal cadena As String) As Boolean
@@ -112,78 +123,61 @@ Public Class N_Algoritmo_Banamex
         Dim veri As Boolean
         copy = cadena
 
+        Try
+            With _formato.Formato_global
+                If .Fecha_operacion_dia_length > 0 Then
+                    aux = cadena.Substring(0, .Fecha_operacion_dia_length)
+                    If IsNumeric(aux) Then
+                        cadena = cadena.Substring(.Fecha_operacion_dia_length)
+                        aux = cadena.Substring(0, .Fecha_operacion_separador_dia_mes.Length)
+                        If aux = .Fecha_operacion_separador_dia_mes Then
+                            If .Fecha_operacion_mes_length > 0 Then
+                                cadena = cadena.Substring(.Fecha_operacion_separador_dia_mes.Length)
+                                aux = cadena.Substring(0, .Fecha_operacion_mes_length)
 
-        With _formato.Formato_global
+                                Select Case .Fecha_operacion_mes_length
+                                    Case 2
+                                        veri = IsNumeric(aux)
+                                    Case 3
+                                        veri = GetMesNum(aux).Length > 0
+                                    Case >= 4
+                                        veri = GetMesNum(aux).Length > 0
+                                End Select
 
-            If .Fecha_operacion_dia_length > 0 Then
-                aux = cadena.Substring(0, .Fecha_operacion_dia_length)
-                If IsNumeric(aux) Then
-                    cadena = cadena.Substring(.Fecha_operacion_dia_length)
-                    aux = cadena.Substring(0, .Fecha_operacion_separador_dia_mes.Length)
-                    If aux = .Fecha_operacion_separador_dia_mes Then
-                        If .Fecha_operacion_mes_length > 0 Then
-                            cadena = cadena.Substring(.Fecha_operacion_separador_dia_mes.Length)
-                            aux = cadena.Substring(0, .Fecha_operacion_mes_length)
+                                If veri Then
+                                    If .Fecha_liquidacion_anio_length > 0 Then
+                                        cadena = cadena.Substring(.Fecha_operacion_mes_length)
+                                        aux = cadena.Substring(0, .Fecha_operacion_separador_dia_mes.Length)
 
-                            Select Case .Fecha_operacion_mes_length
-                                Case 2
-                                    veri = IsNumeric(aux)
-                                Case 3
-                                    veri = GetMesNum(aux).Length > 0
-                                Case >= 4
-                                    veri = GetMesNum(aux).Length > 0
-                            End Select
+                                        If aux = .Fecha_operacion_separador_dia_mes Then
+                                            cadena = cadena.Substring(.Fecha_operacion_separador_dia_mes.Length)
+                                            aux = cadena.Substring(0, .Fecha_operacion_anio_length)
 
-                            If veri Then
-                                If .Fecha_liquidacion_anio_length > 0 Then
-                                    cadena = cadena.Substring(.Fecha_operacion_mes_length)
-                                    aux = cadena.Substring(0, .Fecha_operacion_separador_dia_mes.Length)
-
-                                    If aux = .Fecha_operacion_separador_dia_mes Then
-                                        cadena = cadena.Substring(.Fecha_operacion_separador_dia_mes.Length)
-                                        aux = cadena.Substring(0, .Fecha_operacion_anio_length)
-
-                                        If IsNumeric(aux) Then
-                                            cadena = cadena.Substring(.Fecha_operacion_anio_length)
-                                            If cadena.Length = 0 Then
-                                                Return True
-                                            Else
-                                                Return False
+                                            If IsNumeric(aux) Then
+                                                cadena = cadena.Substring(.Fecha_operacion_anio_length)
+                                                If cadena.Length = 0 Then
+                                                    Return True
+                                                End If
                                             End If
-                                        Else
-                                                Return False
                                         End If
-
                                     Else
-                                        Return False
-                                    End If
-
-                                Else
-                                    cadena = cadena.Substring(.Fecha_operacion_mes_length)
-                                    If cadena.Length = 0 Then
-                                        Return True
-                                    Else
-                                        Return False
+                                        cadena = cadena.Substring(.Fecha_operacion_mes_length)
+                                        If cadena.Length = 0 Then
+                                            Return True
+                                        End If
                                     End If
                                 End If
-                            Else
-                                Return False
                             End If
-
-                        Else
-                            Return True
                         End If
-                    Else
-                        Return False
                     End If
-                Else
-                    Return False
                 End If
-            End If
 
-        End With
+            End With
+        Catch ex As Exception
+            X(ex)
+        End Try
 
-
+        Return False
     End Function
 
     Private Sub CargarVariables()
@@ -201,7 +195,7 @@ Public Class N_Algoritmo_Banamex
                 End Select
             Next
         Catch ex As Exception
-
+            X(ex)
         End Try
     End Sub
 
@@ -246,24 +240,32 @@ Public Class N_Algoritmo_Banamex
                 End If
             Loop While cadena.Length > 0
         Catch ex As Exception
-
+            X(ex)
         End Try
         cadena = copy
 
         'QUITAR CIFRAS DE CADENA --------------------------------------
-        For Each linea As String In cifras
-            indice = cadena.IndexOf(linea)
-            If indice >= 0 Then
-                cadena = cadena.Remove(indice, linea.Length)
-            End If
-        Next
+        Try
+            For Each linea As String In cifras
+                indice = cadena.IndexOf(linea)
+                If indice >= 0 Then
+                    cadena = cadena.Remove(indice, linea.Length)
+                End If
+            Next
+        Catch ex As Exception
+            X(ex)
+        End Try
 
         'QUITAR FECHA -------------------------------------------------
-        For i = 0 To no_fechas - 1
-            aux = cadena.Substring(0, size_fecha)
-            fechas.Add(aux)
-            cadena = cadena.Substring(aux.Length + 1)
-        Next
+        Try
+            For i = 0 To no_fechas - 1
+                aux = cadena.Substring(0, size_fecha)
+                fechas.Add(aux)
+                cadena = cadena.Substring(aux.Length + 1)
+            Next
+        Catch ex As Exception
+            X(ex)
+        End Try
 
         'ELIMINA SALTOS DE LINEA Y ESPACIOS EN BLANCOS DUPLICADOS
         cadena = cadena.Replace(vbLf, " ")
@@ -278,58 +280,61 @@ Public Class N_Algoritmo_Banamex
         operacion = GetOperacion(cadena)
 
         'ORDENAMIENTO DE CAMPOS OBTENIDOS --------------------------
+        Try
+            'Fechas
+            Fecha_Operacion = fechas(0)
+            If fechas.Count = 2 Then
+                Fecha_Liquidacion = fechas(1)
+            End If
 
-        'Fechas
-        Fecha_Operacion = fechas(0)
-        If fechas.Count = 2 Then
-            Fecha_Liquidacion = fechas(1)
-        End If
+            'Cadenas
+            Concepto = cadenas(0)
+            If cadenas.Count = 2 Then
+                Referencia = cadenas(1)
+            End If
 
-        'Cadenas
-        Concepto = cadenas(0)
-        If cadenas.Count = 2 Then
-            Referencia = cadenas(1)
-        End If
-
-        'Cifras
-        If operacion = "Deposito" Then
-            Deposito = cifras(0)
-        Else
-            Retiro = cifras(0)
-        End If
-
-
-        If cifras.Count = 2 Then
-            Saldo_Operacion = cifras(1)
-        ElseIf cifras.Count = 3 Then
-            Saldo_Liquidacion = cifras(2)
-        End If
+            'Cifras
+            If operacion = "Deposito" Then
+                Deposito = cifras(0)
+            Else
+                Retiro = cifras(0)
+            End If
 
 
-        'MANEJAR LA INFORMACION
-        For Each campo As I_Formato_campos In _formato.Formato_campos
+            If cifras.Count = 2 Then
+                Saldo_Operacion = cifras(1)
+            ElseIf cifras.Count = 3 Then
+                Saldo_Liquidacion = cifras(2)
+            End If
 
-            Select Case campo.Idcampo.ToUpper
-                Case "FECHAOPERACION"
-                    respuesta.Add(Fecha_Operacion)
-                Case "FECHALIQUIDACION"
-                    respuesta.Add(Fecha_Liquidacion)
-                Case "CONCEPTO"
-                    respuesta.Add(Concepto)
-                Case "REFERENCIA"
-                    respuesta.Add(Referencia)
-                Case "RETIRO"
-                    respuesta.Add(Retiro)
-                Case "DEPOSITO"
-                    respuesta.Add(Deposito)
-                Case "SALDOOPERACION"
-                    respuesta.Add(Saldo_Operacion)
-                Case "SALDOLIQUIDACION"
-                    respuesta.Add(Saldo_Liquidacion)
-                Case Else
-                    respuesta.Add("")
-            End Select
-        Next
+
+            'MANEJAR LA INFORMACION
+            For Each campo As I_Formato_campos In _formato.Formato_campos
+
+                Select Case campo.Idcampo.ToUpper
+                    Case "FECHAOPERACION"
+                        respuesta.Add(Fecha_Operacion)
+                    Case "FECHALIQUIDACION"
+                        respuesta.Add(Fecha_Liquidacion)
+                    Case "CONCEPTO"
+                        respuesta.Add(Concepto)
+                    Case "REFERENCIA"
+                        respuesta.Add(Referencia)
+                    Case "RETIRO"
+                        respuesta.Add(Retiro)
+                    Case "DEPOSITO"
+                        respuesta.Add(Deposito)
+                    Case "SALDOOPERACION"
+                        respuesta.Add(Saldo_Operacion)
+                    Case "SALDOLIQUIDACION"
+                        respuesta.Add(Saldo_Liquidacion)
+                    Case Else
+                        respuesta.Add("")
+                End Select
+            Next
+        Catch ex As Exception
+            X(ex)
+        End Try
 
         Return respuesta
     End Function
@@ -343,7 +348,7 @@ Public Class N_Algoritmo_Banamex
                 End If
             Next
         Catch ex As Exception
-
+            X(ex)
         End Try
 
         Try
@@ -353,11 +358,10 @@ Public Class N_Algoritmo_Banamex
                 End If
             Next
         Catch ex As Exception
-
+            X(ex)
         End Try
 
         Return ""
-
     End Function
 
     Private Function GetCantidad(ByVal cadena As String) As String
@@ -411,6 +415,7 @@ Public Class N_Algoritmo_Banamex
 
             Return numero
         Catch ex As Exception
+            X(ex)
             Return ""
         End Try
 
@@ -439,6 +444,7 @@ Public Class N_Algoritmo_Banamex
                 End While
                 res += cadena
             Catch ex As Exception
+                X(ex)
                 Return copy
             End Try
             Return res

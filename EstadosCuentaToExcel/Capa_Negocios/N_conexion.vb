@@ -18,8 +18,8 @@ Public Class N_conexion
             leerDBinfo()
             Return db.InicializarDB(getConexionString(conexionInfo))
         Catch ex As Exception
+            X(ex)
             Return False
-            MsgBox(ex.ToString)
         End Try
 
     End Function
@@ -41,7 +41,7 @@ Public Class N_conexion
             sw.WriteLine(texto)
             sw.Close()
         Catch ex As Exception
-            MsgBox(ex.ToString)
+            X(ex)
         End Try
     End Sub
 
@@ -69,12 +69,14 @@ Public Class N_conexion
             texto = sr.ReadToEnd()
             sr.Close()
         Catch ex As Exception
+            X(ex)
             createDBinfo()
             Try
                 Dim sr As New StreamReader(fichero)
                 texto = sr.ReadToEnd()
                 sr.Close()
             Catch ex2 As Exception
+                X(ex)
                 createDBinfo()
             End Try
         End Try
@@ -106,7 +108,7 @@ Public Class N_conexion
             sw.WriteLine(texto)
             sw.Close()
         Catch ex As Exception
-            MsgBox(ex.ToString)
+            X(ex)
         End Try
 
     End Sub
