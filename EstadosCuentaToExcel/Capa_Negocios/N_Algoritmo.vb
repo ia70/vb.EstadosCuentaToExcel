@@ -314,7 +314,7 @@ Public Class N_Algoritmo
         'DEFINE TIPO DE TRANSACCION INGRESO/EGRESO
         operacion = GetOperacion(cadena)
 
-        'ORDENAMIENTO DE CAMPOS OBTENIDOS ---------------------------------------------------------------------------
+        'ORDENAMIENTO DE CAMPOS OBTENIDOS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Try
             'Fechas
             Fecha_Operacion = fechas(0)
@@ -434,7 +434,7 @@ Public Class N_Algoritmo
                     While (i >= 0 Or Not cadena(i) = " ") And (IsNumeric(cadena(i)) Or cadena(i) = ",")
                         i -= 1
                     End While
-                    If i >= 0 And (IsNumeric(cadena(i + 1)) Or cadena(i + 1) = ",") Then
+                    If i >= 0 And IsNumeric(cadena(i + 1)) And cadena(i) = " " Then
                         ini = i + 1
                         If IsNumeric(cadena(indice + 1)) And IsNumeric(cadena(indice + 2)) Then
                             If ((indice + 3) <= size - 1) Then
@@ -464,6 +464,15 @@ Public Class N_Algoritmo
             Loop While indice >= 0
 
             cadena = cadena.Substring(ini, fin - ini)
+
+            'VERIFICAR QUE NO SEA CIFRA FALSA -----------------
+            If cadena.Length > 6 Then
+                indice = cadena.Length - (6 + 1)
+                If Not cadena(indice) = "," Then
+                    Return ""
+                End If
+            End If
+
             numero = cadena
 
             Return numero
@@ -591,7 +600,13 @@ Public Class N_Algoritmo
                     Exit Do
                 End If
                 indice = cadena.IndexOf(aux)
-                cadena = cadena.Substring(indice + 1 + aux.Length)
+                If (indice + 1 + aux.Length) > cadena.Length Then
+                    aux = ""
+                    Exit Do
+                Else
+                    cadena = cadena.Substring(indice + 1 + aux.Length)
+                End If
+
                 aux = GetLinea(cadena)
             Catch ex As Exception
                 X(ex)
