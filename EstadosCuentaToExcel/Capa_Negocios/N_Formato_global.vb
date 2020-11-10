@@ -65,6 +65,10 @@ Public Class N_Formato_global
 
                 .Ignora_parcial_ini = res.Rows(0).Item(GetIn)
                 .Ignora_parcial_fin = res.Rows(0).Item(GetIn)
+                .Ignora_parcial_adicional_1_ini = res.Rows(0).Item(GetIn)
+                .Ignora_parcial_adicional_1_fin = res.Rows(0).Item(GetIn)
+                .Ignora_parcial_adicional_2_ini = res.Rows(0).Item(GetIn)
+                .Ignora_parcial_adicional_2_fin = res.Rows(0).Item(GetIn)
 
             End With
         Catch ex As Exception

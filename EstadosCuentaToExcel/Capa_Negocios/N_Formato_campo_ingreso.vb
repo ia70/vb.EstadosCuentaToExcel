@@ -36,6 +36,8 @@ Public Class N_Formato_campo_ingreso
                     .Id = linea.Item(0)
                     .Id_formato = linea.Item(1)
                     .Cadena = linea.Item(2)
+                    .Cadena_adicional_1 = linea.Item(3)
+                    .Cadena_adicional_2 = linea.Item(4)
                 End With
 
                 campos.Add(iden)

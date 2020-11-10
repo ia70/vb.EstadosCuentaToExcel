@@ -36,7 +36,7 @@ Public Class N_Algoritmo
 
         Try
             CargarVariables()
-            _textopdf = LimpiarTexto(_textopdf)
+            GetSizeFecha()
         Catch ex As Exception
             X(ex)
         End Try
@@ -555,7 +555,7 @@ Public Class N_Algoritmo
     ''' </summary>
     ''' <param name="cadena"></param>
     ''' <returns></returns>
-    Private Function GetOperacion(ByVal cadena As String) As String
+    Protected Overridable Function GetOperacion(ByVal cadena As String) As String
 
         Try
             For Each campo As I_Formato_campo_ingreso In _formato.Formato_campo_ingreso
@@ -588,14 +588,20 @@ Public Class N_Algoritmo
     ''' </summary>
     Public Sub ProcesarFichero()
         Dim cadena As String = _textopdf
+        Dim campos As List(Of String)
         Dim aux As String
         Dim indice As Integer
 
+        'Se quita toda la información que no pertenece al cuerpo del documento
+        _textopdf = LimpiarTexto(_textopdf)
+
+        'Se comienza a procesar el cuerpo del documento
         aux = GetLinea(cadena)
         Do
             Try
                 If aux.Length > 0 Then
-                    _fichero.agregarFila(ProcesarLinea(aux))
+                    campos = ProcesarLinea(aux)
+                    _fichero.agregarFila(campos)
                 Else
                     Exit Do
                 End If
@@ -641,30 +647,17 @@ Public Class N_Algoritmo
     ''' <param name="cadena">Texto del PDF</param>
     ''' <returns></returns>
     Private Function GetLinea(cadena As String) As String
-        Dim size, in1, in2 As Integer
+        Dim in1, in2 As Integer
         Dim copy As String
 
         copy = cadena
         Try
-            With _formato.Formato_global
-
-                size = .Fecha_operacion_dia_length + .Fecha_operacion_mes_length + .Fecha_operacion_anio_length
-                If .Fecha_operacion_mes_length > 0 Then
-                    size += .Fecha_operacion_separador_dia_mes.Length
-                End If
-                If .Fecha_operacion_anio_length > 0 Then
-                    size += .Fecha_operacion_separador_dia_mes.Length
-                End If
-            End With
-
-            _size_fecha = size
-
-            in1 = GetFechaIndice(cadena, size)
+            in1 = GetFechaIndice(cadena, _size_fecha)
             If in1 >= 0 Then
-                cadena = cadena.Substring(in1 + size + 1)
-                in2 = GetFechaIndice(cadena, size)
+                cadena = cadena.Substring(in1 + _size_fecha + 1)
+                in2 = GetFechaIndice(cadena, _size_fecha)
                 If in2 >= 0 Then
-                    cadena = copy.Substring(in1, in2 + size)
+                    cadena = copy.Substring(in1, in2 + _size_fecha)
                     Return cadena
                 Else
                     Return copy
@@ -699,6 +692,25 @@ Public Class N_Algoritmo
         Catch ex As Exception
             X(ex)
         End Try
+    End Sub
+
+    ''' <summary>
+    ''' Obtiene la longitud de fecha para el formato activo
+    ''' </summary>
+    Private Sub GetSizeFecha()
+        Dim size As Integer
+        With _formato.Formato_global
+
+            size = .Fecha_operacion_dia_length + .Fecha_operacion_mes_length + .Fecha_operacion_anio_length
+            If .Fecha_operacion_mes_length > 0 Then
+                size += .Fecha_operacion_separador_dia_mes.Length
+            End If
+            If .Fecha_operacion_anio_length > 0 Then
+                size += .Fecha_operacion_separador_dia_mes.Length
+            End If
+        End With
+
+        _size_fecha = size
     End Sub
 
 #End Region

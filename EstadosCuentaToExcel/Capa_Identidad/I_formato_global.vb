@@ -32,6 +32,10 @@
 
     Private _ignora_parcial_ini As String
     Private _ignora_parcial_fin As String
+    Private _ignora_parcial_adicional_1_ini As String
+    Private _ignora_parcial_adicional_1_fin As String
+    Private _ignora_parcial_adicional_2_ini As String
+    Private _ignora_parcial_adicional_2_fin As String
 
 #Region "CONSTRUCTORES"
 
@@ -66,6 +70,42 @@
         Me.Fecha_liquidacion_separador_dia_mes = fecha_liquidacion_separador_dia_mes
         Me.Ignora_parcial_ini = ignora_parcial_ini
         Me.Ignora_parcial_fin = ignora_parcial_fin
+    End Sub
+
+    Public Sub New(id As Integer, id_formato As String, rfc_ini As String, rfc_fin As String, fecha_general_ini As String, fecha_general_fin As String, fecha_general_separador As String, no_cuenta_ini As String, no_cuenta_fin As String, saldo_anterior_ini As String, saldo_anterior_fin As String, detalles_saldo_ini As String, detalles_saldo_fin As String, fecha_operacion_activo As Boolean, fecha_operacion_ini As String, fecha_operacion_fin As String, fecha_operacion_dia_length As Integer, fecha_operacion_mes_length As Integer, fecha_operacion_anio_length As Integer, fecha_operacion_separador_dia_mes As String, fecha_liquidacion_activo As Boolean, fecha_liquidacion_ini As String, fecha_liquidacion_fin As String, fecha_liquidacion_dia_length As Integer, fecha_liquidacion_mes_length As Integer, fecha_liquidacion_anio_length As Integer, fecha_liquidacion_separador_dia_mes As String, ignora_parcial_ini As String, ignora_parcial_fin As String, ignora_parcial_adicional_1_ini As String, ignora_parcial_adicional_1_fin As String, ignora_parcial_adicional_2_ini As String, ignora_parcial_adicional_2_fin As String)
+        _id = id
+        _id_formato = id_formato
+        _rfc_ini = rfc_ini
+        _rfc_fin = rfc_fin
+        _fecha_general_ini = fecha_general_ini
+        _fecha_general_fin = fecha_general_fin
+        _fecha_general_separador = fecha_general_separador
+        _no_cuenta_ini = no_cuenta_ini
+        _no_cuenta_fin = no_cuenta_fin
+        _saldo_anterior_ini = saldo_anterior_ini
+        _saldo_anterior_fin = saldo_anterior_fin
+        _detalles_saldo_ini = detalles_saldo_ini
+        _detalles_saldo_fin = detalles_saldo_fin
+        _fecha_operacion_activo = fecha_operacion_activo
+        _fecha_operacion_ini = fecha_operacion_ini
+        _fecha_operacion_fin = fecha_operacion_fin
+        _fecha_operacion_dia_length = fecha_operacion_dia_length
+        _fecha_operacion_mes_length = fecha_operacion_mes_length
+        _fecha_operacion_anio_length = fecha_operacion_anio_length
+        _fecha_operacion_separador_dia_mes = fecha_operacion_separador_dia_mes
+        _fecha_liquidacion_activo = fecha_liquidacion_activo
+        _fecha_liquidacion_ini = fecha_liquidacion_ini
+        _fecha_liquidacion_fin = fecha_liquidacion_fin
+        _fecha_liquidacion_dia_length = fecha_liquidacion_dia_length
+        _fecha_liquidacion_mes_length = fecha_liquidacion_mes_length
+        _fecha_liquidacion_anio_length = fecha_liquidacion_anio_length
+        _fecha_liquidacion_separador_dia_mes = fecha_liquidacion_separador_dia_mes
+        _ignora_parcial_ini = ignora_parcial_ini
+        _ignora_parcial_fin = ignora_parcial_fin
+        _ignora_parcial_adicional_1_ini = ignora_parcial_adicional_1_ini
+        _ignora_parcial_adicional_1_fin = ignora_parcial_adicional_1_fin
+        _ignora_parcial_adicional_2_ini = ignora_parcial_adicional_2_ini
+        _ignora_parcial_adicional_2_fin = ignora_parcial_adicional_2_fin
     End Sub
 
 #End Region
@@ -329,6 +369,42 @@
         End Get
         Set(value As String)
             _id_formato = value
+        End Set
+    End Property
+
+    Public Property Ignora_parcial_adicional_1_ini As String
+        Get
+            Return _ignora_parcial_adicional_1_ini
+        End Get
+        Set(value As String)
+            _ignora_parcial_adicional_1_ini = value
+        End Set
+    End Property
+
+    Public Property Ignora_parcial_adicional_1_fin As String
+        Get
+            Return _ignora_parcial_adicional_1_fin
+        End Get
+        Set(value As String)
+            _ignora_parcial_adicional_1_fin = value
+        End Set
+    End Property
+
+    Public Property Ignora_parcial_adicional_2_ini As String
+        Get
+            Return _ignora_parcial_adicional_2_ini
+        End Get
+        Set(value As String)
+            _ignora_parcial_adicional_2_ini = value
+        End Set
+    End Property
+
+    Public Property Ignora_parcial_adicional_2_fin As String
+        Get
+            Return _ignora_parcial_adicional_2_fin
+        End Get
+        Set(value As String)
+            _ignora_parcial_adicional_2_fin = value
         End Set
     End Property
 
