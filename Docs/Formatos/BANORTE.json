@@ -1,7 +1,7 @@
 {
     "id_formato": "F002",
     "banco": "BANORTE",
-    "algoritmo": "1",
+    "algoritmo": "banorte",
     "cadena": "Banco Mercantil del Norte S.A. Institución de Banca Múltiple Grupo Financiero Banorte",
     "IdCamposDescripcion": "FechaOperacion, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
     "formato_campos": [

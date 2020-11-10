@@ -1,70 +1,98 @@
 {
     "id_formato": "F005",
     "banco": "BBVA",
-    "algoritmo": "1",
+    "algoritmo": "bbva",
     "cadena": "MAESTRA PYME BANCOMER MN",
     "IdCamposDescripcion": "FechaOperacion, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
     "formato_campos": [
         {
-            "nombre": "Fecha",
+            "nombre": "FECHA OPER",
             "tipo": "DateTime",
             "IdCampo":"FechaOperacion"
         },
         {
-            "nombre": "Concepto",
+            "nombre": "FECHA LIQ",
+            "tipo": "DateTime",
+            "IdCampo":"FechaLiquidacion"
+        },
+        {
+            "nombre": "COD. DESCRIPCIÓN",
             "tipo": "String",
             "IdCampo":"Concepto"
         },
         {
-            "nombre": "Retiros",
+            "nombre": "CARGOS",
             "tipo": "Decimal",
             "IdCampo":"Retiro"
         },
         {
-            "nombre": "Depósitos",
+            "nombre": "ABONOS",
             "tipo": "Decimal",
             "IdCampo":"Deposito"
         },
         {
-            "nombre": "Saldo",
+            "nombre": "SALDO OPERACION",
             "tipo": "Decimal",
             "IdCampo":"SaldoOperacion"
+        },
+        {
+            "nombre": "SALDO LIQUIDACIÓN",
+            "tipo": "Decimal",
+            "IdCampo":"SaldoLiquidacion"
         }
     ],
     "formato_campo_ingreso": [
         {
-            "cadena": "PAGO RECIBIDO"
-        },
-        {
-            "cadena": "CTA.ORDENANTE"
+            "cadena": "RECIBIDO"
         },
         {
             "cadena": "DEPOSITO"
+        },
+        {
+            "cadena": "N06 PAGO CUENTA DE TERCERO"
+        },
+        {
+            "cadena":"DEP."
         }
     ],
     "formato_campo_egreso": [
         {
-            "cadena": "PAGO INTERBANCARIO"
+            "cadena": "LIBRADOS"
         },
         {
-            "cadena": "PAGO A TERCEROS"
+            "cadena": "PAGO SIPARE"
         },
         {
-            "cadena": "PAGO DE SERVICIO"
+            "cadena": "IVA COM"
+        },
+        {
+            "cadena": "SERV BANCA INTERNET"
+        },
+        {
+            "cadena": "SPEI ENVIADO"
+        },
+        {
+            "cadena": "RECAUDACION DE IMPUE"
+        },
+        {
+            "cadena": "PAGO FACTURA"
+        },
+        {
+            "cadena": "P14 "
         }
     ],
     "formato_global": {
-        "rfc_ini": "Registro Federal de Contribuyentes: ",
+        "rfc_ini": "  R.F.C ",
         "rfc_fin": "\n",
-        "fecha_general_ini": "CONTRATO SALDO ANTERIOR SALDO AL ",
+        "fecha_general_ini": "Fecha de Corte ",
         "fecha_general_fin": "\n",
         "fecha_general_separador": "/",
-        "no_cuenta_ini": "Cuenta de Cheques Moneda\nNacional ",
-        "no_cuenta_fin": " ",
-        "saldo_anterior_ini": "SALDO ANTERIOR  ",
+        "no_cuenta_ini": "No. de Cuenta ",
+        "no_cuenta_fin": "\n",
+        "saldo_anterior_ini": " Saldo de Operación Inicial ",
         "saldo_anterior_fin": "\n",
-        "detalles_saldo_ini": "FECHA CONCEPTO RETIROS DEPOSITOS SALDO\n",
-        "detalles_saldo_fin": "SALDO MINIMO REQUERIDO\n",
+        "detalles_saldo_ini": "OPER LIQ COD. DESCRIPCIÓN REFERENCIA CARGOS ABONOS OPERACIÓN LIQUIDACIÓN\n",
+        "detalles_saldo_fin": "\nTotal de Movimientos\n",
 
         "fecha_operacion_activo": true,
         "fecha_operacion_ini": "\n",
@@ -72,17 +100,17 @@
         "fecha_operacion_dia_length": 2,
         "fecha_operacion_mes_length": 3,
         "fecha_operacion_anio_length": 0,
-        "fecha_operacion_separador_dia_mes": " ",
+        "fecha_operacion_separador_dia_mes": "/",
         
-        "fecha_liquidacion_activo": false,
-        "fecha_liquidacion_ini": "",
-        "fecha_liquidacion_fin": "",
-        "fecha_liquidacion_dia_length": 0,
-        "fecha_liquidacion_mes_length": 0,
+        "fecha_liquidacion_activo": true,
+        "fecha_liquidacion_ini": " ",
+        "fecha_liquidacion_fin": " ",
+        "fecha_liquidacion_dia_length": 2,
+        "fecha_liquidacion_mes_length": 3,
         "fecha_liquidacion_anio_length": 0,
-        "fecha_liquidacion_separador_dia_mes": "",
+        "fecha_liquidacion_separador_dia_mes": "/",
  
-        "ignora_parcial_ini": "000180.",
-        "ignora_parcial_fin": "FECHA CONCEPTO RETIROS DEPOSITOS SALDO\n"
+        "ignora_parcial_ini": "La GAT Real es el rendimiento que obtendría ",
+        "ignora_parcial_fin": "OPER LIQ COD. DESCRIPCIÓN REFERENCIA CARGOS ABONOS OPERACIÓN LIQUIDACIÓN\n"
     }
 }

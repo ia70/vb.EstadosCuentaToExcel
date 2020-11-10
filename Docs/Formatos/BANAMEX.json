@@ -1,7 +1,7 @@
 {
     "id_formato": "F001",
     "banco": "CITIBANAMEX",
-    "algoritmo": "1",
+    "algoritmo": "citibanamex",
     "cadena": "Banamex Resuelve",
     "IdCamposDescripcion": "FechaOperacion, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
     "formato_campos": [

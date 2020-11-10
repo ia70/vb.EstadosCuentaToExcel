@@ -1,7 +1,7 @@
 {
     "id_formato": "F003",
     "banco": "SANTANDER",
-    "algoritmo": "1",
+    "algoritmo": "santander",
     "cadena": "\nBANCO SANTANDER (MEXICO) S.A.",
     "IdCamposDescripcion": "FechaOperacion, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
     "formato_campos": [

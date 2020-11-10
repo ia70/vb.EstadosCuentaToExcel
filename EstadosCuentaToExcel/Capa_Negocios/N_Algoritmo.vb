@@ -314,7 +314,7 @@ Public Class N_Algoritmo
         'DEFINE TIPO DE TRANSACCION INGRESO/EGRESO
         operacion = GetOperacion(cadena)
 
-        'ORDENAMIENTO DE CAMPOS OBTENIDOS --------------------------
+        'ORDENAMIENTO DE CAMPOS OBTENIDOS ---------------------------------------------------------------------------
         Try
             'Fechas
             Fecha_Operacion = fechas(0)
@@ -331,17 +331,18 @@ Public Class N_Algoritmo
             'Cifras
             If operacion = "Deposito" Then
                 Deposito = cifras(0)
-            Else
+            ElseIf operacion = "Retiro" Then
                 Retiro = cifras(0)
             End If
 
-
-            If cifras.Count = 2 Then
+            If cifras.Count = 1 And operacion = "" Then
+                Saldo_Operacion = cifras(0)
+            ElseIf cifras.Count = 2 Then
                 Saldo_Operacion = cifras(1)
             ElseIf cifras.Count = 3 Then
                 Saldo_Liquidacion = cifras(2)
             End If
-
+            '/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             'MANEJAR LA INFORMACION
             For Each campo As I_Formato_campos In _formato.Formato_campos
@@ -505,7 +506,7 @@ Public Class N_Algoritmo
                                 End Select
 
                                 If veri Then
-                                    If .Fecha_liquidacion_anio_length > 0 Then
+                                    If .Fecha_operacion_anio_length > 0 Then
                                         cadena = cadena.Substring(.Fecha_operacion_mes_length)
                                         aux = cadena.Substring(0, .Fecha_operacion_separador_dia_mes.Length)
 
