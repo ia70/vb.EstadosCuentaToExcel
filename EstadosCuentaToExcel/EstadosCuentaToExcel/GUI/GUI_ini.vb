@@ -6,6 +6,7 @@ Public Class GUI_ini
         Try
             G_DB_Inicializada = CargarVariablesGlobales()
             GUI_Configuracion.Show()
+            'Test.Show()
         Catch ex As Exception
             X(ex)
             End

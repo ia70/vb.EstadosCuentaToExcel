@@ -7,34 +7,42 @@ Public Class N_Algoritmo
     Private _formato As I_Formato       'Identidad del formato.
     Private _no_campos As Integer       'Número de campos que tiene el formato.
 
-    Private _no_cifras As Integer       'Número de cifras encontradas en la linea del formato.
-    Private _no_cadenas As Integer      'Número de cadenas encontradas en la linea del formato.
-    Private _no_fechas As Integer       'Número de fechas encontradas en la linea del formato.
+    Private _no_cifras As Integer       'Número de campos de tipo decimal que tiene el formato.
+    Private _no_cadenas As Integer      'Número de campos de tipo decimal que tiene el formato.
+    Private _no_fechas As Integer       'Número de campos de tipo decimal que tiene el formato.
     Private _size_fecha As Integer      'Longitud de fecha de Operacion/Liquidacion del formato.
     Private _ruta_guardado As String    'Ruta donde se guardará el archivo.
 #End Region
 #Region "CONSTRUCTORES"
-    Public Sub New()
-    End Sub
+
+    'Public Sub New()
+    'End Sub
 
     ''' <summary>
     ''' Constructor
     ''' </summary>
-    ''' <param name="cadena">PDF en texto plano</param>
-    ''' <param name="formato">Identidad del formato</param>
+    ''' <param name="textopdf_">PDF en texto plano</param>
+    ''' <param name="formato_">Identidad del formato</param>
     ''' <param name="ruta_">Ruta donde se guardará el archivo.</param>
-    Public Sub New(ByVal cadena As String, ByVal formato As I_Formato, ByVal ruta_ As String)
+    Public Sub New(ByVal textopdf_ As String, ByVal formato_ As I_Formato, ByVal ruta_ As String)
         Try
-            _textopdf = cadena
+            _textopdf = textopdf_
             _ruta_guardado = ruta_
-            _fichero = New I_Archivo(formato.Formato_campos)
-            _formato = formato
+            _fichero = New I_Archivo(formato_.Formato_campos)
+            _formato = formato_
         Catch ex As Exception
             X(ex)
         End Try
 
-        ProcesarInfo()
+        Try
+            CargarVariables()
+            _textopdf = LimpiarTexto(_textopdf)
+        Catch ex As Exception
+            X(ex)
+        End Try
+
     End Sub
+
 #End Region
 #Region "PROPIEDADES"
 
@@ -121,9 +129,71 @@ Public Class N_Algoritmo
 
 #End Region
 #Region "FUNCIONES"
+#Region "FORMATEAR TEXTO"
 
-#Region "VARIAS"
+    ''' <summary>
+    ''' Se encarga de quitar todo lo que no es el cuerpo del estado de cuenta
+    ''' </summary>
+    ''' <param name="cadena">cadena a limpiar</param>
+    ''' <returns></returns>
+    Private Function LimpiarTexto(ByVal cadena As String) As String
+        Dim ig_ini, ig_fin, ig_total_ini, ig_total_fin As String
+        Dim aux, aux2 As String
+        Dim indice As Integer
 
+        'CARGAR VARIABLES
+        ig_ini = _formato.Formato_global.Ignora_parcial_ini
+        ig_fin = _formato.Formato_global.Ignora_parcial_fin
+        ig_total_ini = _formato.Formato_global.Detalles_saldo_ini
+        ig_total_fin = _formato.Formato_global.Detalles_saldo_fin
+
+        Try
+            'RECUPERAR DATOS GLOBALES
+            With _fichero
+                .Rfc = GetRFC()
+                .Fecha = GetFecha()
+                .Saldo_inicial = GetSaldoInicial()
+                .No_cuenta = GetNoCuenta()
+            End With
+
+        Catch ex As Exception
+            X(ex)
+        End Try
+
+        Try
+            'QUITAR ENCABEZADO
+            indice = cadena.IndexOf(ig_total_ini)
+            cadena = cadena.Substring(indice + ig_total_ini.Length)
+
+            'QUITAR PIE
+            indice = cadena.IndexOf(ig_total_fin)
+            cadena = cadena.Substring(0, indice)
+
+            'QUITAR PARCIAL
+            While cadena.IndexOf(ig_ini) >= 0
+                indice = cadena.IndexOf(ig_ini)
+                'indice2 = cadena.IndexOf(ig_fin)
+
+                aux = cadena.Substring(0, indice)
+                indice = cadena.IndexOf(ig_fin)
+
+                aux2 = cadena.Substring(indice + ig_fin.Length)
+                cadena = aux + aux2
+            End While
+
+        Catch ex As Exception
+            X(ex)
+        End Try
+
+        Return cadena
+    End Function
+
+    ''' <summary>
+    ''' Inserta saltos de linea en la descripción de cada linea del formato.
+    ''' </summary>
+    ''' <param name="cadena">Descripcion/concepto</param>
+    ''' <param name="salto">Número de caracteres para cada salto</param>
+    ''' <returns></returns>
     Private Function InsertarSaltoslinea(ByVal cadena As String, ByVal salto As Integer) As String
         Dim copy, aux As String
         Dim i As Integer
@@ -156,88 +226,14 @@ Public Class N_Algoritmo
         End If
     End Function
 
-    Private Function GetCantidad(ByVal cadena As String) As String
-        Dim copy As String
-        Dim indice, ini, fin, i, size As Integer
-        Dim numero As String
+#End Region
+#Region "FUNCIONES DE LINEA DE FORMATO"
 
-        Try
-            copy = cadena
-            size = cadena.Length
-            indice = cadena.IndexOf(".")
-
-            Do
-                If indice >= 0 Then
-                    i = indice - 1
-                    While (i >= 0 Or Not cadena(i) = " ") And (IsNumeric(cadena(i)) Or cadena(i) = ",")
-                        i -= 1
-                    End While
-                    If i >= 0 And (IsNumeric(cadena(i + 1)) Or cadena(i + 1) = ",") Then
-                        ini = i + 1
-                        If IsNumeric(cadena(indice + 1)) And IsNumeric(cadena(indice + 2)) Then
-                            If ((indice + 3) <= size - 1) Then
-                                If cadena(indice + 3) = " " Or cadena(indice + 3) = vbLf Then
-                                    fin = indice + 3
-                                    Exit Do
-                                Else
-                                    Return ""
-                                End If
-                            Else
-                                fin = indice + 3
-                                Exit Do
-                            End If
-                        Else
-                            Return ""
-                        End If
-                    Else
-                        Return ""
-                    End If
-                Else
-                    Return ""
-                End If
-
-                cadena = cadena.Substring(indice + 1)
-                size = cadena.Length
-                indice = cadena.IndexOf(".")
-            Loop While indice >= 0
-
-            cadena = cadena.Substring(ini, fin - ini)
-
-            numero = cadena
-
-            Return numero
-        Catch ex As Exception
-            X(ex)
-            Return ""
-        End Try
-
-    End Function
-
-    Private Function GetOperacion(ByVal cadena As String) As String
-
-        Try
-            For Each campo As I_Formato_campo_ingreso In _formato.Formato_campo_ingreso
-                If cadena.Contains(campo.Cadena) Then
-                    Return "Deposito"
-                End If
-            Next
-        Catch ex As Exception
-            X(ex)
-        End Try
-
-        Try
-            For Each campo As I_Formato_campo_egreso In _formato.Formato_campo_egreso
-                If cadena.Contains(campo.Cadena) Then
-                    Return "Retiro"
-                End If
-            Next
-        Catch ex As Exception
-            X(ex)
-        End Try
-
-        Return ""
-    End Function
-
+    ''' <summary>
+    ''' Devuelve lista de String con cada uno de los campos de la linea
+    ''' </summary>
+    ''' <param name="cadena"></param>
+    ''' <returns></returns>
     Private Function ProcesarLinea(ByVal cadena As String) As List(Of String)
         Dim cifras As New List(Of String)
         Dim fechas As New List(Of String)
@@ -377,34 +373,13 @@ Public Class N_Algoritmo
 
         Return respuesta
     End Function
-    Private Sub CargarVariables()
-        Try
-            _no_campos = _formato.Formato_campos.Count
 
-            For Each campo As I_Formato_campos In _formato.Formato_campos
-                Select Case campo.Tipo.ToUpper
-                    Case "DATETIME"
-                        _no_fechas += 1
-                    Case "STRING"
-                        _no_cadenas += 1
-                    Case "DECIMAL"
-                        _no_cifras += 1
-                End Select
-            Next
-        Catch ex As Exception
-            X(ex)
-        End Try
-    End Sub
-
-    Protected Sub ProcesarInfo()
-        Try
-            _textopdf = LimpiarTexto(_textopdf)
-        Catch ex As Exception
-            X(ex)
-        End Try
-        GetDatos()
-    End Sub
-
+    ''' <summary>
+    ''' Obtiene el indice dentro de cadena de una fecha valida
+    ''' </summary>
+    ''' <param name="cadena"></param>
+    ''' <param name="size"></param>
+    ''' <returns></returns>
     Private Function GetFechaIndice(ByVal cadena As String, ByVal size As Integer) As Integer
         Dim indice As Integer
         Dim aux, copy As String
@@ -437,6 +412,72 @@ Public Class N_Algoritmo
 
     End Function
 
+    ''' <summary>
+    ''' Obtiene la primer cifra encontrada en texto de descripcion.
+    ''' </summary>
+    ''' <param name="cadena"></param>
+    ''' <returns></returns>
+    Private Function GetCantidad(ByVal cadena As String) As String
+        Dim copy As String
+        Dim indice, ini, fin, i, size As Integer
+        Dim numero As String
+
+        Try
+            copy = cadena
+            size = cadena.Length
+            indice = cadena.IndexOf(".")
+
+            Do
+                If indice >= 0 Then
+                    i = indice - 1
+                    While (i >= 0 Or Not cadena(i) = " ") And (IsNumeric(cadena(i)) Or cadena(i) = ",")
+                        i -= 1
+                    End While
+                    If i >= 0 And (IsNumeric(cadena(i + 1)) Or cadena(i + 1) = ",") Then
+                        ini = i + 1
+                        If IsNumeric(cadena(indice + 1)) And IsNumeric(cadena(indice + 2)) Then
+                            If ((indice + 3) <= size - 1) Then
+                                If cadena(indice + 3) = " " Or cadena(indice + 3) = vbLf Then
+                                    fin = indice + 3
+                                    Exit Do
+                                Else
+                                    Return ""
+                                End If
+                            Else
+                                fin = indice + 3
+                                Exit Do
+                            End If
+                        Else
+                            Return ""
+                        End If
+                    Else
+                        Return ""
+                    End If
+                Else
+                    Return ""
+                End If
+
+                cadena = cadena.Substring(indice + 1)
+                size = cadena.Length
+                indice = cadena.IndexOf(".")
+            Loop While indice >= 0
+
+            cadena = cadena.Substring(ini, fin - ini)
+            numero = cadena
+
+            Return numero
+        Catch ex As Exception
+            X(ex)
+            Return ""
+        End Try
+
+    End Function
+
+    ''' <summary>
+    ''' Verifica si la cadena es una fecha valida segun el formato
+    ''' </summary>
+    ''' <param name="cadena"></param>
+    ''' <returns></returns>
     Private Function VerificarFecha(ByVal cadena As String) As Boolean
         Dim aux, copy As String
         Dim veri As Boolean
@@ -499,7 +540,91 @@ Public Class N_Algoritmo
         Return False
     End Function
 
-    Protected Function GetLinea(cadena As String) As String
+    ''' <summary>
+    ''' Obtiene el tipo de operacion de la linea: INGRESO|EGRESO
+    ''' </summary>
+    ''' <param name="cadena"></param>
+    ''' <returns></returns>
+    Private Function GetOperacion(ByVal cadena As String) As String
+
+        Try
+            For Each campo As I_Formato_campo_ingreso In _formato.Formato_campo_ingreso
+                If cadena.Contains(campo.Cadena) Then
+                    Return "Deposito"
+                End If
+            Next
+        Catch ex As Exception
+            X(ex)
+        End Try
+
+        Try
+            For Each campo As I_Formato_campo_egreso In _formato.Formato_campo_egreso
+                If cadena.Contains(campo.Cadena) Then
+                    Return "Retiro"
+                End If
+            Next
+        Catch ex As Exception
+            X(ex)
+        End Try
+
+        Return ""
+    End Function
+
+#End Region
+#Region "CORE"
+
+    ''' <summary>
+    ''' Procesa el texto del PDF para obtener todos los datos
+    ''' </summary>
+    Public Sub ProcesarFichero()
+        Dim cadena As String = _textopdf
+        Dim aux As String
+        Dim indice As Integer
+
+        aux = GetLinea(cadena)
+        Do
+            Try
+                If aux.Length > 0 Then
+                    _fichero.agregarFila(ProcesarLinea(aux))
+                Else
+                    Exit Do
+                End If
+                indice = cadena.IndexOf(aux)
+                cadena = cadena.Substring(indice + 1 + aux.Length)
+                aux = GetLinea(cadena)
+            Catch ex As Exception
+                X(ex)
+                aux = ""
+            End Try
+        Loop While aux.Length >= 0
+
+    End Sub
+
+    ''' <summary>
+    ''' Genera y crea archivo de Excel el la ubicación especificada
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function GenerarExcel() As Boolean
+
+        Try
+            Dim Exportar As New N_ExportarExcel()
+            Return Exportar.Exportar(_fichero.Tabla, _formato.Formato_campos, _ruta_guardado, _fichero)
+        Catch ex As Exception
+            X(ex)
+            Return False
+        End Try
+
+    End Function
+
+#End Region
+#Region "PROCESAMIENTO GENERAL DE DATOS DEL FORMATO"
+
+    ''' <summary>
+    ''' Obtiene la primer linea valida dentro el texto del PDF
+    ''' </summary>
+    ''' <param name="cadena">Texto del PDF</param>
+    ''' <returns></returns>
+    Private Function GetLinea(cadena As String) As String
         Dim size, in1, in2 As Integer
         Dim copy As String
 
@@ -537,136 +662,28 @@ Public Class N_Algoritmo
         End Try
 
     End Function
-    Protected Sub GetDatos()
-        Dim cadena As String = _textopdf
-        Dim aux As String
-        Dim indice As Integer
 
-        CargarVariables()
-        aux = GetLinea(cadena)
-        Do
-            Try
-                If aux.Length > 0 Then
-                    _fichero.agregarFila(ProcesarLinea(aux))
-                Else
-                    Exit Do
-                End If
-                indice = cadena.IndexOf(aux)
-                cadena = cadena.Substring(indice + 1 + aux.Length)
-                aux = GetLinea(cadena)
-            Catch ex As Exception
-                X(ex)
-                aux = ""
-            End Try
-
-        Loop While aux.Length >= 0
-
+    ''' <summary>
+    ''' Calcula número de campos de cada tipo segun el formato
+    ''' </summary>
+    Private Sub CargarVariables()
         Try
-            Dim Exportar As New N_ExportarExcel()
-            Exportar.Exportar(_fichero.Tabla, _formato.Formato_campos, _ruta_guardado, _fichero)
+            _no_campos = _formato.Formato_campos.Count
+
+            For Each campo As I_Formato_campos In _formato.Formato_campos
+                Select Case campo.Tipo.ToUpper
+                    Case "DATETIME"
+                        _no_fechas += 1
+                    Case "STRING"
+                        _no_cadenas += 1
+                    Case "DECIMAL"
+                        _no_cifras += 1
+                End Select
+            Next
         Catch ex As Exception
             X(ex)
         End Try
-
     End Sub
-
-    ''' <summary>
-    ''' Se encarga de quitar todo lo que no es el cuerpo del estado de cuenta
-    ''' </summary>
-    ''' <param name="cadena">cadena a limpiar</param>
-    ''' <returns></returns>
-    Protected Function LimpiarTexto(ByVal cadena As String) As String
-        Dim ig_ini, ig_fin, ig_total_ini, ig_total_fin As String
-        Dim aux, aux2 As String
-        Dim indice As Integer
-
-        'CARGAR VARIABLES
-        ig_ini = _formato.Formato_global.Ignora_parcial_ini
-        ig_fin = _formato.Formato_global.Ignora_parcial_fin
-        ig_total_ini = _formato.Formato_global.Detalles_saldo_ini
-        ig_total_fin = _formato.Formato_global.Detalles_saldo_fin
-
-        Try
-            'RECUPERAR DATOS GLOBALES
-            With _fichero
-                .Rfc = GetRFC()
-                .Fecha = GetFecha()
-                .Saldo_inicial = GetSaldoInicial()
-                .No_cuenta = GetNoCuenta()
-            End With
-
-        Catch ex As Exception
-            X(ex)
-        End Try
-
-        Try
-            'QUITAR ENCABEZADO
-            indice = cadena.IndexOf(ig_total_ini)
-            cadena = cadena.Substring(indice + ig_total_ini.Length)
-
-            'QUITAR PIE
-            indice = cadena.IndexOf(ig_total_fin)
-            cadena = cadena.Substring(0, indice)
-
-            'QUITAR PARCIAL
-            While cadena.IndexOf(ig_ini) >= 0
-                indice = cadena.IndexOf(ig_ini)
-                'indice2 = cadena.IndexOf(ig_fin)
-
-                aux = cadena.Substring(0, indice)
-                indice = cadena.IndexOf(ig_fin)
-
-                aux2 = cadena.Substring(indice + ig_fin.Length)
-                cadena = aux + aux2
-            End While
-
-        Catch ex As Exception
-            X(ex)
-        End Try
-
-        Return cadena
-    End Function
-
-    ''' <summary>
-    ''' Se encarga de extraer la información de un campo
-    ''' </summary>
-    ''' <param name="cad_ini">Prefijo de inicio</param>
-    ''' <param name="cad_fin">Prefijo de final</param>
-    ''' <returns></returns>
-    Protected Function GetCampo(ByVal cad_ini As String, cad_fin As String) As String
-        Return GetCampo(_textopdf, cad_ini, cad_fin)
-    End Function
-
-    ''' <summary>
-    ''' Se encarga de extraer la información de un campo
-    ''' </summary>
-    ''' <param name="vcadena">Cadena en la cual buscar</param>
-    ''' <param name="cad_ini">Prefijo de inicio</param>
-    ''' <param name="cad_fin">Prefijo de final</param>
-    ''' <returns></returns>
-    Protected Function GetCampo(ByVal vcadena As String, ByVal cad_ini As String, cad_fin As String) As String
-        Dim cadenaAux As String
-        Dim ini, fin As Integer
-        cadenaAux = vcadena
-
-        Try
-            ini = cadenaAux.IndexOf(cad_ini)
-            If ini >= 0 Then
-                cadenaAux = cadenaAux.Substring(ini + cad_ini.Length)
-            End If
-
-            fin = cadenaAux.IndexOf(cad_fin)
-            If fin >= 0 Then
-                cadenaAux = cadenaAux.Substring(0, fin)
-            End If
-
-            Return cadenaAux
-        Catch ex As Exception
-            X(ex)
-            Return ""
-        End Try
-
-    End Function
 
 #End Region
 #Region "OBTENER CAMPOS GENERALES"
@@ -675,7 +692,7 @@ Public Class N_Algoritmo
     ''' Obtiene el RFC de una cadena
     ''' </summary>
     ''' <returns></returns>
-    Protected Function GetRFC() As String
+    Private Function GetRFC() As String
         Return GetCampo(_formato.Formato_global.Rfc_ini, _formato.Formato_global.Rfc_fin)
     End Function
 
@@ -683,7 +700,7 @@ Public Class N_Algoritmo
     ''' Obtiene el Saldo inicial de un formato
     ''' </summary>
     ''' <returns></returns>
-    Protected Function GetSaldoInicial() As Decimal
+    Private Function GetSaldoInicial() As Decimal
         Dim saldo As String = "0"
 
         Try
@@ -700,7 +717,7 @@ Public Class N_Algoritmo
     ''' OUT(Date)
     ''' </summary>
     ''' <returns></returns>
-    Protected Function GetFecha() As Date
+    Private Function GetFecha() As Date
         Dim vfecha, separador, aux, dia, anio, mes As String
         Dim fecha As Date
 
@@ -738,7 +755,7 @@ Public Class N_Algoritmo
     ''' Devuelve el número de cuenta del formato
     ''' </summary>
     ''' <returns></returns>
-    Protected Function GetNoCuenta() As String
+    Private Function GetNoCuenta() As String
         Dim noCuenta As String = ""
 
         Try
@@ -750,6 +767,47 @@ Public Class N_Algoritmo
         Return noCuenta
     End Function
 
+    ''' <summary>
+    ''' Se encarga de extraer la información de un campo
+    ''' </summary>
+    ''' <param name="cad_ini">Prefijo de inicio</param>
+    ''' <param name="cad_fin">Prefijo de final</param>
+    ''' <returns></returns>
+    Private Function GetCampo(ByVal cad_ini As String, cad_fin As String) As String
+        Return GetCampo(_textopdf, cad_ini, cad_fin)
+    End Function
+
+    ''' <summary>
+    ''' Se encarga de extraer la información de un campo
+    ''' </summary>
+    ''' <param name="vcadena">Cadena en la cual buscar</param>
+    ''' <param name="cad_ini">Prefijo de inicio</param>
+    ''' <param name="cad_fin">Prefijo de final</param>
+    ''' <returns></returns>
+    Private Function GetCampo(ByVal vcadena As String, ByVal cad_ini As String, cad_fin As String) As String
+        Dim cadenaAux As String
+        Dim ini, fin As Integer
+        cadenaAux = vcadena
+
+        Try
+            ini = cadenaAux.IndexOf(cad_ini)
+            If ini >= 0 Then
+                cadenaAux = cadenaAux.Substring(ini + cad_ini.Length)
+            End If
+
+            fin = cadenaAux.IndexOf(cad_fin)
+            If fin >= 0 Then
+                cadenaAux = cadenaAux.Substring(0, fin)
+            End If
+
+            Return cadenaAux
+        Catch ex As Exception
+            X(ex)
+            Return ""
+        End Try
+
+    End Function
+
 #End Region
 #Region "OPERACIONES CON FECHAS"
 
@@ -759,7 +817,7 @@ Public Class N_Algoritmo
     ''' </summary>
     ''' <param name="cadena">Mes</param>
     ''' <returns></returns>
-    Protected Function GetMesNum(ByVal cadena As String) As String
+    Private Function GetMesNum(ByVal cadena As String) As String
         Dim mes As String
         cadena = cadena.ToUpper
 
@@ -806,7 +864,7 @@ Public Class N_Algoritmo
     ''' </summary>
     ''' <param name="num">Número de mes STRING</param>
     ''' <returns></returns>
-    Protected Function GetMesNombre(ByVal num As String) As String
+    Private Function GetMesNombre(ByVal num As String) As String
         Return GetMesNombre(Convert.ToInt32(num))
     End Function
 
@@ -816,7 +874,7 @@ Public Class N_Algoritmo
     ''' </summary>
     ''' <param name="num">Número del mes INT</param>
     ''' <returns></returns>
-    Protected Function GetMesNombre(ByVal num As Integer) As String
+    Private Function GetMesNombre(ByVal num As Integer) As String
         Dim mes As String
 
         Select Case num
@@ -857,7 +915,7 @@ Public Class N_Algoritmo
     ''' </summary>
     ''' <param name="num">Número del mes</param>
     ''' <returns></returns>
-    Protected Function GetMesAbreviacion(ByVal num As Integer) As String
+    Private Function GetMesAbreviacion(ByVal num As Integer) As String
         Dim mes As String
 
         Select Case num

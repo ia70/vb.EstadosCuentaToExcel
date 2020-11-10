@@ -21,10 +21,14 @@ Public Class Test
                 Dim page As Integer
 
                 For page = 1 To PdfReader.NumberOfPages
-                    Dim currentText = PdfTextExtractor.GetTextFromPage(PdfReader, page, New LocationTextExtractionStrategy())
+                    Try
+                        Dim currentText = PdfTextExtractor.GetTextFromPage(PdfReader, page, New LocationTextExtractionStrategy())
 
-                    currentText = Encoding.UTF8.GetString(Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(currentText)))
-                    Cadena.Append(currentText)
+                        currentText = Encoding.UTF8.GetString(Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(currentText)))
+                        Cadena.Append(currentText)
+                    Catch ex As Exception
+                        X(ex)
+                    End Try
                 Next
                 PdfReader.Close()
             End If

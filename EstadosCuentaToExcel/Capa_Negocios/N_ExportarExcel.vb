@@ -79,7 +79,7 @@ Public Class N_ExportarExcel
     End Function
 
     '----- CABECERA ------------------------------------------------
-    Private Sub ExcelHeader()
+    Private Function ExcelHeader() As Boolean
         Dim i As Integer = 0
         Dim tipo As String
 
@@ -103,14 +103,15 @@ Public Class N_ExportarExcel
                     Hoja.Columns(i).NumberFormat = "###,###,###,##0.00"
                 End If
             Next
-
+            Return True
         Catch ex As Exception
             X(ex)
+            Return False
         End Try
-    End Sub
+    End Function
 
     '----- CUERPO -------------------------------------------------
-    Private Sub ExcelBody()
+    Private Function ExcelBody() As Boolean
         Dim tipo As String
         Dim _X, Y As Integer
 
@@ -136,13 +137,15 @@ Public Class N_ExportarExcel
                 Next
                 Y += 1
             Next
+            Return True
         Catch ex As Exception
             X(ex)
+            Return False
         End Try
-    End Sub
+    End Function
 
     '----- FORMATO FINAL -----------------------------------------
-    Private Sub ExcelFormato()
+    Private Function ExcelFormato() As Boolean
         Dim col, lin As Integer
         col = Tabla.Columns.Count
         lin = Tabla.Rows.Count + 1
@@ -157,14 +160,17 @@ Public Class N_ExportarExcel
 
             Hoja.Range("A1:" & GetLetraAbc(col) & lin).HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft
             Hoja.Range("A1:" & GetLetraAbc(col) & lin).VerticalAlignment = Excel.XlHAlign.xlHAlignCenter
+
+            Return True
         Catch ex As Exception
             X(ex)
+            Return False
         End Try
 
-    End Sub
+    End Function
 
     'GUARDAR EXCEL
-    Private Sub ExcelGuardar()
+    Private Function ExcelGuardar() As Boolean
         Dim nom As String
         Try
             nom = GetNombreFichero()
@@ -174,11 +180,13 @@ Public Class N_ExportarExcel
             Archivo.Workbooks.Close()
             ' Eliminamos el objeto excel
             Archivo.Quit()
+            Return True
         Catch ex As Exception
             X(ex)
+            Return False
         End Try
 
-    End Sub
+    End Function
 
     Private Function GetNombreFichero() As String
         Dim nom As String
@@ -191,7 +199,6 @@ Public Class N_ExportarExcel
             X(ex)
             res = ""
         End Try
-
 
         Return res
     End Function

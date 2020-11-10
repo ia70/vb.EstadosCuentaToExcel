@@ -125,8 +125,9 @@ Module mAutomatizacion
             For Each f In Directory.GetFiles(sDir, "*.*")
                 Try
                     If Not DB_FICHEROS_PROCESADOS.Existe(f) Then
-                        ProcesarArchivo(f)
-                        DB_FICHEROS_PROCESADOS.Insertar(New I_ficheros_procesados(f))
+                        If ProcesarArchivo(f) Then
+                            DB_FICHEROS_PROCESADOS.Insertar(New I_Ficheros_procesados(f))
+                        End If
                     End If
                 Catch ex As Exception
                     X(ex)
@@ -168,8 +169,7 @@ Module mAutomatizacion
 
                 For Each formato As I_formato In G_Formatos
                     If Cadena.Contains(formato.Cadena) Then
-                        ProcesarFormato(Cadena, G_Formatos(indice))
-                        Return True
+                        Return ProcesarFormato(Cadena, G_Formatos(indice))
                     End If
                     indice += 1
                 Next
@@ -179,23 +179,24 @@ Module mAutomatizacion
         End Try
 
         Return False
-
     End Function
 
 #End Region
 #Region "ALGORITMOS DE LOS FORMATOS"
 
-    Public Sub ProcesarFormato(ByVal cadena As String, ByVal formato As I_formato)
+    Public Function ProcesarFormato(ByVal cadena As String, ByVal formato As I_Formato) As Boolean
         Dim algoritmo As N_Algoritmo
 
         Try
             algoritmo = New N_Algoritmo(cadena, formato, G_Folder_Out)
+            algoritmo.ProcesarFichero()
+            Return algoritmo.GenerarExcel
         Catch ex As Exception
             X(ex)
+            Return False
         End Try
 
-    End Sub
-
+    End Function
 
 #End Region
 #Region "MONITOR DE ARCHIVOS"
@@ -211,10 +212,7 @@ Module mAutomatizacion
 
     End Sub
 
-
-
 #End Region
-
 #Region "FUNCIONES PRIVADAS"
 
     ''' <summary>

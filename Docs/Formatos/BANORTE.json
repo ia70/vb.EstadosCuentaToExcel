@@ -1,31 +1,85 @@
 {
-    "id_formato": "",
-    "cadena": "",
-    "banco": "",
-    "algoritmo": "",
+    "id_formato": "F002",
+    "banco": "BANORTE",
+    "algoritmo": "1",
+    "cadena": "Banco Mercantil del Norte S.A. Institución de Banca Múltiple Grupo Financiero Banorte",
+    "IdCamposDescripcion": "FechaOperacion, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
     "formato_campos": [
         {
-            "indice": 0,
-            "nombre": ""
+            "nombre": "FECHA",
+            "tipo": "DateTime",
+            "IdCampo": "FechaOperacion"
+        },
+        {
+            "nombre": "DESCRIPCIÓN / ESTABLECIMIENTO",
+            "tipo": "String",
+            "IdCampo": "Concepto"
+        },
+        {
+            "nombre": "MONTO DEL DEPOSITO",
+            "tipo": "Decimal",
+            "IdCampo": "Deposito"
+        },
+        {
+            "nombre": "MONTO DEL RETIRO",
+            "tipo": "Decimal",
+            "IdCampo": "Retiro"
+        },
+        {
+            "nombre": "Saldo",
+            "tipo": "Decimal",
+            "IdCampo": "SaldoOperacion"
         }
     ],
-    "formato_campo_ingreso": [],
-    "formato_campo_egreso": [],
+    "formato_campo_ingreso": [
+        {
+            "cadena": "SPEI RECIBIDO"
+        },
+        {
+            "cadena": "DEPOSITO DE CUENTA DE TERCEROS"
+        }
+    ],
+    "formato_campo_egreso": [
+        {
+            "cadena": "COMPRA ORDEN DE PAGO SPEI"
+        },
+        {
+            "cadena": "COMISION ORDEN DE PAGO SPEI"
+        },
+        {
+            "cadena": "TRASPASO A CUENTA DE TERCEROS"
+        },
+        {
+            "cadena": "I.V.A. ORDEN DE PAGO SPEI"
+        }
+    ],
     "formato_global": {
-        "rfc_ini": "",
-        "rfc_fin": "",
-        "saldo_inicial_ini": "",
-        "saldo_inicial_fin": "",
-        "mes_ini": "",
-        "mes_fin": "",
-        "anio_ini": "",
-        "anio_fin": "",
-        "cuenta_ini": "",
-        "cuenta_fin": "",
-        "algoritmo_nueva_linea": "",
-        "separador_linea": "",
-        "ignora_parcial_ini": "",
-        "ignora_parcial_fin": "",
-        "ignora_total": ""
+        "rfc_ini": "RFC: ",
+        "rfc_fin": "\n",
+        "fecha_general_ini": "Fecha de corte ",
+        "fecha_general_fin": "\n",
+        "fecha_general_separador": "/",
+        "no_cuenta_ini": "INVERSION ENLACE NEGOCIOS ",
+        "no_cuenta_fin": " ",
+        "saldo_anterior_ini": " SALDO ANTERIOR ",
+        "saldo_anterior_fin": "\n",
+        "detalles_saldo_ini": "Enlace Negocios Basica\nFECHA DESCRIPCIÓN / ESTABLECIMIENTO MONTO DEL DEPOSITO MONTO DEL RETIRO SALDO\n",
+        "detalles_saldo_fin": "INVERSION ENLACE NEGOCIOS\n",
+        "fecha_operacion_activo": true,
+        "fecha_operacion_ini": "\n",
+        "fecha_operacion_fin": " ",
+        "fecha_operacion_dia_length": 2,
+        "fecha_operacion_mes_length": 3,
+        "fecha_operacion_anio_length": 2,
+        "fecha_operacion_separador_dia_mes": "-",
+        "fecha_liquidacion_activo": false,
+        "fecha_liquidacion_ini": "",
+        "fecha_liquidacion_fin": "",
+        "fecha_liquidacion_dia_length": 0,
+        "fecha_liquidacion_mes_length": 0,
+        "fecha_liquidacion_anio_length": 0,
+        "fecha_liquidacion_separador_dia_mes": "",
+        "ignora_parcial_ini": "\nLínea Directa para su empresa:\n",
+        "ignora_parcial_fin": "MONTO DEL DEPOSITO MONTO DEL RETIRO SALDO\n"
     }
 }
