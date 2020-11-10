@@ -1,0 +1,82 @@
+{
+    "id_formato": "F004",
+    "banco": "AFIRME",
+    "algoritmo": "1",
+    "cadena": "Banamex Resuelve",
+    "IdCamposDescripcion": "FechaOperacion, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
+    "formato_campos": [
+        {
+            "nombre": "Día",
+            "tipo": "DateTime",
+            "IdCampo":"FechaOperacion"
+        },
+        {
+            "nombre": "Descripción",
+            "tipo": "String",
+            "IdCampo":"Concepto"
+        },
+        {
+            "nombre": "Referencia",
+            "tipo": "String",
+            "IdCampo":"Referencia"
+        },
+        {
+            "nombre": "Depósitos",
+            "tipo": "Decimal",
+            "IdCampo":"Deposito"
+        },
+        {
+            "nombre": "Retiros",
+            "tipo": "Decimal",
+            "IdCampo":"Retiro"
+        },
+        {
+            "nombre": "Saldo",
+            "tipo": "Decimal",
+            "IdCampo":"SaldoOperacion"
+        }
+    ],
+    "formato_campo_ingreso": [
+
+    ],
+    "formato_campo_egreso": [
+        {
+            "cadena": "COM MEMBRESIA PAQ."
+        },
+        {
+            "cadena": "IVA POR COMISIONES/CARGOS"
+        }
+    ],
+    "formato_global": {
+        "rfc_ini": "R.F.C. ",
+        "rfc_fin": "\n",
+        "fecha_general_ini": "Otras comisiones $\nPeríodo de ",
+        "fecha_general_fin": " AL ",
+        "fecha_general_separador": " ",
+        "no_cuenta_ini": "EMPRESARIAL\nNúmero de cuenta  ",
+        "no_cuenta_fin": " Clave ",
+        "saldo_anterior_ini": "\nSALDO INICIAL $ ",
+        "saldo_anterior_fin": "\n",
+        "detalles_saldo_ini": "Día Descripción Referencia Depósitos Retiros Saldo\n",
+        "detalles_saldo_fin": "Sus ahorros  están protegidos y garantizados",
+
+        "fecha_operacion_activo": true,
+        "fecha_operacion_ini": "\n",
+        "fecha_operacion_fin": " ",
+        "fecha_operacion_dia_length": 2,
+        "fecha_operacion_mes_length": 0,
+        "fecha_operacion_anio_length": 0,
+        "fecha_operacion_separador_dia_mes": " ",
+        
+        "fecha_liquidacion_activo": false,
+        "fecha_liquidacion_ini": "",
+        "fecha_liquidacion_fin": "",
+        "fecha_liquidacion_dia_length": 0,
+        "fecha_liquidacion_mes_length": 0,
+        "fecha_liquidacion_anio_length": 0,
+        "fecha_liquidacion_separador_dia_mes": "",
+ 
+        "ignora_parcial_ini": "Sus ahorros están protegidos y garantizados",
+        "ignora_parcial_fin": "Día Descripción Referencia Depósitos Retiros Saldo\n"
+    }
+}
