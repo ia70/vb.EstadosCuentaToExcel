@@ -13,9 +13,9 @@ Public Class N_Configuracion
 
         Try
             With iden
-                .Id = res.Rows(0).Item(0)
-                .Folder_in = res.Rows(0).Item(1)
-                .Folder_out = res.Rows(0).Item(2)
+                .Id = GetInt(res.Rows(0).Item(0))
+                .Folder_in = GetStr(res.Rows(0).Item(1))
+                .Folder_out = GetStr(res.Rows(0).Item(2))
             End With
         Catch ex As Exception
             X(ex)

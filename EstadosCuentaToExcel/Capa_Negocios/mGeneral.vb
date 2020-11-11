@@ -9,6 +9,42 @@ Module mGeneral
 
 #End Region
 
+#Region "FUNCIONES"
+    Public Function GetStr(ByVal valor As Object) As String
+        Dim aux As String
+
+        Try
+            aux = valor
+            Return valor
+        Catch ex As Exception
+            Return ""
+        End Try
+
+    End Function
+
+    Public Function GetInt(ByVal valor As Object) As Integer
+        Dim aux As Integer
+
+        Try
+            aux = valor
+            Return valor
+        Catch ex As Exception
+            Return 0
+        End Try
+    End Function
+
+    Public Function GetBool(ByVal valor As Object) As Boolean
+        Dim aux As Boolean
+
+        Try
+            aux = valor
+            Return valor
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+#End Region
+
 #Region "FUNCIONES GENERALES"
 
     Public Sub Msg()

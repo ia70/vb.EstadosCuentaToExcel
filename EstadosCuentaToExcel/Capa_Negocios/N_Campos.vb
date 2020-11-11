@@ -33,11 +33,11 @@ Public Class N_Campos
             For Each linea As DataRow In res.Rows
                 iden = New I_Campos
                 With iden
-                    .Id = linea.Item(0)
-                    .Id_formato = linea.Item(1)
-                    .Nombre = linea.Item(2)
-                    .Tipo = linea.Item(3)
-                    .Idcampo = linea(4)
+                    .Id = GetInt(linea.Item(0))
+                    .Id_formato = GetStr(linea.Item(1))
+                    .Nombre = GetStr(linea.Item(2))
+                    .Tipo = GetStr(linea.Item(3))
+                    .Idcampo = GetStr(linea(4))
                 End With
 
                 campos.Add(iden)

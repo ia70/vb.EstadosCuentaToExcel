@@ -113,11 +113,11 @@ Public Class N_Formato
             res = db.Consulta("id_formato", id)
 
             With iden
-                .Id_formato = res.Rows(0).Item(0)
-                .Banco = res.Rows(0).Item(1)
-                .Algoritmo = res.Rows(0).Item(2)
-                .Cadena = res.Rows(0).Item(3)
-                .Idcamposdescripcion = res.Rows(0).Item(4)
+                .Id_formato = GetStr(res.Rows(0).Item(0))
+                .Banco = GetStr(res.Rows(0).Item(1))
+                .Algoritmo = GetStr(res.Rows(0).Item(2))
+                .Cadena = GetStr(res.Rows(0).Item(3))
+                .Idcamposdescripcion = GetStr(res.Rows(0).Item(4))
                 .Campos = db_fc.Consultar(id)
                 .Tipo_operacion = db_tipo_operacion.Consultar(id)
                 .Prefijos = db_prefijos.Consultar(id)

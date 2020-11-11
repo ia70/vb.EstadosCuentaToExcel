@@ -34,13 +34,13 @@ Public Class N_Tipo_operacion
             For Each linea As DataRow In res.Rows
                 iden = New I_Tipo_operacion
                 With iden
-                    .Id = linea.Item(0)
-                    .Id_formato = linea.Item(1).ToString
-                    .Cadena = linea.Item(2).ToString
-                    .Cadena_adicional_1 = linea.Item(3).ToString
-                    .Cadena_adicional_2 = linea.Item(4).ToString
-                    .Cadena_no_contener = linea.Item(5).ToString
-                    .Tipo = linea.Item(6).ToString
+                    .Id = GetInt(linea.Item(0))
+                    .Id_formato = GetStr(linea.Item(1))
+                    .Cadena = GetStr(linea.Item(2))
+                    .Cadena_adicional_1 = GetStr(linea.Item(3))
+                    .Cadena_adicional_2 = GetStr(linea.Item(4))
+                    .Cadena_no_contener = GetStr(linea.Item(5))
+                    .Tipo = GetInt(linea.Item(6))
                 End With
 
                 campos.Add(iden)
