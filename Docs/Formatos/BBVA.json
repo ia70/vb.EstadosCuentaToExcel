@@ -3,8 +3,8 @@
     "banco": "BBVA",
     "algoritmo": "bbva",
     "cadena": "MAESTRA PYME BANCOMER MN",
-    "IdCamposDescripcion": "FechaOperacion, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
-    "formato_campos": [
+    "IdCamposDescripcion": "FechaOperacion, Folio, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
+    "campos": [
         {
             "nombre": "FECHA OPER",
             "tipo": "DateTime",
@@ -41,47 +41,57 @@
             "IdCampo":"SaldoLiquidacion"
         }
     ],
-    "formato_campo_ingreso": [
+    "tipo_operacion": [
         {
-            "cadena": "RECIBIDO"
+            "cadena": "RECIBIDO",
+            "tipo":1
         },
         {
-            "cadena": "DEPOSITO"
+            "cadena": "DEPOSITO",
+            "tipo":1
         },
         {
-            "cadena": "N06 PAGO CUENTA DE TERCERO"
+            "cadena": "N06 PAGO CUENTA DE TERCERO",
+            "tipo":1
         },
         {
-            "cadena":"DEP."
+            "cadena":"DEP.",
+            "tipo":1
+        },
+        {
+            "cadena": "LIBRADOS",
+            "tipo":0
+        },
+        {
+            "cadena": "PAGO SIPARE",
+            "tipo":0
+        },
+        {
+            "cadena": "IVA COM",
+            "tipo":0
+        },
+        {
+            "cadena": "SERV BANCA INTERNET",
+            "tipo":0
+        },
+        {
+            "cadena": "SPEI ENVIADO",
+            "tipo":0
+        },
+        {
+            "cadena": "RECAUDACION DE IMPUE",
+            "tipo":0
+        },
+        {
+            "cadena": "PAGO FACTURA",
+            "tipo":0
+        },
+        {
+            "cadena": "P14 ",
+            "tipo":0
         }
     ],
-    "formato_campo_egreso": [
-        {
-            "cadena": "LIBRADOS"
-        },
-        {
-            "cadena": "PAGO SIPARE"
-        },
-        {
-            "cadena": "IVA COM"
-        },
-        {
-            "cadena": "SERV BANCA INTERNET"
-        },
-        {
-            "cadena": "SPEI ENVIADO"
-        },
-        {
-            "cadena": "RECAUDACION DE IMPUE"
-        },
-        {
-            "cadena": "PAGO FACTURA"
-        },
-        {
-            "cadena": "P14 "
-        }
-    ],
-    "formato_global": {
+    "prefijos": {
         "rfc_ini": "  R.F.C ",
         "rfc_fin": "\n",
         "fecha_general_ini": "Fecha de Corte ",

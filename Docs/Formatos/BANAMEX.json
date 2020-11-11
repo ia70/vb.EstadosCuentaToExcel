@@ -3,8 +3,8 @@
     "banco": "CITIBANAMEX",
     "algoritmo": "citibanamex",
     "cadena": "Banamex Resuelve",
-    "IdCamposDescripcion": "FechaOperacion, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
-    "formato_campos": [
+    "IdCamposDescripcion": "FechaOperacion, Folio, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
+    "campos": [
         {
             "nombre": "Fecha",
             "tipo": "DateTime",
@@ -31,29 +31,33 @@
             "IdCampo":"SaldoOperacion"
         }
     ],
-    "formato_campo_ingreso": [
+    "tipo_operacion": [
         {
-            "cadena": "PAGO RECIBIDO"
+            "cadena": "PAGO RECIBIDO",
+            "tipo":1
         },
         {
-            "cadena": "CTA.ORDENANTE"
+            "cadena": "CTA.ORDENANTE",
+            "tipo":1
         },
         {
-            "cadena": "DEPOSITO"
+            "cadena": "DEPOSITO",
+            "tipo":1
+        },
+        {
+            "cadena": "PAGO INTERBANCARIO",
+            "tipo":0
+        },
+        {
+            "cadena": "PAGO A TERCEROS",
+            "tipo":0
+        },
+        {
+            "cadena": "PAGO DE SERVICIO",
+            "tipo":0
         }
     ],
-    "formato_campo_egreso": [
-        {
-            "cadena": "PAGO INTERBANCARIO"
-        },
-        {
-            "cadena": "PAGO A TERCEROS"
-        },
-        {
-            "cadena": "PAGO DE SERVICIO"
-        }
-    ],
-    "formato_global": {
+    "prefijos": {
         "rfc_ini": "Registro Federal de Contribuyentes: ",
         "rfc_fin": "\n",
         "fecha_general_ini": "CONTRATO SALDO ANTERIOR SALDO AL ",

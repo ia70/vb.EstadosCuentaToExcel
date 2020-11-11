@@ -9,7 +9,7 @@ Public Class N_ExportarExcel
     Private Rango As Excel.Range
 
     Private _info As I_Archivo
-    Private _campos As List(Of I_Formato_campos)
+    Private _campos As List(Of I_Campos)
     Private _tabla As DataTable
     Private _ruta As String
 
@@ -33,11 +33,11 @@ Public Class N_ExportarExcel
         End Set
     End Property
 
-    Public Property Campos As List(Of I_Formato_campos)
+    Public Property Campos As List(Of I_Campos)
         Get
             Return _campos
         End Get
-        Set(value As List(Of I_Formato_campos))
+        Set(value As List(Of I_Campos))
             _campos = value
         End Set
     End Property
@@ -55,7 +55,7 @@ Public Class N_ExportarExcel
 #Region "Constructor"
     Public Sub New()
     End Sub
-    Public Sub New(ByVal datos As DataTable, ByVal campos_ As List(Of I_Formato_campos), ByVal ruta_ As String, ByVal info_ As I_Archivo)
+    Public Sub New(ByVal datos As DataTable, ByVal campos_ As List(Of I_Campos), ByVal ruta_ As String, ByVal info_ As I_Archivo)
         Tabla = datos
         Ruta = ruta_
         Campos = campos_
@@ -64,7 +64,7 @@ Public Class N_ExportarExcel
 #End Region
 #Region "Funciones"
     '----- EXPORTACION MAIN ----------------------------------------
-    Public Function Exportar(ByVal datos As DataTable, ByVal campos_ As List(Of I_Formato_campos), ByVal ruta_ As String, ByVal info_ As I_Archivo) As Boolean
+    Public Function Exportar(ByVal datos As DataTable, ByVal campos_ As List(Of I_Campos), ByVal ruta_ As String, ByVal info_ As I_Archivo) As Boolean
         Tabla = datos
         Ruta = ruta_
         Campos = campos_

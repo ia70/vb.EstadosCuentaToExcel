@@ -3,8 +3,8 @@
     "banco": "SANTANDER",
     "algoritmo": "santander",
     "cadena": "\nBANCO SANTANDER (MEXICO) S.A.",
-    "IdCamposDescripcion": "FechaOperacion, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
-    "formato_campos": [
+    "IdCamposDescripcion": "FechaOperacion, Folio, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
+    "campos": [
         {
             "nombre": "FECHA",
             "tipo": "DateTime",
@@ -36,23 +36,25 @@
             "IdCampo":"SaldoOperacion"
         }
     ],
-    "formato_campo_ingreso": [
+    "tipo_operacion": [
         {
-            "cadena": "ABONO TRANSFERENCIA SPEI"
-        }
-    ],
-    "formato_campo_egreso": [
-        {
-            "cadena": "COM MEMBRESIA CUENTA E PYME"
+            "cadena": "ABONO TRANSFERENCIA SPEI",
+            "tipo":1
         },
         {
-            "cadena": "CGO IMPTO FED TRANSF ELECT"
+            "cadena": "COM MEMBRESIA CUENTA E PYME",
+            "tipo":0
         },
         {
-            "cadena": "I V A "
+            "cadena": "CGO IMPTO FED TRANSF ELECT",
+            "tipo":0
+        },
+        {
+            "cadena": "I V A ",
+            "tipo":0
         }
     ],
-    "formato_global": {
+    "prefijos": {
         "rfc_ini": "R.F.C. ",
         "rfc_fin": "\n",
         "fecha_general_ini": "CORTE AL ",

@@ -1,7 +1,7 @@
 ﻿Imports Capa_Datos
 Imports Capa_Identidad
-Public Class N_Formato_campos
-    Private tabla As String = "formato_campos"
+Public Class N_Campos
+    Private tabla As String = "campos"
 
 #Region "FUNCIONES PUBLICAS"
 
@@ -10,7 +10,7 @@ Public Class N_Formato_campos
     ''' </summary>
     ''' <param name="obj">Objeto a insertar</param>
     ''' <returns>True - si se ha insertado</returns>
-    Public Function Insertar(ByVal obj As I_formato_campos) As Boolean
+    Public Function Insertar(ByVal obj As I_Campos) As Boolean
         Dim db As New D_db_operaciones(tabla)
 
         Return db.Insertar(obj)
@@ -21,17 +21,17 @@ Public Class N_Formato_campos
     ''' </summary>
     ''' <param name="id">ID formato</param>
     ''' <returns>Lista de objetos</returns>
-    Public Function Consultar(ByVal id As String) As List(Of I_formato_campos)
+    Public Function Consultar(ByVal id As String) As List(Of I_Campos)
         Dim db As New D_db_operaciones(tabla)
-        Dim campos As New List(Of I_formato_campos)
-        Dim iden As I_formato_campos
+        Dim campos As New List(Of I_Campos)
+        Dim iden As I_Campos
         Dim res As DataTable
 
         Try
             res = db.Consulta("id_formato", id)
 
             For Each linea As DataRow In res.Rows
-                iden = New I_Formato_campos
+                iden = New I_Campos
                 With iden
                     .Id = linea.Item(0)
                     .Id_formato = linea.Item(1)

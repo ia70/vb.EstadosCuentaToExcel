@@ -36,10 +36,10 @@ Public Class N_Formato
         Dim iden_formato As I_formato
         Dim f_simple As New I_Formato_simple
         Dim db_f As New D_db_operaciones(tabla)
-        Dim db_fce As New N_Formato_campo_egreso
-        Dim db_fci As New N_Formato_campo_ingreso
-        Dim db_fc As New N_Formato_campos
-        Dim db_fg As New N_Formato_global
+        Dim db_fce As New N_Tipo_operacion
+        Dim db_fci As New N_Tipo_operacion
+        Dim db_fc As New N_Campos
+        Dim db_fg As New N_Prefijos
 
         Try
             iden_formato = LeerFichero(ruta)
@@ -64,29 +64,29 @@ Public Class N_Formato
                 Throw New Exception("Error")
             End If
 
-            For Each ifce As I_Formato_campo_egreso In iden_formato.Formato_campo_egreso
+            For Each ifce As I_Tipo_operacion In iden_formato.Tipo_operacion
                 ifce.Id_formato = iden_formato.Id_formato
                 If Not db_fce.Insertar(ifce) Then
                     Throw New Exception("Error")
                 End If
             Next
 
-            For Each ifci As I_Formato_campo_ingreso In iden_formato.Formato_campo_ingreso
+            For Each ifci As I_Tipo_operacion In iden_formato.Tipo_operacion
                 ifci.Id_formato = iden_formato.Id_formato
                 If Not db_fci.Insertar(ifci) Then
                     Throw New Exception("Error")
                 End If
             Next
 
-            For Each ifc As I_Formato_campos In iden_formato.Formato_campos
+            For Each ifc As I_Campos In iden_formato.Campos
                 ifc.Id_formato = iden_formato.Id_formato
                 If Not db_fc.Insertar(ifc) Then
                     Throw New Exception("Error")
                 End If
             Next
 
-            iden_formato.Formato_global.Id_formato = iden_formato.Id_formato
-            If Not db_fg.Insertar(iden_formato.Formato_global) Then
+            iden_formato.Prefijos.Id_formato = iden_formato.Id_formato
+            If Not db_fg.Insertar(iden_formato.Prefijos) Then
                 Throw New Exception("Error")
             End If
 
@@ -104,10 +104,9 @@ Public Class N_Formato
         Dim iden As New I_formato
         Dim res As DataTable
 
-        Dim db_fce As New N_Formato_campo_egreso
-        Dim db_fci As New N_Formato_campo_ingreso
-        Dim db_fc As New N_Formato_campos
-        Dim db_fg As New N_Formato_global
+        Dim db_tipo_operacion As New N_Tipo_operacion
+        Dim db_fc As New N_Campos
+        Dim db_prefijos As New N_Prefijos
 
         Try
             id = "'" + id + "'"
@@ -119,10 +118,9 @@ Public Class N_Formato
                 .Algoritmo = res.Rows(0).Item(2)
                 .Cadena = res.Rows(0).Item(3)
                 .Idcamposdescripcion = res.Rows(0).Item(4)
-                .Formato_campos = db_fc.Consultar(id)
-                .Formato_campo_egreso = db_fce.Consultar(id)
-                .Formato_campo_ingreso = db_fci.Consultar(id)
-                .Formato_global = db_fg.Consultar(id)
+                .Campos = db_fc.Consultar(id)
+                .Tipo_operacion = db_tipo_operacion.Consultar(id)
+                .Prefijos = db_prefijos.Consultar(id)
             End With
         Catch ex As Exception
             X(ex)
@@ -154,19 +152,16 @@ Public Class N_Formato
     Public Function Eliminar(ByVal id As String)
         Dim res As Boolean
         Dim db As New D_db_operaciones(tabla)
-        Dim db_fce As New N_Formato_campo_egreso
-        Dim db_fci As New N_Formato_campo_ingreso
-        Dim db_fc As New N_Formato_campos
-        Dim db_fg As New N_Formato_global
+        Dim db_tipo_operacion As New N_Tipo_operacion
+        Dim db_fc As New N_Campos
+        Dim db_fg As New N_Prefijos
 
         id = "'" + id + "'"
 
         On Error Resume Next
         res = db.Eliminar("id_formato", id)
         On Error Resume Next
-        db_fce.Eliminar(id)
-        On Error Resume Next
-        db_fci.Eliminar(id)
+        db_tipo_operacion.Eliminar(id)
         On Error Resume Next
         db_fc.Eliminar(id)
         On Error Resume Next
@@ -179,8 +174,8 @@ Public Class N_Formato
 
 #Region "FUNCIONES PRIVADAS"
 
-    Private Function LeerFichero(ByVal fichero As String) As I_formato
-        Dim texto As String = ""
+    Private Function LeerFichero(ByVal fichero As String) As I_Formato
+        Dim texto As String
 
         Try
             Dim sr As New StreamReader(fichero)

@@ -1,8 +1,8 @@
 ﻿Imports Capa_Datos
 Imports Capa_Identidad
 
-Public Class N_Formato_campo_egreso
-    Private tabla As String = "formato_campo_egreso"
+Public Class N_Tipo_operacion
+    Private tabla As String = "tipo_operacion"
 
 #Region "FUNCIONES PUBLICAS"
 
@@ -11,7 +11,7 @@ Public Class N_Formato_campo_egreso
     ''' </summary>
     ''' <param name="obj">Objeto a insertar</param>
     ''' <returns>True - si se ha insertado</returns>
-    Public Function Insertar(ByVal obj As I_formato_campo_egreso) As Boolean
+    Public Function Insertar(ByVal obj As I_Tipo_operacion) As Boolean
         Dim db As New D_db_operaciones(tabla)
 
         Return db.Insertar(obj)
@@ -22,23 +22,25 @@ Public Class N_Formato_campo_egreso
     ''' </summary>
     ''' <param name="id">ID formato</param>
     ''' <returns>Lista de objetos</returns>
-    Public Function Consultar(ByVal id As String) As List(Of I_formato_campo_egreso)
+    Public Function Consultar(ByVal id As String) As List(Of I_Tipo_operacion)
         Dim db As New D_db_operaciones(tabla)
-        Dim campos As New List(Of I_formato_campo_egreso)
-        Dim iden As I_formato_campo_egreso
+        Dim campos As New List(Of I_Tipo_operacion)
+        Dim iden As I_Tipo_operacion
         Dim res As DataTable
 
         Try
             res = db.Consulta("id_formato", id)
 
             For Each linea As DataRow In res.Rows
-                iden = New I_Formato_campo_egreso
+                iden = New I_Tipo_operacion
                 With iden
                     .Id = linea.Item(0)
                     .Id_formato = linea.Item(1)
                     .Cadena = linea.Item(2)
                     .Cadena_adicional_1 = linea.Item(3)
                     .Cadena_adicional_2 = linea.Item(4)
+                    .Cadena_no_contener = linea.Item(5)
+                    .Tipo = linea.Item(6)
                 End With
 
                 campos.Add(iden)

@@ -7,26 +7,24 @@ Public Class I_Formato
     Private _algoritmo As String
     Private _cadena As String
     Private _idcamposdescripcion As String
-    Private _formato_campos As List(Of I_formato_campos)
-    Private _formato_campo_ingreso As List(Of I_formato_campo_ingreso)
-    Private _formato_campo_egreso As List(Of I_formato_campo_egreso)
-    Private _formato_global As I_formato_global
+    Private _campos As List(Of I_Campos)
+    Private _tipo_operacion As List(Of I_Tipo_operacion)
+    Private _prefijos As I_Prefijos
 
 #Region "CONSTRUCTOR"
 
     Public Sub New()
     End Sub
 
-    Public Sub New(id_formato As String, banco As String, algoritmo As String, cadena As String, idcamposdescripcion As String, formato_campos As List(Of I_Formato_campos), formato_campo_ingreso As List(Of I_Formato_campo_ingreso), formato_campo_egreso As List(Of I_Formato_campo_egreso), formato_global As I_Formato_global)
+    Public Sub New(id_formato As String, banco As String, algoritmo As String, cadena As String, idcamposdescripcion As String, campos As List(Of I_Campos), tipo_operacion As List(Of I_Tipo_operacion), prefijos As I_Prefijos)
         _id_formato = id_formato
         _banco = banco
         _algoritmo = algoritmo
         _cadena = cadena
         _idcamposdescripcion = idcamposdescripcion
-        _formato_campos = formato_campos
-        _formato_campo_ingreso = formato_campo_ingreso
-        _formato_campo_egreso = formato_campo_egreso
-        _formato_global = formato_global
+        _campos = campos
+        _tipo_operacion = tipo_operacion
+        _prefijos = prefijos
     End Sub
 
 #End Region
@@ -68,48 +66,39 @@ Public Class I_Formato
         End Set
     End Property
 
-    Public Property Formato_campos As List(Of I_formato_campos)
-        Get
-            Return _formato_campos
-        End Get
-        Set(value As List(Of I_formato_campos))
-            _formato_campos = value
-        End Set
-    End Property
-
-    Public Property Formato_campo_ingreso As List(Of I_formato_campo_ingreso)
-        Get
-            Return _formato_campo_ingreso
-        End Get
-        Set(value As List(Of I_formato_campo_ingreso))
-            _formato_campo_ingreso = value
-        End Set
-    End Property
-
-    Public Property Formato_campo_egreso As List(Of I_formato_campo_egreso)
-        Get
-            Return _formato_campo_egreso
-        End Get
-        Set(value As List(Of I_formato_campo_egreso))
-            _formato_campo_egreso = value
-        End Set
-    End Property
-
-    Public Property Formato_global As I_formato_global
-        Get
-            Return _formato_global
-        End Get
-        Set(value As I_formato_global)
-            _formato_global = value
-        End Set
-    End Property
-
     Public Property Idcamposdescripcion As String
         Get
             Return _idcamposdescripcion
         End Get
         Set(value As String)
             _idcamposdescripcion = value
+        End Set
+    End Property
+
+    Public Property Campos As List(Of I_Campos)
+        Get
+            Return _campos
+        End Get
+        Set(value As List(Of I_Campos))
+            _campos = value
+        End Set
+    End Property
+
+    Public Property Tipo_operacion As List(Of I_Tipo_operacion)
+        Get
+            Return _tipo_operacion
+        End Get
+        Set(value As List(Of I_Tipo_operacion))
+            _tipo_operacion = value
+        End Set
+    End Property
+
+    Public Property Prefijos As I_Prefijos
+        Get
+            Return _prefijos
+        End Get
+        Set(value As I_Prefijos)
+            _prefijos = value
         End Set
     End Property
 

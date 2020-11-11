@@ -3,8 +3,8 @@
     "banco": "AFIRME",
     "algoritmo": "afirme",
     "cadena": "Banamex Resuelve",
-    "IdCamposDescripcion": "FechaOperacion, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
-    "formato_campos": [
+    "IdCamposDescripcion": "FechaOperacion, Folio, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
+    "campos": [
         {
             "nombre": "Día",
             "tipo": "DateTime",
@@ -36,18 +36,17 @@
             "IdCampo":"SaldoOperacion"
         }
     ],
-    "formato_campo_ingreso": [
-
-    ],
-    "formato_campo_egreso": [
+    "tipo_operacion": [
         {
-            "cadena": "COM MEMBRESIA PAQ."
+            "cadena": "COM MEMBRESIA PAQ.",
+            "tipo":0
         },
         {
-            "cadena": "IVA POR COMISIONES/CARGOS"
+            "cadena": "IVA POR COMISIONES/CARGOS",
+            "tipo":0
         }
     ],
-    "formato_global": {
+    "prefijos": {
         "rfc_ini": "R.F.C. ",
         "rfc_fin": "\n",
         "fecha_general_ini": "Otras comisiones $\nPeríodo de ",

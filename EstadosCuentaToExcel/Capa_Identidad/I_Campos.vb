@@ -1,4 +1,4 @@
-﻿Public Class I_Formato_campos
+﻿Public Class I_Campos
     Private _id As Integer
     Private _id_formato As String
     Private _nombre As String

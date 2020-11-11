@@ -1,4 +1,4 @@
-﻿Public Class I_Formato_global
+﻿Public Class I_Prefijos
 
     Private _id As Integer
     Private _id_formato As String

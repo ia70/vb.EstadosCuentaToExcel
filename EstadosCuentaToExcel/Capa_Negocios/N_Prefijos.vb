@@ -1,7 +1,7 @@
 ﻿Imports Capa_Datos
 Imports Capa_Identidad
-Public Class N_Formato_global
-    Private ReadOnly tabla As String = "formato_global"
+Public Class N_Prefijos
+    Private ReadOnly tabla As String = "prefijos"
     Private i As Integer
 
 #Region "FUNCIONES PUBLICAS"
@@ -11,7 +11,7 @@ Public Class N_Formato_global
     ''' </summary>
     ''' <param name="obj">Objeto a insertar</param>
     ''' <returns>True - si se ha insertado</returns>
-    Public Function Insertar(ByVal obj As I_formato_global) As Boolean
+    Public Function Insertar(ByVal obj As I_Prefijos) As Boolean
         Dim db As New D_db_operaciones(tabla)
 
         Return db.Insertar(obj)
@@ -22,9 +22,9 @@ Public Class N_Formato_global
     ''' </summary>
     ''' <param name="id">ID formato</param>
     ''' <returns>Lista de objetos</returns>
-    Public Function Consultar(ByVal id As String) As I_formato_global
+    Public Function Consultar(ByVal id As String) As I_Prefijos
         Dim db As New D_db_operaciones(tabla)
-        Dim iden As New I_formato_global
+        Dim iden As New I_Prefijos
         Dim res As DataTable
 
         Try

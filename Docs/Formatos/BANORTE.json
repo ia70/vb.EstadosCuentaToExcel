@@ -3,8 +3,8 @@
     "banco": "BANORTE",
     "algoritmo": "banorte",
     "cadena": "Banco Mercantil del Norte S.A. Institución de Banca Múltiple Grupo Financiero Banorte",
-    "IdCamposDescripcion": "FechaOperacion, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
-    "formato_campos": [
+    "IdCamposDescripcion": "FechaOperacion, Folio, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
+    "campos": [
         {
             "nombre": "FECHA",
             "tipo": "DateTime",
@@ -31,29 +31,33 @@
             "IdCampo": "SaldoOperacion"
         }
     ],
-    "formato_campo_ingreso": [
+    "tipo_operacion": [
         {
-            "cadena": "SPEI RECIBIDO"
+            "cadena": "SPEI RECIBIDO",
+            "tipo":1
         },
         {
-            "cadena": "DEPOSITO DE CUENTA DE TERCEROS"
+            "cadena": "DEPOSITO DE CUENTA DE TERCEROS",
+            "tipo":1
+        },
+        {
+            "cadena": "COMPRA ORDEN DE PAGO SPEI",
+            "tipo":0
+        },
+        {
+            "cadena": "COMISION ORDEN DE PAGO SPEI",
+            "tipo":0
+        },
+        {
+            "cadena": "TRASPASO A CUENTA DE TERCEROS",
+            "tipo":0
+        },
+        {
+            "cadena": "I.V.A. ORDEN DE PAGO SPEI",
+            "tipo":0
         }
     ],
-    "formato_campo_egreso": [
-        {
-            "cadena": "COMPRA ORDEN DE PAGO SPEI"
-        },
-        {
-            "cadena": "COMISION ORDEN DE PAGO SPEI"
-        },
-        {
-            "cadena": "TRASPASO A CUENTA DE TERCEROS"
-        },
-        {
-            "cadena": "I.V.A. ORDEN DE PAGO SPEI"
-        }
-    ],
-    "formato_global": {
+    "prefijos": {
         "rfc_ini": "RFC: ",
         "rfc_fin": "\n",
         "fecha_general_ini": "Fecha de corte ",
@@ -65,6 +69,7 @@
         "saldo_anterior_fin": "\n",
         "detalles_saldo_ini": "Enlace Negocios Basica\nFECHA DESCRIPCIÓN / ESTABLECIMIENTO MONTO DEL DEPOSITO MONTO DEL RETIRO SALDO\n",
         "detalles_saldo_fin": "INVERSION ENLACE NEGOCIOS\n",
+
         "fecha_operacion_activo": true,
         "fecha_operacion_ini": "\n",
         "fecha_operacion_fin": " ",
@@ -72,6 +77,7 @@
         "fecha_operacion_mes_length": 3,
         "fecha_operacion_anio_length": 2,
         "fecha_operacion_separador_dia_mes": "-",
+
         "fecha_liquidacion_activo": false,
         "fecha_liquidacion_ini": "",
         "fecha_liquidacion_fin": "",
@@ -79,6 +85,7 @@
         "fecha_liquidacion_mes_length": 0,
         "fecha_liquidacion_anio_length": 0,
         "fecha_liquidacion_separador_dia_mes": "",
+
         "ignora_parcial_ini": "\nLínea Directa para su empresa:\n",
         "ignora_parcial_fin": "MONTO DEL DEPOSITO MONTO DEL RETIRO SALDO\n"
     }

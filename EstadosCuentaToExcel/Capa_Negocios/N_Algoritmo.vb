@@ -28,7 +28,7 @@ Public Class N_Algoritmo
         Try
             _textopdf = textopdf_
             _ruta_guardado = ruta_
-            _fichero = New I_Archivo(formato_.Formato_campos)
+            _fichero = New I_Archivo(formato_.Campos)
             _formato = formato_
         Catch ex As Exception
             X(ex)
@@ -142,10 +142,10 @@ Public Class N_Algoritmo
         Dim indice As Integer
 
         'CARGAR VARIABLES
-        ig_ini = _formato.Formato_global.Ignora_parcial_ini
-        ig_fin = _formato.Formato_global.Ignora_parcial_fin
-        ig_total_ini = _formato.Formato_global.Detalles_saldo_ini
-        ig_total_fin = _formato.Formato_global.Detalles_saldo_fin
+        ig_ini = _formato.Prefijos.Ignora_parcial_ini
+        ig_fin = _formato.Prefijos.Ignora_parcial_fin
+        ig_total_ini = _formato.Prefijos.Detalles_saldo_ini
+        ig_total_fin = _formato.Prefijos.Detalles_saldo_fin
 
         Try
             'RECUPERAR DATOS GLOBALES
@@ -345,7 +345,7 @@ Public Class N_Algoritmo
             '/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             'MANEJAR LA INFORMACION
-            For Each campo As I_Formato_campos In _formato.Formato_campos
+            For Each campo As I_Campos In _formato.Campos
 
                 Select Case campo.Idcampo.ToUpper
                     Case "FECHAOPERACION"
@@ -494,7 +494,7 @@ Public Class N_Algoritmo
         copy = cadena
 
         Try
-            With _formato.Formato_global
+            With _formato.Prefijos
                 If .Fecha_operacion_dia_length > 0 Then
                     aux = cadena.Substring(0, .Fecha_operacion_dia_length)
                     If IsNumeric(aux) Then
@@ -558,7 +558,7 @@ Public Class N_Algoritmo
     Protected Overridable Function GetOperacion(ByVal cadena As String) As String
 
         Try
-            For Each campo As I_Formato_campo_ingreso In _formato.Formato_campo_ingreso
+            For Each campo As I_Tipo_operacion In _formato.Tipo_operacion
                 If cadena.Contains(campo.Cadena) Then
                     Return "Deposito"
                 End If
@@ -568,7 +568,7 @@ Public Class N_Algoritmo
         End Try
 
         Try
-            For Each campo As I_Formato_campo_egreso In _formato.Formato_campo_egreso
+            For Each campo As I_Tipo_operacion In _formato.Tipo_operacion
                 If cadena.Contains(campo.Cadena) Then
                     Return "Retiro"
                 End If
@@ -630,7 +630,7 @@ Public Class N_Algoritmo
 
         Try
             Dim Exportar As New N_ExportarExcel()
-            Return Exportar.Exportar(_fichero.Tabla, _formato.Formato_campos, _ruta_guardado, _fichero)
+            Return Exportar.Exportar(_fichero.Tabla, _formato.Campos, _ruta_guardado, _fichero)
         Catch ex As Exception
             X(ex)
             Return False
@@ -677,9 +677,9 @@ Public Class N_Algoritmo
     ''' </summary>
     Private Sub CargarVariables()
         Try
-            _no_campos = _formato.Formato_campos.Count
+            _no_campos = _formato.Campos.Count
 
-            For Each campo As I_Formato_campos In _formato.Formato_campos
+            For Each campo As I_Campos In _formato.Campos
                 Select Case campo.Tipo.ToUpper
                     Case "DATETIME"
                         _no_fechas += 1
@@ -699,7 +699,7 @@ Public Class N_Algoritmo
     ''' </summary>
     Private Sub GetSizeFecha()
         Dim size As Integer
-        With _formato.Formato_global
+        With _formato.Prefijos
 
             size = .Fecha_operacion_dia_length + .Fecha_operacion_mes_length + .Fecha_operacion_anio_length
             If .Fecha_operacion_mes_length > 0 Then
@@ -721,7 +721,7 @@ Public Class N_Algoritmo
     ''' </summary>
     ''' <returns></returns>
     Private Function GetRFC() As String
-        Return GetCampo(_formato.Formato_global.Rfc_ini, _formato.Formato_global.Rfc_fin)
+        Return GetCampo(_formato.Prefijos.Rfc_ini, _formato.Prefijos.Rfc_fin)
     End Function
 
     ''' <summary>
@@ -732,7 +732,7 @@ Public Class N_Algoritmo
         Dim saldo As String = "0"
 
         Try
-            saldo = GetCampo(_formato.Formato_global.Saldo_anterior_ini, _formato.Formato_global.Saldo_anterior_fin)
+            saldo = GetCampo(_formato.Prefijos.Saldo_anterior_ini, _formato.Prefijos.Saldo_anterior_fin)
         Catch ex As Exception
             X(ex)
         End Try
@@ -749,9 +749,9 @@ Public Class N_Algoritmo
         Dim vfecha, separador, aux, dia, anio, mes As String
         Dim fecha As Date
 
-        separador = _formato.Formato_global.Fecha_general_separador
+        separador = _formato.Prefijos.Fecha_general_separador
         Try
-            vfecha = GetCampo(_formato.Formato_global.Fecha_general_ini, _formato.Formato_global.Fecha_general_fin)
+            vfecha = GetCampo(_formato.Prefijos.Fecha_general_ini, _formato.Prefijos.Fecha_general_fin)
 
             'Obtencion de parametros individuales --------------------------------------------------------------------
             'OBTENER DIA ---------------------
@@ -787,7 +787,7 @@ Public Class N_Algoritmo
         Dim noCuenta As String = ""
 
         Try
-            noCuenta = GetCampo(_formato.Formato_global.No_cuenta_ini, _formato.Formato_global.No_cuenta_fin)
+            noCuenta = GetCampo(_formato.Prefijos.No_cuenta_ini, _formato.Prefijos.No_cuenta_fin)
         Catch ex As Exception
             X(ex)
         End Try

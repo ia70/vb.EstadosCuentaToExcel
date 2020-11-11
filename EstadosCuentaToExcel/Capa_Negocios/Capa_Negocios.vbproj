@@ -89,10 +89,9 @@
     <Compile Include="N_ExportarExcel.vb" />
     <Compile Include="N_Ficheros_procesados.vb" />
     <Compile Include="N_Formato.vb" />
-    <Compile Include="N_Formato_campos.vb" />
-    <Compile Include="N_Formato_campo_egreso.vb" />
-    <Compile Include="N_Formato_campo_ingreso.vb" />
-    <Compile Include="N_Formato_global.vb" />
+    <Compile Include="N_Campos.vb" />
+    <Compile Include="N_Tipo_operacion.vb" />
+    <Compile Include="N_Prefijos.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

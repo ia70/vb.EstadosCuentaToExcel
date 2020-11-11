@@ -8,7 +8,7 @@
     Private _anio As String
     Private _dia As String
     Private _tabla As DataTable
-    Private _campos As List(Of I_formato_campos)
+    Private _campos As List(Of I_Campos)
 
 #Region "CONSTRUCTORES"
 
@@ -16,12 +16,12 @@
     ''' Constructor
     ''' </summary>
     ''' <param name="campos">Lista de campos</param>
-    Public Sub New(ByVal campos As List(Of I_formato_campos))
+    Public Sub New(ByVal campos As List(Of I_Campos))
         Tabla = New DataTable
         _campos = campos
 
         Try
-            For Each campo As I_Formato_campos In campos
+            For Each campo As I_Campos In campos
                 'Tabla.Columns.Add(campo.Nombre, Type.GetType("System." & campo.Tipo))
                 Tabla.Columns.Add(campo.Nombre, Type.GetType("System.String"))
             Next
