@@ -267,7 +267,7 @@ Public Class N_Algoritmo
         'VARIABLES --------------------
         Dim Fecha_Operacion As String
         Dim Fecha_Liquidacion As String = ""
-        Dim Folio As String = ""
+        Dim Folio As String
         Dim Concepto As String
         Dim Referencia As String = ""
         Dim Retiro As String = ""
@@ -281,7 +281,7 @@ Public Class N_Algoritmo
         Dim i, indice As Integer
 
         copy = cadena
-        'OBTENER CIFRAS -----------------------------------------------
+        '///  OBTENER CIFRAS   /////////////////////////////////////////////////////////////////////////////////
         Try
             Do
                 numero = GetCantidad(cadena)
@@ -304,7 +304,7 @@ Public Class N_Algoritmo
         End Try
         cadena = copy
 
-        'QUITAR CIFRAS DE CADENA --------------------------------------
+        '///  QUITAR CIFRAS DE CADENA   //////////////////////////////////////////////////////////////////////////
         Try
             For Each linea As String In cifras
                 indice = cadena.IndexOf(linea)
@@ -345,6 +345,12 @@ Public Class N_Algoritmo
             Fecha_Operacion = fechas(0)
             If fechas.Count = 2 Then
                 Fecha_Liquidacion = fechas(1)
+            End If
+
+            'Folio
+            If Formato.Prefijos.Folio_activo Then
+                Folio = cadena.Substring(0, Formato.Prefijos.Folio_length + 1)
+                cadena = cadena.Remove(0, Formato.Prefijos.Folio_length + 1)
             End If
 
             'Cadenas
@@ -581,22 +587,47 @@ Public Class N_Algoritmo
     ''' <param name="cadena"></param>
     ''' <returns></returns>
     Protected Overridable Function GetOperacion(ByVal cadena As String) As String
+        Dim contiene As Boolean     'Especifica si cumple con las condiciones de similitud de palabras
+        Dim no_contiene As Boolean  'True si no contiene la cadena que no debe contener
+        Dim operacion As String
 
         Try
-            For Each campo As I_Tipo_operacion In _formato.Tipo_operacion
-                If cadena.Contains(campo.Cadena) Then
-                    Return "Deposito"
-                End If
-            Next
-        Catch ex As Exception
-            X(ex)
-        End Try
+            For Each linea As I_Tipo_operacion In _formato.Tipo_operacion
+                contiene = False
+                no_contiene = False
+                If cadena.Contains(linea.Cadena) Then
+                    If linea.Cadena_adicional_1.Length > 0 Then
+                        If cadena.Contains(linea.Cadena_adicional_1) Then
+                            If linea.Cadena_adicional_2.Length > 0 Then
+                                If cadena.Contains(linea.Cadena_adicional_2) Then
+                                    contiene = True
+                                End If
+                            Else
+                                contiene = True
+                            End If
+                        End If
+                    Else
+                        contiene = True
+                    End If
 
-        Try
-            For Each campo As I_Tipo_operacion In _formato.Tipo_operacion
-                If cadena.Contains(campo.Cadena) Then
-                    Return "Retiro"
+                    If linea.Cadena_no_contener.Length > 0 Then
+                        If Not cadena.Contains(linea.Cadena_no_contener) Then
+                            no_contiene = True
+                        End If
+                    Else
+                        no_contiene = True
+                    End If
+
+                    If contiene And no_contiene Then
+                        If linea.Tipo Then
+                            operacion = "Deposito"
+                        Else
+                            operacion = "Retiro"
+                        End If
+                        Return operacion
+                    End If
                 End If
+
             Next
         Catch ex As Exception
             X(ex)
@@ -674,15 +705,22 @@ Public Class N_Algoritmo
     Private Function GetLinea(cadena As String) As String
         Dim in1, in2 As Integer
         Dim copy As String
+        Dim sizeFechaLocal As Integer
+
+        'Calcular tamaño de fecha si fecha liquidacion activo
+        sizeFechaLocal = _size_fecha
+        If _formato.Prefijos.Fecha_liquidacion_activo Then
+            sizeFechaLocal += sizeFechaLocal + 1
+        End If
 
         copy = cadena
         Try
             in1 = GetFechaIndice(cadena, _size_fecha)
             If in1 >= 0 Then
-                cadena = cadena.Substring(in1 + _size_fecha + 1)
+                cadena = cadena.Substring(in1 + sizeFechaLocal + 1)
                 in2 = GetFechaIndice(cadena, _size_fecha)
                 If in2 >= 0 Then
-                    cadena = copy.Substring(in1, in2 + _size_fecha)
+                    cadena = copy.Substring(in1, in2 + sizeFechaLocal)
                     Return cadena
                 Else
                     Return copy

@@ -5,7 +5,7 @@
     Private _cadena_adicional_1 As String
     Private _cadena_adicional_2 As String
     Private _cadena_no_contener As String
-    Private _tipo As Integer
+    Private _tipo As Boolean
 
     Public Sub New()
     End Sub
@@ -15,7 +15,7 @@
         Me.Cadena = cadena
     End Sub
 
-    Public Sub New(id As Integer, id_formato As String, cadena As String, cadena_adicional_1 As String, cadena_adicional_2 As String, cadena_no_contener As String, tipo As Integer)
+    Public Sub New(id As Integer, id_formato As String, cadena As String, cadena_adicional_1 As String, cadena_adicional_2 As String, cadena_no_contener As String, tipo As Boolean)
         _id = id
         _id_formato = id_formato
         _cadena = cadena
@@ -79,11 +79,11 @@
         End Set
     End Property
 
-    Public Property Tipo As Integer
+    Public Property Tipo As Boolean
         Get
             Return _tipo
         End Get
-        Set(value As Integer)
+        Set(value As Boolean)
             _tipo = value
         End Set
     End Property
