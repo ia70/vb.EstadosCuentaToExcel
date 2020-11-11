@@ -137,15 +137,8 @@ Public Class N_Algoritmo
     ''' <param name="cadena">cadena a limpiar</param>
     ''' <returns></returns>
     Private Function LimpiarTexto(ByVal cadena As String) As String
-        Dim ig_ini, ig_fin, ig_total_ini, ig_total_fin As String
-        Dim aux, aux2 As String
         Dim indice As Integer
 
-        'CARGAR VARIABLES
-        ig_ini = _formato.Prefijos.Ignora_parcial_ini
-        ig_fin = _formato.Prefijos.Ignora_parcial_fin
-        ig_total_ini = _formato.Prefijos.Detalles_saldo_ini
-        ig_total_fin = _formato.Prefijos.Detalles_saldo_fin
 
         Try
             'RECUPERAR DATOS GLOBALES
@@ -161,26 +154,57 @@ Public Class N_Algoritmo
         End Try
 
         Try
-            'QUITAR ENCABEZADO
-            indice = cadena.IndexOf(ig_total_ini)
-            cadena = cadena.Substring(indice + ig_total_ini.Length)
+            With Formato.Prefijos
 
-            'QUITAR PIE
-            indice = cadena.IndexOf(ig_total_fin)
-            cadena = cadena.Substring(0, indice)
+                'QUITAR ENCABEZADO
+                indice = cadena.IndexOf(.Detalles_saldo_ini)
+                cadena = cadena.Substring(indice + .Detalles_saldo_ini.Length)
 
-            'QUITAR PARCIAL
-            While cadena.IndexOf(ig_ini) >= 0
-                indice = cadena.IndexOf(ig_ini)
-                'indice2 = cadena.IndexOf(ig_fin)
+                'QUITAR PIE
+                indice = cadena.IndexOf(.Detalles_saldo_fin)
+                cadena = cadena.Substring(0, indice)
 
-                aux = cadena.Substring(0, indice)
-                indice = cadena.IndexOf(ig_fin)
+                'QUITAR PARCIAL
+                cadena = LimpiaParcial(cadena, .Ignora_parcial_ini, .Ignora_parcial_fin)
+                cadena = LimpiaParcial(cadena, .Ignora_parcial_adicional_1_ini, .Ignora_parcial_adicional_1_fin)
+                cadena = LimpiaParcial(cadena, .Ignora_parcial_adicional_2_ini, .Ignora_parcial_adicional_2_fin)
 
-                aux2 = cadena.Substring(indice + ig_fin.Length)
-                cadena = aux + aux2
-            End While
+            End With
+        Catch ex As Exception
+            X(ex)
+        End Try
 
+        Return cadena
+    End Function
+
+    ''' <summary>
+    ''' Se encarga de quitar texto adicional parcial en el cuerpo del formato
+    ''' </summary>
+    ''' <param name="cadena">cuerpo del formato</param>
+    ''' <param name="ini">inicio a ignorar</param>
+    ''' <param name="fin">fin a ignorar</param>
+    ''' <returns></returns>
+    Private Function LimpiaParcial(ByVal cadena As String, ByVal ini As String, ByVal fin As String) As String
+        Dim aux, aux2 As String
+        Dim indice As Integer
+
+        Try
+            If cadena.Length > 0 Then
+                With Formato.Prefijos
+
+                    'QUITAR PARCIAL
+                    While cadena.IndexOf(ini) >= 0
+                        indice = cadena.IndexOf(ini)
+
+                        aux = cadena.Substring(0, indice)
+                        indice = cadena.IndexOf(fin)
+
+                        aux2 = cadena.Substring(indice + fin.Length)
+                        cadena = aux + aux2
+                    End While
+
+                End With
+            End If
         Catch ex As Exception
             X(ex)
         End Try
@@ -243,6 +267,7 @@ Public Class N_Algoritmo
         'VARIABLES --------------------
         Dim Fecha_Operacion As String
         Dim Fecha_Liquidacion As String = ""
+        Dim Folio As String = ""
         Dim Concepto As String
         Dim Referencia As String = ""
         Dim Retiro As String = ""

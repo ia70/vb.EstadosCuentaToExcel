@@ -37,42 +37,23 @@
     Private _ignora_parcial_adicional_2_ini As String
     Private _ignora_parcial_adicional_2_fin As String
 
+    Private _folio_activo As Boolean
+    Private _folio_ini As String
+    Private _folio_fin As String
+    Private _folio_length As Integer
+    Private _folio_tipo As String
+
+    Private _referencia_activo As Boolean
+    Private _referencia_ini As String
+    Private _referencia_fin As String
+
+
 #Region "CONSTRUCTORES"
 
     Public Sub New()
     End Sub
 
-    Public Sub New(rfc_ini As String, rfc_fin As String, fecha_general_ini As String, fecha_general_fin As String, fecha_general_separador As String, no_cuenta_ini As String, no_cuenta_fin As String, saldo_anterior_ini As String, saldo_anterior_fin As String, detalles_saldo_ini As String, detalles_saldo_fin As String, fecha_operacion_activo As Boolean, fecha_operacion_ini As String, fecha_operacion_fin As String, fecha_operacion_dia_length As Integer, fecha_operacion_mes_length As Integer, fecha_operacion_anio_length As Integer, fecha_operacion_separador_dia_mes As String, fecha_liquidacion_activo As Boolean, fecha_liquidacion_ini As String, fecha_liquidacion_fin As String, fecha_liquidacion_dia_length As Integer, fecha_liquidacion_mes_length As Integer, fecha_liquidacion_anio_length As Integer, fecha_liquidacion_separador_dia_mes As String, ignora_parcial_ini As String, ignora_parcial_fin As String)
-        Me.Rfc_ini = rfc_ini
-        Me.Rfc_fin = rfc_fin
-        Me.Fecha_general_ini = fecha_general_ini
-        Me.Fecha_general_fin = fecha_general_fin
-        Me.Fecha_general_separador = fecha_general_separador
-        Me.No_cuenta_ini = no_cuenta_ini
-        Me.No_cuenta_fin = no_cuenta_fin
-        Me.Saldo_anterior_ini = saldo_anterior_ini
-        Me.Saldo_anterior_fin = saldo_anterior_fin
-        Me.Detalles_saldo_ini = detalles_saldo_ini
-        Me.Detalles_saldo_fin = detalles_saldo_fin
-        Me.Fecha_operacion_activo = fecha_operacion_activo
-        Me.Fecha_operacion_ini = fecha_operacion_ini
-        Me.Fecha_operacion_fin = fecha_operacion_fin
-        Me.Fecha_operacion_dia_length = fecha_operacion_dia_length
-        Me.Fecha_operacion_mes_length = fecha_operacion_mes_length
-        Me.Fecha_operacion_anio_length = fecha_operacion_anio_length
-        Me.Fecha_operacion_separador_dia_mes = fecha_operacion_separador_dia_mes
-        Me.Fecha_liquidacion_activo = fecha_liquidacion_activo
-        Me.Fecha_liquidacion_ini = fecha_liquidacion_ini
-        Me.Fecha_liquidacion_fin = fecha_liquidacion_fin
-        Me.Fecha_liquidacion_dia_length = fecha_liquidacion_dia_length
-        Me.Fecha_liquidacion_mes_length = fecha_liquidacion_mes_length
-        Me.Fecha_liquidacion_anio_length = fecha_liquidacion_anio_length
-        Me.Fecha_liquidacion_separador_dia_mes = fecha_liquidacion_separador_dia_mes
-        Me.Ignora_parcial_ini = ignora_parcial_ini
-        Me.Ignora_parcial_fin = ignora_parcial_fin
-    End Sub
-
-    Public Sub New(id As Integer, id_formato As String, rfc_ini As String, rfc_fin As String, fecha_general_ini As String, fecha_general_fin As String, fecha_general_separador As String, no_cuenta_ini As String, no_cuenta_fin As String, saldo_anterior_ini As String, saldo_anterior_fin As String, detalles_saldo_ini As String, detalles_saldo_fin As String, fecha_operacion_activo As Boolean, fecha_operacion_ini As String, fecha_operacion_fin As String, fecha_operacion_dia_length As Integer, fecha_operacion_mes_length As Integer, fecha_operacion_anio_length As Integer, fecha_operacion_separador_dia_mes As String, fecha_liquidacion_activo As Boolean, fecha_liquidacion_ini As String, fecha_liquidacion_fin As String, fecha_liquidacion_dia_length As Integer, fecha_liquidacion_mes_length As Integer, fecha_liquidacion_anio_length As Integer, fecha_liquidacion_separador_dia_mes As String, ignora_parcial_ini As String, ignora_parcial_fin As String, ignora_parcial_adicional_1_ini As String, ignora_parcial_adicional_1_fin As String, ignora_parcial_adicional_2_ini As String, ignora_parcial_adicional_2_fin As String)
+    Public Sub New(id As Integer, id_formato As String, rfc_ini As String, rfc_fin As String, fecha_general_ini As String, fecha_general_fin As String, fecha_general_separador As String, no_cuenta_ini As String, no_cuenta_fin As String, saldo_anterior_ini As String, saldo_anterior_fin As String, detalles_saldo_ini As String, detalles_saldo_fin As String, fecha_operacion_activo As Boolean, fecha_operacion_ini As String, fecha_operacion_fin As String, fecha_operacion_dia_length As Integer, fecha_operacion_mes_length As Integer, fecha_operacion_anio_length As Integer, fecha_operacion_separador_dia_mes As String, fecha_liquidacion_activo As Boolean, fecha_liquidacion_ini As String, fecha_liquidacion_fin As String, fecha_liquidacion_dia_length As Integer, fecha_liquidacion_mes_length As Integer, fecha_liquidacion_anio_length As Integer, fecha_liquidacion_separador_dia_mes As String, ignora_parcial_ini As String, ignora_parcial_fin As String, ignora_parcial_adicional_1_ini As String, ignora_parcial_adicional_1_fin As String, ignora_parcial_adicional_2_ini As String, ignora_parcial_adicional_2_fin As String, folio_activo As Boolean, folio_ini As String, folio_fin As String, folio_length As Integer, folio_tipo As String, referencia_activo As Boolean, referencia_ini As String, referencia_fin As String)
         _id = id
         _id_formato = id_formato
         _rfc_ini = rfc_ini
@@ -106,6 +87,14 @@
         _ignora_parcial_adicional_1_fin = ignora_parcial_adicional_1_fin
         _ignora_parcial_adicional_2_ini = ignora_parcial_adicional_2_ini
         _ignora_parcial_adicional_2_fin = ignora_parcial_adicional_2_fin
+        _folio_activo = folio_activo
+        _folio_ini = folio_ini
+        _folio_fin = folio_fin
+        _folio_length = folio_length
+        _folio_tipo = folio_tipo
+        _referencia_activo = referencia_activo
+        _referencia_ini = referencia_ini
+        _referencia_fin = referencia_fin
     End Sub
 
 #End Region
@@ -405,6 +394,78 @@
         End Get
         Set(value As String)
             _ignora_parcial_adicional_2_fin = value
+        End Set
+    End Property
+
+    Public Property Folio_activo As Boolean
+        Get
+            Return _folio_activo
+        End Get
+        Set(value As Boolean)
+            _folio_activo = value
+        End Set
+    End Property
+
+    Public Property Folio_ini As String
+        Get
+            Return _folio_ini
+        End Get
+        Set(value As String)
+            _folio_ini = value
+        End Set
+    End Property
+
+    Public Property Folio_fin As String
+        Get
+            Return _folio_fin
+        End Get
+        Set(value As String)
+            _folio_fin = value
+        End Set
+    End Property
+
+    Public Property Folio_length As Integer
+        Get
+            Return _folio_length
+        End Get
+        Set(value As Integer)
+            _folio_length = value
+        End Set
+    End Property
+
+    Public Property Folio_tipo As String
+        Get
+            Return _folio_tipo
+        End Get
+        Set(value As String)
+            _folio_tipo = value
+        End Set
+    End Property
+
+    Public Property Referencia_activo As Boolean
+        Get
+            Return _referencia_activo
+        End Get
+        Set(value As Boolean)
+            _referencia_activo = value
+        End Set
+    End Property
+
+    Public Property Referencia_ini As String
+        Get
+            Return _referencia_ini
+        End Get
+        Set(value As String)
+            _referencia_ini = value
+        End Set
+    End Property
+
+    Public Property Referencia_fin As String
+        Get
+            Return _referencia_fin
+        End Get
+        Set(value As String)
+            _referencia_fin = value
         End Set
     End Property
 
