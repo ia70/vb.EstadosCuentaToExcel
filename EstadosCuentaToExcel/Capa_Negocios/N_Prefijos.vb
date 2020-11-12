@@ -19,27 +19,27 @@ Public Class N_Prefijos
                 db.Insertar(obj.Rfc)
             End If
 
-            If Not IsNothing(obj.Rfc) Then
+            If Not IsNothing(obj.Fecha_general) Then
                 db.Insertar(obj.Fecha_general)
             End If
 
-            If Not IsNothing(obj.Rfc) Then
+            If Not IsNothing(obj.No_cuenta) Then
                 db.Insertar(obj.No_cuenta)
             End If
 
-            If Not IsNothing(obj.Rfc) Then
+            If Not IsNothing(obj.Saldo_anterior) Then
                 db.Insertar(obj.Saldo_anterior)
             End If
 
-            If Not IsNothing(obj.Rfc) Then
+            If Not IsNothing(obj.Detalles_saldo) Then
                 db.Insertar(obj.Detalles_saldo)
             End If
 
-            If Not IsNothing(obj.Rfc) Then
+            If Not IsNothing(obj.Referencia) Then
                 db.Insertar(obj.Referencia)
             End If
 
-            If Not IsNothing(obj.Rfc) Then
+            If Not IsNothing(obj.Folio) Then
                 db.Insertar(obj.Folio)
             End If
 
