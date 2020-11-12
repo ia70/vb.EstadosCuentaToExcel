@@ -156,7 +156,10 @@ Public Class N_Algoritmo
         Try
             'QUITAR ENCABEZADO
             indice = cadena.IndexOf(Formato.Prefijos.Detalles_saldo.Inicio)
-            cadena = cadena.Substring(indice + Formato.Prefijos.Detalles_saldo.Inicio.Length)
+            If indice >= 0 Then
+                cadena = cadena.Substring(indice + Formato.Prefijos.Detalles_saldo.Inicio.Length)
+            End If
+
 
             'QUITAR PIE
             For Each linea As I_Prefijo_simple In Formato.Prefijos.Fin_documento
@@ -187,7 +190,7 @@ Public Class N_Algoritmo
     ''' <param name="fin">fin a ignorar</param>
     ''' <returns></returns>
     Private Function LimpiaParcial(ByVal cadena As String, ByVal ini As String, ByVal fin As String) As String
-        Dim aux, aux2 As String
+        Dim aux = "", aux2 As String
         Dim indice As Integer
 
         Try
@@ -199,11 +202,18 @@ Public Class N_Algoritmo
                         While cadena.IndexOf(ini) >= 0
                             indice = cadena.IndexOf(ini)
 
-                            aux = cadena.Substring(0, indice)
-                            indice = cadena.IndexOf(fin)
+                            If indice >= 0 Then
+                                aux = cadena.Substring(0, indice)
+                            End If
 
-                            aux2 = cadena.Substring(indice + fin.Length)
-                            cadena = aux + aux2
+                            indice = cadena.IndexOf(fin)
+                            If indice >= 0 Then
+                                aux2 = cadena.Substring(indice + fin.Length)
+                                cadena = aux + aux2
+                            ElseIf aux.Length > 0 Then
+                                cadena = aux
+                            End If
+
                         End While
 
                     End With
@@ -271,10 +281,10 @@ Public Class N_Algoritmo
         Dim operacion As String
 
         'VARIABLES --------------------
-        Dim Fecha_Operacion As String
+        Dim Fecha_Operacion As String = ""
         Dim Fecha_Liquidacion As String = ""
-        Dim Folio As String
-        Dim Concepto As String
+        Dim Folio As String = ""
+        Dim Concepto As String = ""
         Dim Referencia As String = ""
         Dim Retiro As String = ""
         Dim Deposito As String = ""
@@ -340,7 +350,7 @@ Public Class N_Algoritmo
         cadena = InsertarSaltoslinea(cadena, 100)
 
         'OBTIENE FOLIO
-        If Formato.Prefijos.Folio.Size > 0 Then
+        If Not IsNothing(Formato.Prefijos.Folio) Then
             Folio = cadena.Substring(0, Formato.Prefijos.Folio.Size + 1)
             cadena = cadena.Remove(0, Formato.Prefijos.Folio.Size + 1)
         End If
@@ -354,30 +364,38 @@ Public Class N_Algoritmo
         'ORDENAMIENTO DE CAMPOS OBTENIDOS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Try
             'Fechas
-            Fecha_Operacion = fechas(0)
-            If fechas.Count = 2 Then
-                Fecha_Liquidacion = fechas(1)
+            If Not IsNothing(fechas) Then
+                Fecha_Operacion = fechas(0)
+                If fechas.Count = 2 Then
+                    Fecha_Liquidacion = fechas(1)
+                End If
             End If
 
             'Cadenas
-            Concepto = cadenas(0)
-            If cadenas.Count = 2 Then
-                Referencia = cadenas(1)
+            If Not IsNothing(cadenas) Then
+                Concepto = cadenas(0)
+                If cadenas.Count = 2 Then
+                    Referencia = cadenas(1)
+                End If
             End If
 
             'Cifras
-            If operacion = "Deposito" Then
-                Deposito = cifras(0)
-            ElseIf operacion = "Retiro" Then
-                Retiro = cifras(0)
+            If Not IsNothing(cifras) Then
+                If operacion = "Deposito" Then
+                    Deposito = cifras(0)
+                ElseIf operacion = "Retiro" Then
+                    Retiro = cifras(0)
+                End If
             End If
 
-            If cifras.Count = 1 And operacion = "" Then
-                Saldo_Operacion = cifras(0)
-            ElseIf cifras.Count = 2 Then
-                Saldo_Operacion = cifras(1)
-            ElseIf cifras.Count = 3 Then
-                Saldo_Liquidacion = cifras(2)
+            If Not IsNothing(cifras) Then
+                If cifras.Count = 1 And operacion = "" Then
+                    Saldo_Operacion = cifras(0)
+                ElseIf cifras.Count = 2 Then
+                    Saldo_Operacion = cifras(1)
+                ElseIf cifras.Count = 3 Then
+                    Saldo_Liquidacion = cifras(2)
+                End If
             End If
             '/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -389,6 +407,8 @@ Public Class N_Algoritmo
                         respuesta.Add(Fecha_Operacion)
                     Case "FECHALIQUIDACION"
                         respuesta.Add(Fecha_Liquidacion)
+                    Case "FOLIO"
+                        respuesta.Add(Folio)
                     Case "CONCEPTO"
                         respuesta.Add(Concepto)
                     Case "REFERENCIA"

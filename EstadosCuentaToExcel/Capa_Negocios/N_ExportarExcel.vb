@@ -173,6 +173,7 @@ Public Class N_ExportarExcel
     Private Function ExcelGuardar() As Boolean
         Dim nom As String
         Try
+            Archivo.DisplayAlerts = False
             nom = GetNombreFichero()
             ' Guardamos el excel en la ruta que ha especificado el usuario
             Libro.SaveAs(nom)

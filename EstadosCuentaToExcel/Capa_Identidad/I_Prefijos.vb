@@ -19,6 +19,9 @@ Public Class I_Prefijos
 #Region "CONSTRUCTIRES"
 
     Public Sub New()
+        _fechas_registro = New List(Of I_Fechas)
+        _ignora_parcial = New List(Of I_Prefijo_simple)
+        _fin_documento = New List(Of I_Prefijo_simple)
     End Sub
 
     Public Sub New(id_formato As String, rfc As I_Prefijo_simple, fecha_general As I_Prefijo_simple, no_cuenta As I_Prefijo_simple, saldo_anterior As I_Prefijo_simple, detalles_saldo As I_Prefijo_simple, folio As I_Prefijo_simple, referencia As I_Prefijo_simple, fechas_registro As List(Of I_Fechas), ignora_parcial As List(Of I_Prefijo_simple), fin_documento As List(Of I_Prefijo_simple))
