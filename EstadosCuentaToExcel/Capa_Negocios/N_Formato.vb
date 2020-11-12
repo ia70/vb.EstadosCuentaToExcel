@@ -33,25 +33,25 @@ Public Class N_Formato
     End Function
 
     Public Function Insertar(ByVal ruta As String) As Boolean
-        Dim iden_formato As I_formato
-        Dim f_simple As New I_Formato_simple
-        Dim db_f As New D_db_operaciones(tabla)
-        Dim db_fce As New N_Tipo_operacion
-        Dim db_fc As New N_Campos
-        Dim db_fg As New N_Prefijos
+        Dim iden_formato As I_Formato
+        Dim iden_formato_simple As New I_Formato_simple
+        Dim db_formato As New D_db_operaciones(tabla)
+        Dim db_tipo_operacion As New N_Tipo_operacion
+        Dim db_campos As New N_Campos
+        Dim db_prefijos As New N_Prefijos
 
         Try
             iden_formato = LeerFichero(ruta)
             With iden_formato
-                f_simple.Id_formato = .Id_formato
-                f_simple.Banco = .Banco
-                f_simple.Algoritmo = .Algoritmo
-                f_simple.Cadena = .Cadena
-                f_simple.Idcamposdescripcion = .Idcamposdescripcion
+                iden_formato_simple.Id_formato = .Id_formato
+                iden_formato_simple.Banco = .Banco
+                iden_formato_simple.Algoritmo = .Algoritmo
+                iden_formato_simple.Cadena = .Cadena
+                iden_formato_simple.Idcamposdescripcion = .Idcamposdescripcion
             End With
         Catch ex As Exception
             X(ex)
-            iden_formato = New I_formato
+            iden_formato = New I_Formato
         End Try
 
         Try
@@ -59,26 +59,30 @@ Public Class N_Formato
                 Return False
             End If
 
-            If Not db_f.Insertar(f_simple) Then
+            'INSERTAR FORMATO
+            If Not db_formato.Insertar(iden_formato_simple) Then
                 Throw New Exception("Error")
             End If
 
-            For Each ifce As I_Tipo_operacion In iden_formato.Tipo_operacion
-                ifce.Id_formato = iden_formato.Id_formato
-                If Not db_fce.Insertar(ifce) Then
+            'INSERTAR TIPO_OPERACION
+            For Each linea As I_Tipo_operacion In iden_formato.Tipo_operacion
+                linea.Id_formato = iden_formato.Id_formato
+                If Not db_tipo_operacion.Insertar(linea) Then
                     Throw New Exception("Error")
                 End If
             Next
 
-            For Each ifc As I_Campos In iden_formato.Campos
-                ifc.Id_formato = iden_formato.Id_formato
-                If Not db_fc.Insertar(ifc) Then
+            'INSERTAR CAMPOS
+            For Each linea As I_Campos In iden_formato.Campos
+                linea.Id_formato = iden_formato.Id_formato
+                If Not db_campos.Insertar(linea) Then
                     Throw New Exception("Error")
                 End If
             Next
 
+            'INSERTAR PREFIJOS
             iden_formato.Prefijos.Id_formato = iden_formato.Id_formato
-            If Not db_fg.Insertar(iden_formato.Prefijos) Then
+            If Not db_prefijos.Insertar(iden_formato.Prefijos) Then
                 Throw New Exception("Error")
             End If
 
