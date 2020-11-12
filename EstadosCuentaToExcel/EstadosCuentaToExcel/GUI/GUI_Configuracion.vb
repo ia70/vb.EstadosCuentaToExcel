@@ -6,10 +6,14 @@ Public Class GUI_Configuracion
     Private Sub GUI_Configuracion_Load(sender As Object, e As EventArgs) Handles Me.Load
         Try
             If Not G_Proceso_Activo Then
-                G_Proceso_Activo = True
-                Inicializar()
-                Me.WindowState = FormWindowState.Minimized
-                ActivarMonitor()
+                If G_Formatos.Count > 0 Then
+                    G_Proceso_Activo = True
+                    Inicializar()
+                    Me.WindowState = FormWindowState.Minimized
+                    ActivarMonitor()
+                Else
+                    Inicializar()
+                End If
             Else
                 Inicializar()
             End If

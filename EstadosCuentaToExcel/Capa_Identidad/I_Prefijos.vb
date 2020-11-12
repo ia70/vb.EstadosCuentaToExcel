@@ -146,26 +146,51 @@ Public Class I_Prefijos
 
     Private Sub setIdFormato()
         Try
+            If Not IsNothing(Rfc) Then
+                Rfc.Id_formato = Id_formato
+            End If
 
-            Rfc.Id_formato = Id_formato
-            Fecha_general.Id_formato = Id_formato
-            No_cuenta.Id_formato = Id_formato
-            Saldo_anterior.Id_formato = Id_formato
-            Detalles_saldo.Id_formato = Id_formato
-            Folio.Id_formato = Id_formato
-            Referencia.Id_formato = Id_formato
+            If Not IsNothing(Fecha_general) Then
+                Fecha_general.Id_formato = Id_formato
+            End If
 
-            For Each linea As I_Fechas In Fechas_registro
-                linea.Id_formato = Id_formato
-            Next
+            If Not IsNothing(No_cuenta) Then
+                No_cuenta.Id_formato = Id_formato
+            End If
 
-            For Each linea As I_Prefijo_simple In Ignora_parcial
-                linea.Id_formato = Id_formato
-            Next
+            If Not IsNothing(Saldo_anterior) Then
+                Saldo_anterior.Id_formato = Id_formato
+            End If
 
-            For Each linea As I_Prefijo_simple In Fin_documento
-                linea.Id_formato = Id_formato
-            Next
+            If Not IsNothing(Detalles_saldo) Then
+                Detalles_saldo.Id_formato = Id_formato
+            End If
+
+            If Not IsNothing(Folio) Then
+                Folio.Id_formato = Id_formato
+            End If
+
+            If Not IsNothing(Referencia) Then
+                Referencia.Id_formato = Id_formato
+            End If
+
+            If Not IsNothing(Fechas_registro) Then
+                For linea As Integer = 0 To Fechas_registro.Count - 1
+                    _fechas_registro(linea).Id_formato = Id_formato
+                Next
+            End If
+
+            If Not IsNothing(Ignora_parcial) Then
+                For linea As Integer = 0 To Ignora_parcial.Count - 1
+                    _ignora_parcial(linea).Id_formato = Id_formato
+                Next
+            End If
+
+            If Not IsNothing(Fin_documento) Then
+                For linea As Integer = 0 To Fin_documento.Count - 1
+                    _fin_documento(linea).Id_formato = Id_formato
+                Next
+            End If
 
         Catch ex As Exception
             X(ex)

@@ -34,7 +34,7 @@ Module mGeneral
 
     Public Sub X(ByVal ex As Exception)
         If (G_MostrarErrores) Then
-            Msg(ex.Message, 3)
+            Msg(ex.StackTrace.ToString, 3)
         End If
         Try
             If G_ErrorLog Then
