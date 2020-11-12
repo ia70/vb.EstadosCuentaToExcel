@@ -33,28 +33,58 @@
     ],
     "tipo_operacion": [
         {
-            "cadena": "SPEI RECIBIDO",
-            "tipo": 1
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "SPEI RECIBIDO"
+                }
+            ]
         },
         {
-            "cadena": "DEPOSITO DE CUENTA DE TERCEROS",
-            "tipo": 1
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "DEPOSITO DE CUENTA DE TERCEROS"
+                }
+            ]
         },
         {
-            "cadena": "LIQ.INT.BRUTOS LIQ",
-            "tipo": 1
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "LIQ.INT.BRUTOS LIQ"
+                }
+            ]
         },
         {
-            "cadena": "ORDEN DE PAGO",
-            "tipo": 0
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "ORDEN DE PAGO"
+                }
+            ]
         },
         {
-            "cadena": "TRASPASO A CUENTA DE TERCEROS",
-            "tipo": 0
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "TRASPASO A CUENTA DE TERCEROS"
+                }
+            ]
         },
         {
-            "cadena": "I.S.R.",
-            "tipo": 0
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "I.S.R."
+                }
+            ]
         }
     ],
     "prefijos": {

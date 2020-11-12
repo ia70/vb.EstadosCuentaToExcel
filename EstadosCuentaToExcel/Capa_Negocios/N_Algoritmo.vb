@@ -618,7 +618,7 @@ Public Class N_Algoritmo
         Dim operacion As String
 
         Try
-            For Each linea As I_Tipo_operacion In _formato.Tipo_operacion
+            For Each linea As I_Tipo_operacion_simple In _formato.Tipo_operacion
                 contiene = False
                 no_contiene = False
                 If cadena.Contains(linea.Cadena) Then

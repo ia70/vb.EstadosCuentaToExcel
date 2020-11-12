@@ -1,45 +1,30 @@
-﻿Public Class I_Tipo_operacion
+﻿Imports Capa_Identidad
+
+Public Class I_Tipo_operacion
     Private _id As Integer
     Private _id_formato As String
-    Private _cadena As String
-    Private _cadena_adicional_1 As String
-    Private _cadena_adicional_2 As String
-    Private _cadena_no_contener As String
     Private _tipo As Boolean
 
+    Private _condiciones As List(Of I_Condicion)
+
+#Region "CONSTRUCTOR"
     Public Sub New()
     End Sub
 
-    Public Sub New(id As Integer, cadena As String)
+    Public Sub New(id As Integer, id_formato As String, tipo As Boolean, condiciones As List(Of I_Condicion))
         Me.Id = id
-        Me.Cadena = cadena
+        Me.Id_formato = id_formato
+        Me.Tipo = tipo
+        Me.Condiciones = condiciones
     End Sub
-
-    Public Sub New(id As Integer, id_formato As String, cadena As String, cadena_adicional_1 As String, cadena_adicional_2 As String, cadena_no_contener As String, tipo As Boolean)
-        _id = id
-        _id_formato = id_formato
-        _cadena = cadena
-        _cadena_adicional_1 = cadena_adicional_1
-        _cadena_adicional_2 = cadena_adicional_2
-        _cadena_no_contener = cadena_no_contener
-        _tipo = tipo
-    End Sub
-
+#End Region
+#Region "PROPIEDADES"
     Public Property Id As Integer
         Get
             Return _id
         End Get
         Set(value As Integer)
             _id = value
-        End Set
-    End Property
-
-    Public Property Cadena As String
-        Get
-            Return _cadena
-        End Get
-        Set(value As String)
-            _cadena = value
         End Set
     End Property
 
@@ -52,33 +37,6 @@
         End Set
     End Property
 
-    Public Property Cadena_adicional_1 As String
-        Get
-            Return _cadena_adicional_1
-        End Get
-        Set(value As String)
-            _cadena_adicional_1 = value
-        End Set
-    End Property
-
-    Public Property Cadena_adicional_2 As String
-        Get
-            Return _cadena_adicional_2
-        End Get
-        Set(value As String)
-            _cadena_adicional_2 = value
-        End Set
-    End Property
-
-    Public Property Cadena_no_contener As String
-        Get
-            Return _cadena_no_contener
-        End Get
-        Set(value As String)
-            _cadena_no_contener = value
-        End Set
-    End Property
-
     Public Property Tipo As Boolean
         Get
             Return _tipo
@@ -87,4 +45,29 @@
             _tipo = value
         End Set
     End Property
+
+    Public Property Condiciones As List(Of I_Condicion)
+        Get
+            Return _condiciones
+        End Get
+        Set(value As List(Of I_Condicion))
+            _condiciones = value
+        End Set
+    End Property
+#End Region
+#Region "FUNCIONES"
+    Public Sub SetIdCampos(ByVal id_ As Integer)
+
+        Try
+            For i As Integer = 0 To Condiciones.Count - 1
+                Condiciones(i).Id_tipo_operacion = Id
+                Condiciones(i).Id_formato = Id_formato
+            Next
+        Catch ex As Exception
+            X(ex)
+        End Try
+
+    End Sub
+#End Region
+
 End Class

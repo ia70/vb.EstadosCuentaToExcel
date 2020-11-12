@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="I_Archivo.vb" />
+    <Compile Include="I_Condicion.vb" />
     <Compile Include="I_Conexion.vb" />
     <Compile Include="I_Configuracion.vb" />
     <Compile Include="I_Fechas.vb" />
@@ -73,6 +74,7 @@
     <Compile Include="I_Campos.vb" />
     <Compile Include="I_Prefijos.vb" />
     <Compile Include="I_Tipo_operacion.vb" />
+    <Compile Include="I_Tipo_operacion_simple.vb" />
     <Compile Include="I_Prefijo_simple.vb" />
     <Compile Include="I_Formato_simple.vb" />
     <Compile Include="mGeneral.vb" />

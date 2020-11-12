@@ -8,79 +8,109 @@
         {
             "nombre": "Fecha",
             "tipo": "DateTime",
-            "IdCampo":"FechaOperacion"
+            "IdCampo": "FechaOperacion"
         },
         {
             "nombre": "Concepto",
             "tipo": "String",
-            "IdCampo":"Concepto"
+            "IdCampo": "Concepto"
         },
         {
             "nombre": "Retiros",
             "tipo": "Decimal",
-            "IdCampo":"Retiro"
+            "IdCampo": "Retiro"
         },
         {
             "nombre": "Depósitos",
             "tipo": "Decimal",
-            "IdCampo":"Deposito"
+            "IdCampo": "Deposito"
         },
         {
             "nombre": "Saldo",
             "tipo": "Decimal",
-            "IdCampo":"SaldoOperacion"
+            "IdCampo": "SaldoOperacion"
         }
     ],
     "tipo_operacion": [
         {
-            "cadena": "PAGO RECIBIDO",
-            "tipo":1
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "PAGO RECIBIDO"
+                }
+            ]
         },
         {
-            "cadena": "CTA.ORDENANTE",
-            "tipo":1
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "CTA.ORDENANTE"
+                }
+            ]
         },
         {
-            "cadena": "DEPOSITO",
-            "tipo":1
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "DEPOSITO"
+                }
+            ]
         },
         {
-            "cadena": "PAGO INTERBANCARIO",
-            "tipo":0
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "PAGO INTERBANCARIO"
+                }
+            ]
         },
         {
-            "cadena": "PAGO A TERCEROS",
-            "tipo":0
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "PAGO A TERCEROS"
+                }
+            ]
         },
         {
-            "cadena": "PAGO DE SERVICIO",
-            "tipo":0
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "PAGO DE SERVICIO"
+                }
+            ]
         }
     ],
     "prefijos": {
         "rfc": {
-            "tipo":"rfc",
+            "tipo": "rfc",
             "inicio": "Registro Federal de Contribuyentes: ",
             "fin": "\n"
         },
         "fecha_general": {
-            "tipo":"fecha_general",
+            "tipo": "fecha_general",
             "inicio": "CONTRATO SALDO ANTERIOR SALDO AL ",
             "fin": "\n",
             "separador": "/"
         },
         "no_cuenta": {
-            "tipo":"no_cuenta",
+            "tipo": "no_cuenta",
             "inicio": "Cuenta de Cheques Moneda\nNacional ",
             "fin": " "
         },
         "saldo_anterior": {
-            "tipo":"saldo_anterior",
+            "tipo": "saldo_anterior",
             "inicio": "SALDO ANTERIOR  ",
             "fin": "\n"
         },
         "detalles_saldo": {
-            "tipo":"detalles_saldo",
+            "tipo": "detalles_saldo",
             "inicio": "FECHA CONCEPTO RETIROS DEPOSITOS SALDO\n"
         },
         "fechas_registro": [
@@ -96,14 +126,14 @@
         ],
         "ignora_parcial": [
             {
-                "tipo":"ignora_parcial",
+                "tipo": "ignora_parcial",
                 "inicio": "000180.",
                 "fin": "FECHA CONCEPTO RETIROS DEPOSITOS SALDO\n"
             }
         ],
         "fin_documento": [
             {
-                "tipo":"fin_documento",
+                "tipo": "fin_documento",
                 "fin": "SALDO MINIMO REQUERIDO\n"
             }
         ]

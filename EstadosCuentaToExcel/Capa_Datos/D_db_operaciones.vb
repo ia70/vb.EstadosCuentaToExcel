@@ -92,6 +92,30 @@
     End Function
 
     ''' <summary>
+    ''' Devuelve el ultimo id insertado en la tabla AUTO-INCREMENT
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function GetUltimoID() As Integer
+        Dim DB As New D_DB_Core
+        Dim sql As String
+        Dim Res As DataTable
+        Dim indice As Integer
+
+        Try
+            sql = "SELECT MAX(id) FROM " & Tabla
+            Res = DB.Query(sql)
+
+            indice = Res.Rows(0).Item(0)
+
+            Return indice
+        Catch ex As Exception
+            X(ex)
+            Return -1
+        End Try
+
+    End Function
+
+    ''' <summary>
     ''' Editar un registro
     ''' </summary>
     ''' <param name="Obj">Objeto Identidad</param>
