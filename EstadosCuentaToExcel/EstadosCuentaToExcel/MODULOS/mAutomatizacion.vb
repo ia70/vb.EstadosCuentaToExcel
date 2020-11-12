@@ -223,8 +223,10 @@ Module mAutomatizacion
     ''' <param name="e"></param>
     Private Sub FSWC_Created(sender As Object, e As FileSystemEventArgs) Handles FSWC.Created
         Try
-            If ProcesarArchivo(e.FullPath) Then
-                DB_FICHEROS_PROCESADOS.Insertar(New I_Ficheros_procesados(e.FullPath))
+            If Not DB_FICHEROS_PROCESADOS.Existe(e.FullPath) Then
+                If ProcesarArchivo(e.FullPath) Then
+                    DB_FICHEROS_PROCESADOS.Insertar(New I_Ficheros_procesados(e.FullPath))
+                End If
             End If
         Catch ex As Exception
             X(ex)

@@ -5,19 +5,36 @@
     Public Sub New()
     End Sub
 
-    Public Sub New(ByVal nombre As String)
-        Try
-            _nombre = nombre.Substring(4)
-            _nombre = _nombre.Replace("\", "^")
-        Catch ex As Exception
-            X(ex)
-        End Try
-
+    Public Sub New(ByVal nombre_ As String)
+        _nombre = GetNombre(nombre_)
     End Sub
 
-    Public Sub New(ByVal id As Integer, ByVal nombre As String)
+    Private Function GetNombre(ByVal cadena As String) As String
+        Dim indice As Integer
+        Dim nom As String
+
+        Try
+            indice = cadena.IndexOf(":\")
+            cadena = cadena.Replace("\", "^")
+            If indice >= 0 Then
+                indice -= 1
+            Else
+                indice = 0
+            End If
+
+            nom = cadena.Substring(indice)
+
+            Return nom
+        Catch ex As Exception
+            X(ex)
+            Return cadena
+        End Try
+
+    End Function
+
+    Public Sub New(ByVal id As Integer, ByVal nombre_ As String)
         _id = id
-        _nombre = nombre
+        _nombre = GetNombre(nombre_)
     End Sub
 
     Public Property Id As Integer
@@ -34,12 +51,7 @@
             Return _nombre
         End Get
         Set(value As String)
-            Try
-                _nombre = value.Substring(4)
-                _nombre = _nombre.Replace("\", "^")
-            Catch ex As Exception
-                X(ex)
-            End Try
+            _nombre = GetNombre(value)
         End Set
     End Property
 End Class

@@ -37,7 +37,6 @@ Public Class N_Formato
         Dim f_simple As New I_Formato_simple
         Dim db_f As New D_db_operaciones(tabla)
         Dim db_fce As New N_Tipo_operacion
-        Dim db_fci As New N_Tipo_operacion
         Dim db_fc As New N_Campos
         Dim db_fg As New N_Prefijos
 
@@ -67,13 +66,6 @@ Public Class N_Formato
             For Each ifce As I_Tipo_operacion In iden_formato.Tipo_operacion
                 ifce.Id_formato = iden_formato.Id_formato
                 If Not db_fce.Insertar(ifce) Then
-                    Throw New Exception("Error")
-                End If
-            Next
-
-            For Each ifci As I_Tipo_operacion In iden_formato.Tipo_operacion
-                ifci.Id_formato = iden_formato.Id_formato
-                If Not db_fci.Insertar(ifci) Then
                     Throw New Exception("Error")
                 End If
             Next

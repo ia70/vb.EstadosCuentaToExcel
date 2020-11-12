@@ -34,59 +34,82 @@
     "tipo_operacion": [
         {
             "cadena": "SPEI RECIBIDO",
-            "tipo":1
+            "tipo": 1
         },
         {
             "cadena": "DEPOSITO DE CUENTA DE TERCEROS",
-            "tipo":1
+            "tipo": 1
         },
         {
-            "cadena": "COMPRA ORDEN DE PAGO SPEI",
-            "tipo":0
+            "cadena": "LIQ.INT.BRUTOS LIQ",
+            "tipo": 1
         },
         {
-            "cadena": "COMISION ORDEN DE PAGO SPEI",
-            "tipo":0
+            "cadena": "ORDEN DE PAGO",
+            "tipo": 0
         },
         {
             "cadena": "TRASPASO A CUENTA DE TERCEROS",
-            "tipo":0
+            "tipo": 0
         },
         {
-            "cadena": "I.V.A. ORDEN DE PAGO SPEI",
-            "tipo":0
+            "cadena": "I.S.R.",
+            "tipo": 0
         }
     ],
     "prefijos": {
-        "rfc_ini": "RFC: ",
-        "rfc_fin": "\n",
-        "fecha_general_ini": "Fecha de corte ",
-        "fecha_general_fin": "\n",
-        "fecha_general_separador": "/",
-        "no_cuenta_ini": "INVERSION ENLACE NEGOCIOS ",
-        "no_cuenta_fin": " ",
-        "saldo_anterior_ini": " SALDO ANTERIOR ",
-        "saldo_anterior_fin": "\n",
-        "detalles_saldo_ini": "Enlace Negocios Basica\nFECHA DESCRIPCIÓN / ESTABLECIMIENTO MONTO DEL DEPOSITO MONTO DEL RETIRO SALDO\n",
-        "detalles_saldo_fin": "INVERSION ENLACE NEGOCIOS\n",
-
-        "fecha_operacion_activo": true,
-        "fecha_operacion_ini": "\n",
-        "fecha_operacion_fin": " ",
-        "fecha_operacion_dia_length": 2,
-        "fecha_operacion_mes_length": 3,
-        "fecha_operacion_anio_length": 2,
-        "fecha_operacion_separador_dia_mes": "-",
-
-        "fecha_liquidacion_activo": false,
-        "fecha_liquidacion_ini": "",
-        "fecha_liquidacion_fin": "",
-        "fecha_liquidacion_dia_length": 0,
-        "fecha_liquidacion_mes_length": 0,
-        "fecha_liquidacion_anio_length": 0,
-        "fecha_liquidacion_separador_dia_mes": "",
-
-        "ignora_parcial_ini": "\nLínea Directa para su empresa:\n",
-        "ignora_parcial_fin": "MONTO DEL DEPOSITO MONTO DEL RETIRO SALDO\n"
+        "rfc": {
+            "tipo":"rfc",
+            "inicio": "RFC: ",
+            "fin": "\n"
+        },
+        "fecha_general": {
+            "tipo":"fecha_general",
+            "inicio": "Fecha de corte ",
+            "fin": "\n",
+            "separador": "/"
+        },
+        "no_cuenta": {
+            "tipo":"no_cuenta",
+            "inicio": "INVERSION ENLACE NEGOCIOS ",
+            "fin": " "
+        },
+        "saldo_anterior": {
+            "tipo":"saldo_anterior",
+            "inicio": " SALDO ANTERIOR ",
+            "fin": "\n"
+        },
+        "detalles_saldo": {
+            "tipo":"detalles_saldo",
+            "inicio": "MONTO DEL DEPOSITO MONTO DEL RETIRO SALDO\n"
+        },
+        "fechas_registro": [
+            {
+                "tipo": "Operacion",
+                "inicio": "\n",
+                "fin": " ",
+                "dia_length": 2,
+                "mes_length": 3,
+                "anio_length": 2,
+                "separador": "-"
+            }
+        ],
+        "ignora_parcial": [
+            {
+                "tipo":"ignora_parcial",
+                "inicio": "\nLínea Directa para su empresa:\n",
+                "fin": "MONTO DEL DEPOSITO MONTO DEL RETIRO SALDO\n"
+            }
+        ],
+        "fin_documento": [
+            {
+                "tipo":"fin_documento",
+                "fin": "INVERSION ENLACE NEGOCIOS\n"
+            },
+            {
+                "tipo":"fin_documento",
+                "fin": "MENSAJES IMPORTANTES\n"
+            }
+        ]
     }
 }

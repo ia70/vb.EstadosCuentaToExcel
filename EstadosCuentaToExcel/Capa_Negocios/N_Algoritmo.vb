@@ -154,22 +154,24 @@ Public Class N_Algoritmo
         End Try
 
         Try
-            With Formato.Prefijos
+            'QUITAR ENCABEZADO
+            indice = cadena.IndexOf(Formato.Prefijos.Detalles_saldo.Inicio)
+            cadena = cadena.Substring(indice + Formato.Prefijos.Detalles_saldo.Inicio.Length)
 
-                'QUITAR ENCABEZADO
-                indice = cadena.IndexOf(.Detalles_saldo_ini)
-                cadena = cadena.Substring(indice + .Detalles_saldo_ini.Length)
+            'QUITAR PIE
+            For Each linea As I_Prefijo_simple In Formato.Prefijos.Fin_documento
+                indice = cadena.IndexOf(linea.Fin)
+                If indice >= 0 Then
+                    cadena = cadena.Substring(0, indice)
+                    Exit For
+                End If
+            Next
 
-                'QUITAR PIE
-                indice = cadena.IndexOf(.Detalles_saldo_fin)
-                cadena = cadena.Substring(0, indice)
+            'QUITAR PARCIAL
+            For Each linea As I_Prefijo_simple In Formato.Prefijos.Ignora_parcial
+                cadena = LimpiaParcial(cadena, linea.Inicio, linea.Fin)
+            Next
 
-                'QUITAR PARCIAL
-                cadena = LimpiaParcial(cadena, .Ignora_parcial_ini, .Ignora_parcial_fin)
-                cadena = LimpiaParcial(cadena, .Ignora_parcial_adicional_1_ini, .Ignora_parcial_adicional_1_fin)
-                cadena = LimpiaParcial(cadena, .Ignora_parcial_adicional_2_ini, .Ignora_parcial_adicional_2_fin)
-
-            End With
         Catch ex As Exception
             X(ex)
         End Try
@@ -190,20 +192,24 @@ Public Class N_Algoritmo
 
         Try
             If cadena.Length > 0 Then
-                With Formato.Prefijos
+                If ini.Length > 0 And fin.Length > 0 Then
+                    With Formato.Prefijos
 
-                    'QUITAR PARCIAL
-                    While cadena.IndexOf(ini) >= 0
-                        indice = cadena.IndexOf(ini)
+                        'QUITAR PARCIAL
+                        While cadena.IndexOf(ini) >= 0
+                            indice = cadena.IndexOf(ini)
 
-                        aux = cadena.Substring(0, indice)
-                        indice = cadena.IndexOf(fin)
+                            aux = cadena.Substring(0, indice)
+                            indice = cadena.IndexOf(fin)
 
-                        aux2 = cadena.Substring(indice + fin.Length)
-                        cadena = aux + aux2
-                    End While
+                            aux2 = cadena.Substring(indice + fin.Length)
+                            cadena = aux + aux2
+                        End While
 
-                End With
+                    End With
+                Else
+                    Return cadena
+                End If
             End If
         Catch ex As Exception
             X(ex)
@@ -333,6 +339,12 @@ Public Class N_Algoritmo
         cadena = cadena.Replace("  ", " ")
         cadena = InsertarSaltoslinea(cadena, 100)
 
+        'OBTIENE FOLIO
+        If Formato.Prefijos.Folio.Size > 0 Then
+            Folio = cadena.Substring(0, Formato.Prefijos.Folio.Size + 1)
+            cadena = cadena.Remove(0, Formato.Prefijos.Folio.Size + 1)
+        End If
+
         'OBTIENE CADENAS --------------------------------------------
         cadenas.Add(cadena)
 
@@ -345,12 +357,6 @@ Public Class N_Algoritmo
             Fecha_Operacion = fechas(0)
             If fechas.Count = 2 Then
                 Fecha_Liquidacion = fechas(1)
-            End If
-
-            'Folio
-            If Formato.Prefijos.Folio_activo Then
-                Folio = cadena.Substring(0, Formato.Prefijos.Folio_length + 1)
-                cadena = cadena.Remove(0, Formato.Prefijos.Folio_length + 1)
             End If
 
             'Cadenas
@@ -525,18 +531,18 @@ Public Class N_Algoritmo
         copy = cadena
 
         Try
-            With _formato.Prefijos
-                If .Fecha_operacion_dia_length > 0 Then
-                    aux = cadena.Substring(0, .Fecha_operacion_dia_length)
+            With _formato.Prefijos.Fechas_registro(0)
+                If .Dia_length > 0 Then
+                    aux = cadena.Substring(0, .Dia_length)
                     If IsNumeric(aux) Then
-                        cadena = cadena.Substring(.Fecha_operacion_dia_length)
-                        aux = cadena.Substring(0, .Fecha_operacion_separador_dia_mes.Length)
-                        If aux = .Fecha_operacion_separador_dia_mes Then
-                            If .Fecha_operacion_mes_length > 0 Then
-                                cadena = cadena.Substring(.Fecha_operacion_separador_dia_mes.Length)
-                                aux = cadena.Substring(0, .Fecha_operacion_mes_length)
+                        cadena = cadena.Substring(.Dia_length)
+                        aux = cadena.Substring(0, .Separador.Length)
+                        If aux = .Separador Then
+                            If .Mes_length > 0 Then
+                                cadena = cadena.Substring(.Separador.Length)
+                                aux = cadena.Substring(0, .Mes_length)
 
-                                Select Case .Fecha_operacion_mes_length
+                                Select Case .Mes_length
                                     Case 2
                                         veri = IsNumeric(aux)
                                     Case 3
@@ -546,23 +552,23 @@ Public Class N_Algoritmo
                                 End Select
 
                                 If veri Then
-                                    If .Fecha_operacion_anio_length > 0 Then
-                                        cadena = cadena.Substring(.Fecha_operacion_mes_length)
-                                        aux = cadena.Substring(0, .Fecha_operacion_separador_dia_mes.Length)
+                                    If .Anio_length > 0 Then
+                                        cadena = cadena.Substring(.Mes_length)
+                                        aux = cadena.Substring(0, .Separador.Length)
 
-                                        If aux = .Fecha_operacion_separador_dia_mes Then
-                                            cadena = cadena.Substring(.Fecha_operacion_separador_dia_mes.Length)
-                                            aux = cadena.Substring(0, .Fecha_operacion_anio_length)
+                                        If aux = .Separador Then
+                                            cadena = cadena.Substring(.Separador.Length)
+                                            aux = cadena.Substring(0, .Anio_length)
 
                                             If IsNumeric(aux) Then
-                                                cadena = cadena.Substring(.Fecha_operacion_anio_length)
+                                                cadena = cadena.Substring(.Anio_length)
                                                 If cadena.Length = 0 Then
                                                     Return True
                                                 End If
                                             End If
                                         End If
                                     Else
-                                        cadena = cadena.Substring(.Fecha_operacion_mes_length)
+                                        cadena = cadena.Substring(.Mes_length)
                                         If cadena.Length = 0 Then
                                             Return True
                                         End If
@@ -643,13 +649,14 @@ Public Class N_Algoritmo
     ''' Procesa el texto del PDF para obtener todos los datos
     ''' </summary>
     Public Sub ProcesarFichero()
-        Dim cadena As String = _textopdf
+        Dim cadena As String
         Dim campos As List(Of String)
         Dim aux As String
         Dim indice As Integer
 
         'Se quita toda la información que no pertenece al cuerpo del documento
         _textopdf = LimpiarTexto(_textopdf)
+        cadena = _textopdf
 
         'Se comienza a procesar el cuerpo del documento
         aux = GetLinea(cadena)
@@ -709,7 +716,7 @@ Public Class N_Algoritmo
 
         'Calcular tamaño de fecha si fecha liquidacion activo
         sizeFechaLocal = _size_fecha
-        If _formato.Prefijos.Fecha_liquidacion_activo Then
+        If _formato.Prefijos.Fechas_registro.Count > 1 Then
             sizeFechaLocal += sizeFechaLocal + 1
         End If
 
@@ -762,16 +769,21 @@ Public Class N_Algoritmo
     ''' </summary>
     Private Sub GetSizeFecha()
         Dim size As Integer
-        With _formato.Prefijos
 
-            size = .Fecha_operacion_dia_length + .Fecha_operacion_mes_length + .Fecha_operacion_anio_length
-            If .Fecha_operacion_mes_length > 0 Then
-                size += .Fecha_operacion_separador_dia_mes.Length
-            End If
-            If .Fecha_operacion_anio_length > 0 Then
-                size += .Fecha_operacion_separador_dia_mes.Length
-            End If
-        End With
+        Try
+            With _formato.Prefijos.Fechas_registro(0)
+
+                size = .Dia_length + .Mes_length + .Anio_length
+                If .Mes_length > 0 Then
+                    size += .Separador.Length
+                End If
+                If .Anio_length > 0 Then
+                    size += .Separador.Length
+                End If
+            End With
+        Catch ex As Exception
+            X(ex)
+        End Try
 
         _size_fecha = size
     End Sub
@@ -784,7 +796,7 @@ Public Class N_Algoritmo
     ''' </summary>
     ''' <returns></returns>
     Private Function GetRFC() As String
-        Return GetCampo(_formato.Prefijos.Rfc_ini, _formato.Prefijos.Rfc_fin)
+        Return GetCampo(_formato.Prefijos.Rfc.Inicio, _formato.Prefijos.Rfc.Fin)
     End Function
 
     ''' <summary>
@@ -795,7 +807,7 @@ Public Class N_Algoritmo
         Dim saldo As String = "0"
 
         Try
-            saldo = GetCampo(_formato.Prefijos.Saldo_anterior_ini, _formato.Prefijos.Saldo_anterior_fin)
+            saldo = GetCampo(_formato.Prefijos.Saldo_anterior.Inicio, _formato.Prefijos.Saldo_anterior.Fin)
         Catch ex As Exception
             X(ex)
         End Try
@@ -812,9 +824,9 @@ Public Class N_Algoritmo
         Dim vfecha, separador, aux, dia, anio, mes As String
         Dim fecha As Date
 
-        separador = _formato.Prefijos.Fecha_general_separador
+        separador = _formato.Prefijos.Fecha_general.Separador
         Try
-            vfecha = GetCampo(_formato.Prefijos.Fecha_general_ini, _formato.Prefijos.Fecha_general_fin)
+            vfecha = GetCampo(_formato.Prefijos.Fecha_general.Inicio, _formato.Prefijos.Fecha_general.Fin)
 
             'Obtencion de parametros individuales --------------------------------------------------------------------
             'OBTENER DIA ---------------------
@@ -850,7 +862,7 @@ Public Class N_Algoritmo
         Dim noCuenta As String = ""
 
         Try
-            noCuenta = GetCampo(_formato.Prefijos.No_cuenta_ini, _formato.Prefijos.No_cuenta_fin)
+            noCuenta = GetCampo(_formato.Prefijos.No_cuenta.Inicio, _formato.Prefijos.No_cuenta.Fin)
         Catch ex As Exception
             X(ex)
         End Try

@@ -87,6 +87,7 @@
     <Compile Include="N_Conexion.vb" />
     <Compile Include="N_Configuracion.vb" />
     <Compile Include="N_ExportarExcel.vb" />
+    <Compile Include="N_Fechas.vb" />
     <Compile Include="N_Ficheros_procesados.vb" />
     <Compile Include="N_Formato.vb" />
     <Compile Include="N_Campos.vb" />
