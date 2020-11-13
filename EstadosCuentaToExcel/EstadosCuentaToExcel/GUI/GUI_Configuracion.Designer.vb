@@ -23,7 +23,9 @@ Partial Class GUI_Configuracion
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(GUI_Configuracion))
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -44,6 +46,7 @@ Partial Class GUI_Configuracion
         Me.txtIP = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.btnInicioWindows = New System.Windows.Forms.CheckBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -56,7 +59,6 @@ Partial Class GUI_Configuracion
         Me.btnImportar = New System.Windows.Forms.Button()
         Me.dlgFile = New System.Windows.Forms.OpenFileDialog()
         Me.Notificacion = New System.Windows.Forms.NotifyIcon(Me.components)
-        Me.btnInicioWindows = New System.Windows.Forms.CheckBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -291,6 +293,18 @@ Partial Class GUI_Configuracion
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "General"
         '
+        'btnInicioWindows
+        '
+        Me.btnInicioWindows.AutoSize = True
+        Me.btnInicioWindows.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnInicioWindows.ForeColor = System.Drawing.Color.DodgerBlue
+        Me.btnInicioWindows.Location = New System.Drawing.Point(16, 191)
+        Me.btnInicioWindows.Name = "btnInicioWindows"
+        Me.btnInicioWindows.Size = New System.Drawing.Size(182, 23)
+        Me.btnInicioWindows.TabIndex = 12
+        Me.btnInicioWindows.Text = "Iniciar con Windows"
+        Me.btnInicioWindows.UseVisualStyleBackColor = True
+        '
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.SteelBlue
@@ -384,20 +398,36 @@ Partial Class GUI_Configuracion
         Me.dgTabla.AllowUserToAddRows = False
         Me.dgTabla.AllowUserToResizeColumns = False
         Me.dgTabla.AllowUserToResizeRows = False
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.Azure
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White
-        Me.dgTabla.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.Azure
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White
+        Me.dgTabla.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.dgTabla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgTabla.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dgTabla.BackgroundColor = System.Drawing.Color.White
         Me.dgTabla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgTabla.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgTabla.Location = New System.Drawing.Point(12, 74)
         Me.dgTabla.MultiSelect = False
         Me.dgTabla.Name = "dgTabla"
         Me.dgTabla.ReadOnly = True
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgTabla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.dgTabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgTabla.Size = New System.Drawing.Size(289, 301)
         Me.dgTabla.TabIndex = 12
@@ -426,18 +456,6 @@ Partial Class GUI_Configuracion
         Me.Notificacion.Icon = CType(resources.GetObject("Notificacion.Icon"), System.Drawing.Icon)
         Me.Notificacion.Text = "13Ponientes"
         Me.Notificacion.Visible = True
-        '
-        'btnInicioWindows
-        '
-        Me.btnInicioWindows.AutoSize = True
-        Me.btnInicioWindows.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnInicioWindows.ForeColor = System.Drawing.Color.DodgerBlue
-        Me.btnInicioWindows.Location = New System.Drawing.Point(16, 191)
-        Me.btnInicioWindows.Name = "btnInicioWindows"
-        Me.btnInicioWindows.Size = New System.Drawing.Size(182, 23)
-        Me.btnInicioWindows.TabIndex = 12
-        Me.btnInicioWindows.Text = "Iniciar con Windows"
-        Me.btnInicioWindows.UseVisualStyleBackColor = True
         '
         'GUI_Configuracion
         '

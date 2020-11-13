@@ -20,7 +20,6 @@ Public Class GUI_Configuracion
         End Try
 
 #End Region
-
         Try
             If Not G_Proceso_Activo Then
                 If G_Formatos.Count > 0 Then
