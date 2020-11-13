@@ -16,7 +16,7 @@ Public Class GUI_Configuracion
                 btnInicioWindows.Checked = False
             End If
         Catch ex As Exception
-            X(ex)
+            'X(ex)
         End Try
 
 #End Region
@@ -262,7 +262,7 @@ Public Class GUI_Configuracion
         End If
     End Sub
 
-    Private Sub BtnInicioWindows_CheckedChanged(sender As Object, e As EventArgs) Handles btnInicioWindows.CheckedChanged
+    Private Sub BtnInicioWindows_Click(sender As Object, e As EventArgs) Handles btnInicioWindows.Click
         EscribirRegistro()
     End Sub
 #End Region
