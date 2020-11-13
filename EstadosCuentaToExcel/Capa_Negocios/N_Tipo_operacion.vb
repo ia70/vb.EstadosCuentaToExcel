@@ -80,7 +80,7 @@ Public Class N_Tipo_operacion
                 With iden
                     .Id = GetInt(linea.Item(0))
                     .Id_formato = GetStr(linea.Item(1))
-                    .Tipo = GetInt(linea.Item(2))
+                    .Tipo = GetBool(linea.Item(2))
                     .Condiciones = db_condicion.Consultar(.Id)
                 End With
 

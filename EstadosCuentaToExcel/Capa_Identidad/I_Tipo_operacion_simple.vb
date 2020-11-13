@@ -1,12 +1,12 @@
 ﻿Public Class I_Tipo_operacion_simple
     Private _id As Integer
     Private _id_formato As String
-    Private _tipo As Integer
+    Private _tipo As Boolean
 
     Public Sub New()
     End Sub
 
-    Public Sub New(id As Integer, id_formato As String, tipo As Integer)
+    Public Sub New(id As Integer, id_formato As String, tipo As Boolean)
         _id = id
         _id_formato = id_formato
         _tipo = tipo
@@ -30,11 +30,11 @@
         End Set
     End Property
 
-    Public Property Tipo As Integer
+    Public Property Tipo As Boolean
         Get
             Return _tipo
         End Get
-        Set(value As Integer)
+        Set(value As Boolean)
             _tipo = value
         End Set
     End Property

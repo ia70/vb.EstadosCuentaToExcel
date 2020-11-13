@@ -613,47 +613,32 @@ Public Class N_Algoritmo
     ''' <param name="cadena"></param>
     ''' <returns></returns>
     Protected Overridable Function GetOperacion(ByVal cadena As String) As String
-        Dim contiene As Boolean     'Especifica si cumple con las condiciones de similitud de palabras
-        Dim no_contiene As Boolean  'True si no contiene la cadena que no debe contener
-        Dim operacion As String
+        Dim verdadero As Boolean
 
         Try
             For Each linea As I_Tipo_operacion In _formato.Tipo_operacion
-                contiene = False
-                no_contiene = False
-                If cadena.Contains(linea.Cadena) Then
-                    If linea.Cadena_adicional_1.Length > 0 Then
-                        If cadena.Contains(linea.Cadena_adicional_1) Then
-                            If linea.Cadena_adicional_2.Length > 0 Then
-                                If cadena.Contains(linea.Cadena_adicional_2) Then
-                                    contiene = True
-                                End If
-                            Else
-                                contiene = True
-                            End If
+                verdadero = True
+                For Each condicion As I_Condicion In linea.Condiciones
+                    If condicion.Tipo Then
+                        If Not cadena.Contains(condicion.Cadena) Then
+                            verdadero = False
+                            Exit For
                         End If
                     Else
-                        contiene = True
-                    End If
-
-                    If linea.Cadena_no_contener.Length > 0 Then
-                        If Not cadena.Contains(linea.Cadena_no_contener) Then
-                            no_contiene = True
+                        If cadena.Contains(condicion.Cadena) Then
+                            verdadero = False
+                            Exit For
                         End If
+                    End If
+                Next
+
+                If verdadero Then
+                    If linea.Tipo Then
+                        Return "Deposito"
                     Else
-                        no_contiene = True
-                    End If
-
-                    If contiene And no_contiene Then
-                        If linea.Tipo Then
-                            operacion = "Deposito"
-                        Else
-                            operacion = "Retiro"
-                        End If
-                        Return operacion
+                        Return "Retiro"
                     End If
                 End If
-
             Next
         Catch ex As Exception
             X(ex)

@@ -60,7 +60,7 @@ Public Class I_Tipo_operacion
 
         Try
             For i As Integer = 0 To Condiciones.Count - 1
-                Condiciones(i).Id_tipo_operacion = Id
+                Condiciones(i).Id_tipo_operacion = id_
                 Condiciones(i).Id_formato = Id_formato
             Next
         Catch ex As Exception

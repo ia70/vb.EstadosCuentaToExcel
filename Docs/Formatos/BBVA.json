@@ -65,6 +65,15 @@
             "condiciones": [
                 {
                     "tipo": 1,
+                    "cadena": "DEP.CHEQUES"
+                }
+            ]
+        },
+        {
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
                     "cadena": "PAGO CUENTA DE TERCERO"
                 },
                 {
@@ -78,18 +87,18 @@
             ]
         },
         {
-            "tipo": 1,
+            "tipo": 0,
             "condiciones": [
                 {
                     "tipo": 1,
-                    "cadena": "DEP.CHEQUES"
+                    "cadena": "PAGO CUENTA DE TERCERO"
+                },
+                {
+                    "tipo":1,
+                    "cadena":"FACTURA"
                 }
             ]
         },
-
-
-
-
         {
             "tipo": 0,
             "condiciones": [
@@ -105,19 +114,6 @@
                 {
                     "tipo": 1,
                     "cadena": "SERV BCA"
-                }
-            ]
-        },
-        {
-            "tipo": 0,
-            "condiciones": [
-                {
-                    "tipo": 1,
-                    "cadena": "PAGO CUENTA DE TERCERO"
-                },
-                {
-                    "tipo":1,
-                    "cadena":"FACTURA"
                 }
             ]
         },
