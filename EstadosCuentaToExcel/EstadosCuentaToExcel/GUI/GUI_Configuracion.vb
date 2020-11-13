@@ -4,6 +4,23 @@ Imports Capa_Negocios
 Public Class GUI_Configuracion
 
     Private Sub GUI_Configuracion_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+#Region "REGISTRO DE WINDOWS"
+        Dim cadena As String
+
+        Try
+            cadena = My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True).GetValue(Application.ProductName).ToString
+            If Not cadena Is Nothing Then
+                btnInicioWindows.Checked = True
+            Else
+                btnInicioWindows.Checked = False
+            End If
+        Catch ex As Exception
+            X(ex)
+        End Try
+
+#End Region
+
         Try
             If Not G_Proceso_Activo Then
                 If G_Formatos.Count > 0 Then
@@ -219,4 +236,34 @@ Public Class GUI_Configuracion
         End Try
 
     End Sub
+
+#Region "FUNCIONES ADICIONALES"
+    Private Sub EscribirRegistro()
+        '------ CLAVE DEL PROGRAMA ------
+        If My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Xcoru", True) Is Nothing Then
+            On Error Resume Next
+            My.Computer.Registry.CurrentUser.CreateSubKey("SOFTWARE\Xcoru")
+        End If
+        If My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Xcoru\EstadosDeCuentas", True) Is Nothing Then
+            On Error Resume Next
+            My.Computer.Registry.CurrentUser.CreateSubKey("SOFTWARE\Xcoru\EstadosDeCuentas")
+        End If
+
+
+        '------ INICO CON WINDOWS ----------
+        If btnInicioWindows.Checked Then
+            On Error Resume Next
+            My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True).SetValue(Application.ProductName, Application.StartupPath & "\play.exe")
+            Msg("Inicio con windows activado!")
+        Else
+            On Error Resume Next
+            My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True).DeleteValue(Application.ProductName)
+            Msg("Inicio con windows desactivado!", 2)
+        End If
+    End Sub
+
+    Private Sub BtnInicioWindows_CheckedChanged(sender As Object, e As EventArgs) Handles btnInicioWindows.CheckedChanged
+        EscribirRegistro()
+    End Sub
+#End Region
 End Class

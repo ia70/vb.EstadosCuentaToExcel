@@ -15,6 +15,11 @@ Module mGeneral
         Msg("<..>", 3)
     End Sub
 
+    ''' <summary>
+    ''' Mensaje
+    ''' </summary>
+    ''' <param name="cadena">cadena</param>
+    ''' <param name="tipo">1 INFO| 2 EXCLAMATION | 3 CRITICAL | 4 QUESTION</param>
     Public Sub Msg(ByVal cadena As String, Optional ByVal tipo As Integer = 1)
         Dim icono As Integer
         Select Case tipo
@@ -32,6 +37,10 @@ Module mGeneral
         MsgBox(cadena, icono, G_EmpresaNombre)
     End Sub
 
+    ''' <summary>
+    ''' Control de errores
+    ''' </summary>
+    ''' <param name="ex">ex Exeption</param>
     Public Sub X(ByVal ex As Exception)
         If (G_MostrarErrores) Then
             Msg(ex.StackTrace.ToString, 3)

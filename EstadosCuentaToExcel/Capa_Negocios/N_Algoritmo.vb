@@ -345,14 +345,22 @@ Public Class N_Algoritmo
 
         'ELIMINA SALTOS DE LINEA Y ESPACIOS EN BLANCOS DUPLICADOS
         cadena = cadena.Replace(vbLf, " ")
-        cadena = cadena.Replace("   ", " ")
-        cadena = cadena.Replace("  ", " ")
+        cadena = cadena.Replace("$", " ")
+        While cadena.Contains("  ")
+            cadena = cadena.Replace("  ", " ")
+        End While
+        'ELimina espacios al inicio de cadena
+        cadena = RemoveEspaciosInicio(cadena)
+
         cadena = InsertarSaltoslinea(cadena, 100)
 
         'OBTIENE FOLIO
         If Not IsNothing(Formato.Prefijos.Folio) Then
-            Folio = cadena.Substring(0, Formato.Prefijos.Folio.Size + 1)
-            cadena = cadena.Remove(0, Formato.Prefijos.Folio.Size + 1)
+            aux = cadena.Substring(0, Formato.Prefijos.Folio.Size + 1)
+            If IsNumeric(aux) Then
+                Folio = aux
+                cadena = cadena.Remove(0, Formato.Prefijos.Folio.Size + 1)
+            End If
         End If
 
         'OBTIENE CADENAS --------------------------------------------
@@ -444,6 +452,13 @@ Public Class N_Algoritmo
         Dim aux, copy As String
 
         copy = cadena
+        'QUITAR ESPACIOS EN BLANCO AL COMIENZO DE LINEA
+        cadena = RemoveEspaciosInicio(cadena)
+
+        If size = 2 Then
+            size = 3
+        End If
+
         Try
             aux = cadena.Substring(0, size)
             Do
@@ -469,6 +484,26 @@ Public Class N_Algoritmo
             Return -1
         End Try
 
+    End Function
+
+    ''' <summary>
+    ''' Elimina los espacios en blanco al inicio de la cadena
+    ''' </summary>
+    ''' <param name="cadena"></param>
+    ''' <returns></returns>
+    Private Function RemoveEspaciosInicio(ByVal cadena As String) As String
+        Dim copy As String
+
+        copy = cadena
+        Try
+            While cadena(0) = " "
+                cadena = cadena.Substring(1)
+            End While
+            Return cadena
+        Catch ex As Exception
+            X(ex)
+            Return copy
+        End Try
     End Function
 
     ''' <summary>
@@ -549,7 +584,15 @@ Public Class N_Algoritmo
     Private Function VerificarFecha(ByVal cadena As String) As Boolean
         Dim aux, copy As String
         Dim veri As Boolean
+        Dim size As Integer
         copy = cadena
+
+        Try
+            size = cadena.Length
+        Catch ex As Exception
+            X(ex)
+            size = 0
+        End Try
 
         Try
             With _formato.Prefijos.Fechas_registro(0)
@@ -596,6 +639,7 @@ Public Class N_Algoritmo
                                     End If
                                 End If
                             End If
+                            Return True
                         End If
                     End If
                 End If
@@ -736,6 +780,7 @@ Public Class N_Algoritmo
                     cadena = copy.Substring(in1, in2 + sizeFechaLocal)
                     Return cadena
                 Else
+                    copy = RemoveEspaciosInicio(copy)
                     Return copy
                 End If
             Else
@@ -802,7 +847,17 @@ Public Class N_Algoritmo
     ''' </summary>
     ''' <returns></returns>
     Private Function GetRFC() As String
-        Return GetCampo(_formato.Prefijos.Rfc.Inicio, _formato.Prefijos.Rfc.Fin)
+        Dim cadena As String
+
+        Try
+            cadena = GetCampo(_formato.Prefijos.Rfc.Inicio, _formato.Prefijos.Rfc.Fin)
+            cadena = cadena.Replace(" ", "")
+        Catch ex As Exception
+            X(ex)
+            cadena = ""
+        End Try
+
+        Return cadena
     End Function
 
     ''' <summary>
