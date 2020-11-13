@@ -153,7 +153,7 @@ Public Class N_ExportarExcel
         Try
             'ANCHO DE COLUMNAS
             Hoja.Range("A1:" & GetLetraAbc(col) & lin).Columns.AutoFit()
-            Hoja.Range("B1:B" & lin).ColumnWidth = 105
+            Hoja.Range(GetRangoConcepto() & lin).ColumnWidth = 105
 
             Hoja.ListObjects.AddEx(Excel.XlListObjectSourceType.xlSrcRange, Hoja.Range("A1:" & GetLetraAbc(col) & lin),, Excel.XlYesNoGuess.xlYes)
             Hoja.ListObjects("Tabla1").TableStyle = "TableStyleMedium7"
@@ -167,6 +167,28 @@ Public Class N_ExportarExcel
             Return False
         End Try
 
+    End Function
+
+    ''' <summary>
+    ''' Obtiene la letra de excel correspondiente al indice del campo concepto
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function GetRangoConcepto() As String
+        Dim Letra As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        Dim aux As String = ""
+
+        Try
+            For i As Integer = 0 To Campos.Count - 1
+                If Campos(i).Idcampo.ToLower = "concepto" Then
+                    aux = Letra.Substring(i, 1)
+                End If
+            Next
+        Catch ex As Exception
+            X(ex)
+        End Try
+
+
+        Return aux + "1:" + aux
     End Function
 
     'GUARDAR EXCEL

@@ -394,6 +394,7 @@ Public Class N_Algoritmo
                 ElseIf cifras.Count = 2 Then
                     Saldo_Operacion = cifras(1)
                 ElseIf cifras.Count = 3 Then
+                    Saldo_Operacion = cifras(1)
                     Saldo_Liquidacion = cifras(2)
                 End If
             End If

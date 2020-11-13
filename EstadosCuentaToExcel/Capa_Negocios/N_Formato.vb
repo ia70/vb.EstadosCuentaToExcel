@@ -65,7 +65,7 @@ Public Class N_Formato
             End If
 
             'INSERTAR PREFIJOS
-            iden_formato.Prefijos.Id_formato = iden_formato.Id_formato
+            iden_formato.Prefijos.setIdFormato(iden_formato.Id_formato)
             If Not db_prefijos.Insertar(iden_formato.Prefijos) Then
                 Throw New Exception("Error")
             End If

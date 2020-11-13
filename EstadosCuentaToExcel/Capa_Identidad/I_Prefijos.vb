@@ -122,7 +122,6 @@ Public Class I_Prefijos
         End Get
         Set(value As String)
             _id_formato = value
-            setIdFormato()
         End Set
     End Property
 
@@ -147,51 +146,51 @@ Public Class I_Prefijos
 #End Region
 #Region "FUNCIONES"
 
-    Private Sub setIdFormato()
+    Public Sub setIdFormato(ByVal id_ As String)
         Try
             If Not IsNothing(Rfc) Then
-                Rfc.Id_formato = Id_formato
+                Rfc.Id_formato = id_
             End If
 
             If Not IsNothing(Fecha_general) Then
-                Fecha_general.Id_formato = Id_formato
+                Fecha_general.Id_formato = id_
             End If
 
             If Not IsNothing(No_cuenta) Then
-                No_cuenta.Id_formato = Id_formato
+                No_cuenta.Id_formato = id_
             End If
 
             If Not IsNothing(Saldo_anterior) Then
-                Saldo_anterior.Id_formato = Id_formato
+                Saldo_anterior.Id_formato = id_
             End If
 
             If Not IsNothing(Detalles_saldo) Then
-                Detalles_saldo.Id_formato = Id_formato
+                Detalles_saldo.Id_formato = id_
             End If
 
             If Not IsNothing(Folio) Then
-                Folio.Id_formato = Id_formato
+                Folio.Id_formato = id_
             End If
 
             If Not IsNothing(Referencia) Then
-                Referencia.Id_formato = Id_formato
+                Referencia.Id_formato = id_
             End If
 
             If Not IsNothing(Fechas_registro) Then
                 For linea As Integer = 0 To Fechas_registro.Count - 1
-                    _fechas_registro(linea).Id_formato = Id_formato
+                    _fechas_registro(linea).Id_formato = id_
                 Next
             End If
 
             If Not IsNothing(Ignora_parcial) Then
                 For linea As Integer = 0 To Ignora_parcial.Count - 1
-                    _ignora_parcial(linea).Id_formato = Id_formato
+                    _ignora_parcial(linea).Id_formato = id_
                 Next
             End If
 
             If Not IsNothing(Fin_documento) Then
                 For linea As Integer = 0 To Fin_documento.Count - 1
-                    _fin_documento(linea).Id_formato = Id_formato
+                    _fin_documento(linea).Id_formato = id_
                 Next
             End If
 
