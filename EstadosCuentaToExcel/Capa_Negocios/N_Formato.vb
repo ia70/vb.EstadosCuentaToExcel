@@ -64,6 +64,12 @@ Public Class N_Formato
                 Throw New Exception("Error")
             End If
 
+            'INSERTAR PREFIJOS
+            iden_formato.Prefijos.Id_formato = iden_formato.Id_formato
+            If Not db_prefijos.Insertar(iden_formato.Prefijos) Then
+                Throw New Exception("Error")
+            End If
+
             'INSERTAR TIPO_OPERACION
             For Each linea As I_Tipo_operacion In iden_formato.Tipo_operacion
                 linea.Id_formato = iden_formato.Id_formato
@@ -79,12 +85,6 @@ Public Class N_Formato
                     Throw New Exception("Error")
                 End If
             Next
-
-            'INSERTAR PREFIJOS
-            iden_formato.Prefijos.Id_formato = iden_formato.Id_formato
-            If Not db_prefijos.Insertar(iden_formato.Prefijos) Then
-                Throw New Exception("Error")
-            End If
 
             Return True
         Catch ex As Exception

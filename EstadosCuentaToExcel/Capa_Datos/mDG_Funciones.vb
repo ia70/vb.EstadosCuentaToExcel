@@ -37,7 +37,7 @@ Module mDG_Funciones
 
 
             While cadena.Length > 0
-                indice = cadena.IndexOf(",")
+                indice = cadena.IndexOf(",*")
                 If indice > 0 Then
                     subcadena = cadena.Substring(0, indice)
                     cadena = cadena.Substring(indice + 1)
@@ -59,7 +59,7 @@ Module mDG_Funciones
                 Else
                     indice = cadena.IndexOf(":")
                     If indice > 0 Then
-                        cadena &= ","
+                        cadena &= ",*"
                     Else
                         Exit While
                     End If

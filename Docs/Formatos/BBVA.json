@@ -8,37 +8,37 @@
         {
             "nombre": "FECHA OPER",
             "tipo": "DateTime",
-            "IdCampo":"FechaOperacion"
+            "IdCampo": "FechaOperacion"
         },
         {
             "nombre": "FECHA LIQ",
             "tipo": "DateTime",
-            "IdCampo":"FechaLiquidacion"
+            "IdCampo": "FechaLiquidacion"
         },
         {
             "nombre": "COD. DESCRIPCIÓN",
             "tipo": "String",
-            "IdCampo":"Concepto"
+            "IdCampo": "Concepto"
         },
         {
             "nombre": "CARGOS",
             "tipo": "Decimal",
-            "IdCampo":"Retiro"
+            "IdCampo": "Retiro"
         },
         {
             "nombre": "ABONOS",
             "tipo": "Decimal",
-            "IdCampo":"Deposito"
+            "IdCampo": "Deposito"
         },
         {
             "nombre": "SALDO OPERACION",
             "tipo": "Decimal",
-            "IdCampo":"SaldoOperacion"
+            "IdCampo": "SaldoOperacion"
         },
         {
             "nombre": "SALDO LIQUIDACIÓN",
             "tipo": "Decimal",
-            "IdCampo":"SaldoLiquidacion"
+            "IdCampo": "SaldoLiquidacion"
         }
     ],
     "tipo_operacion": [
@@ -77,12 +77,33 @@
                     "cadena": "PAGO CUENTA DE TERCERO"
                 },
                 {
-                    "tipo":1,
-                    "cadena":"0113730891"
+                    "tipo": 0,
+                    "cadena": "0113730891"
                 },
                 {
-                    "tipo":0,
-                    "cadena":"PAGO Ref."
+                    "tipo": 0,
+                    "cadena": "FACTURA"
+                }
+            ]
+        },
+        {
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "PAGO CUENTA DE TERCERO"
+                },
+                {
+                    "tipo": 1,
+                    "cadena": "0113730891"
+                },
+                {
+                    "tipo": 0,
+                    "cadena": "PAGO Ref."
+                },
+                {
+                    "tipo": 0,
+                    "cadena": "FACTURA"
                 }
             ]
         },
@@ -94,8 +115,25 @@
                     "cadena": "PAGO CUENTA DE TERCERO"
                 },
                 {
-                    "tipo":1,
-                    "cadena":"FACTURA"
+                    "tipo": 1,
+                    "cadena": "0113730891"
+                },
+                {
+                    "tipo": 1,
+                    "cadena": "PAGO Ref."
+                }
+            ]
+        },
+        {
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "PAGO CUENTA DE TERCERO"
+                },
+                {
+                    "tipo": 1,
+                    "cadena": "FACTURA"
                 }
             ]
         },
@@ -147,29 +185,29 @@
     ],
     "prefijos": {
         "rfc": {
-            "tipo":"rfc",
-            "inicio": "RFC: ",
+            "tipo": "rfc",
+            "inicio": " R.F.C ",
             "fin": "\n"
         },
         "fecha_general": {
-            "tipo":"fecha_general",
-            "inicio": "Fecha de corte ",
+            "tipo": "fecha_general",
+            "inicio": "Fecha de Corte ",
             "fin": "\n",
             "separador": "/"
         },
         "no_cuenta": {
-            "tipo":"no_cuenta",
-            "inicio": "INVERSION ENLACE NEGOCIOS ",
-            "fin": " "
+            "tipo": "no_cuenta",
+            "inicio": "No. de Cuenta ",
+            "fin": "\n"
         },
         "saldo_anterior": {
-            "tipo":"saldo_anterior",
-            "inicio": " SALDO ANTERIOR ",
+            "tipo": "saldo_anterior",
+            "inicio": " Saldo de Operación Inicial ",
             "fin": "\n"
         },
         "detalles_saldo": {
-            "tipo":"detalles_saldo",
-            "inicio": "MONTO DEL DEPOSITO MONTO DEL RETIRO SALDO\n"
+            "tipo": "detalles_saldo",
+            "inicio": "REFERENCIA CARGOS ABONOS OPERACIÓN LIQUIDACIÓN\n"
         },
         "fechas_registro": [
             {
@@ -178,25 +216,40 @@
                 "fin": " ",
                 "dia_length": 2,
                 "mes_length": 3,
-                "anio_length": 2,
-                "separador": "-"
+                "anio_length": 0,
+                "separador": "/"
+            },
+            {
+                "tipo": "Liquidacion",
+                "inicio": " ",
+                "fin": " ",
+                "dia_length": 2,
+                "mes_length": 3,
+                "anio_length": 0,
+                "separador": "/"
             }
         ],
         "ignora_parcial": [
             {
-                "tipo":"ignora_parcial",
-                "inicio": "\nLínea Directa para su empresa:\n",
-                "fin": "MONTO DEL DEPOSITO MONTO DEL RETIRO SALDO\n"
+                "tipo": "ignora_parcial",
+                "inicio": "Estimado Cliente,\n",
+                "fin": "Con BBVA adelante.\n"
+            },
+            {
+                "tipo": "ignora_parcial",
+                "inicio": "La GAT Real es el rendimiento que obtendría después",
+                "fin": "REFERENCIA CARGOS ABONOS OPERACIÓN LIQUIDACIÓN\n"
+            },
+            {
+                "tipo": "ignora_parcial",
+                "inicio": "BBVA BANCOMER, S.A. INSTITUCION DE BANCA MULTIPLE, ",
+                "fin": "REFERENCIA CARGOS ABONOS OPERACIÓN LIQUIDACIÓN\n"
             }
         ],
         "fin_documento": [
             {
-                "tipo":"fin_documento",
-                "fin": "INVERSION ENLACE NEGOCIOS\n"
-            },
-            {
-                "tipo":"fin_documento",
-                "fin": "MENSAJES IMPORTANTES\n"
+                "tipo": "fin_documento",
+                "fin": "\nTotal de Movimientos\n"
             }
         ]
     }

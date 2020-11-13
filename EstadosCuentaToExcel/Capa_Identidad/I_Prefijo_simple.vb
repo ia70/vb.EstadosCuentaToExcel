@@ -9,6 +9,13 @@
     Private _size As Integer
 
     Public Sub New()
+        Id = 0
+        Id_formato = ""
+        Tipo = ""
+        Inicio = ""
+        Fin = ""
+        Separador = ""
+        Size = 0
     End Sub
 
     Public Sub New(id As Integer, id_formato As String, tipo As String, inicio As String, fin As String, separador As String, size As Integer)
