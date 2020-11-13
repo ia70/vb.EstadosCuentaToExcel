@@ -2,60 +2,47 @@
     "id_formato": "F004",
     "banco": "SANTANDER",
     "algoritmo": "santander",
-    "cadena": "Banamex Resuelve",
+    "cadena": "BANCO SANTANDER (MEXICO) S.A.",
     "IdCamposDescripcion": "FechaOperacion, Folio, FechaLiquidacion, Concepto, Referencia, Retiro, Deposito, SaldoOperacion, SaldoLiquidacion",
     "campos": [
         {
-            "nombre": "Fecha",
+            "nombre": "FECHA",
             "tipo": "DateTime",
             "IdCampo": "FechaOperacion"
         },
         {
-            "nombre": "Concepto",
+            "nombre": "FOLIO",
+            "tipo": "String",
+            "IdCampo": "Folio"
+        },
+        {
+            "nombre": "DESCRIPCION",
             "tipo": "String",
             "IdCampo": "Concepto"
         },
         {
-            "nombre": "Retiros",
-            "tipo": "Decimal",
-            "IdCampo": "Retiro"
-        },
-        {
-            "nombre": "Depósitos",
+            "nombre": "DEPOSITOS",
             "tipo": "Decimal",
             "IdCampo": "Deposito"
         },
         {
-            "nombre": "Saldo",
+            "nombre": "RETIROS",
+            "tipo": "Decimal",
+            "IdCampo": "Retiro"
+        },
+        {
+            "nombre": "SALDO",
             "tipo": "Decimal",
             "IdCampo": "SaldoOperacion"
         }
     ],
     "tipo_operacion": [
         {
-            "tipo": 1,
+            "tipo": 0,
             "condiciones": [
                 {
                     "tipo": 1,
-                    "cadena": "PAGO RECIBIDO"
-                }
-            ]
-        },
-        {
-            "tipo": 1,
-            "condiciones": [
-                {
-                    "tipo": 1,
-                    "cadena": "CTA.ORDENANTE"
-                }
-            ]
-        },
-        {
-            "tipo": 1,
-            "condiciones": [
-                {
-                    "tipo": 1,
-                    "cadena": "DEPOSITO"
+                    "cadena": "COM MEMBRESIA"
                 }
             ]
         },
@@ -64,7 +51,16 @@
             "condiciones": [
                 {
                     "tipo": 1,
-                    "cadena": "PAGO INTERBANCARIO"
+                    "cadena": "I V A"
+                }
+            ]
+        },
+        {
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "ABONO"
                 }
             ]
         },
@@ -73,16 +69,7 @@
             "condiciones": [
                 {
                     "tipo": 1,
-                    "cadena": "PAGO A TERCEROS"
-                }
-            ]
-        },
-        {
-            "tipo": 0,
-            "condiciones": [
-                {
-                    "tipo": 1,
-                    "cadena": "PAGO DE SERVICIO"
+                    "cadena": "CGO IMPTO"
                 }
             ]
         }
@@ -90,28 +77,34 @@
     "prefijos": {
         "rfc": {
             "tipo": "rfc",
-            "inicio": "Registro Federal de Contribuyentes: ",
+            "inicio": "R.F.C. ",
             "fin": "\n"
         },
         "fecha_general": {
             "tipo": "fecha_general",
-            "inicio": "CONTRATO SALDO ANTERIOR SALDO AL ",
-            "fin": "\n",
+            "inicio": "CORTE AL ",
+            "fin": " ",
             "separador": "/"
         },
         "no_cuenta": {
             "tipo": "no_cuenta",
-            "inicio": "Cuenta de Cheques Moneda\nNacional ",
+            "inicio": "PYME ",
             "fin": " "
         },
         "saldo_anterior": {
             "tipo": "saldo_anterior",
-            "inicio": "SALDO ANTERIOR  ",
-            "fin": "\n"
+            "inicio": "SALDO INICIAL ",
+            "fin": " +"
+        },
+        "folio": {
+            "tipo": "folio",
+            "inicio": " ",
+            "fin": " ",
+            "size": 7
         },
         "detalles_saldo": {
             "tipo": "detalles_saldo",
-            "inicio": "FECHA CONCEPTO RETIROS DEPOSITOS SALDO\n"
+            "inicio": "DESCRIPCION DEPOSITOS RETIROS SALDO\n"
         },
         "fechas_registro": [
             {
@@ -120,21 +113,21 @@
                 "fin": " ",
                 "dia_length": 2,
                 "mes_length": 3,
-                "anio_length": 0,
-                "separador": " "
+                "anio_length": 4,
+                "separador": "-"
             }
         ],
         "ignora_parcial": [
             {
                 "tipo": "ignora_parcial",
-                "inicio": "000180.",
-                "fin": "FECHA CONCEPTO RETIROS DEPOSITOS SALDO\n"
+                "inicio": "BANCO SANTANDER (MEXICO) S.A.",
+                "fin": "DESCRIPCION DEPOSITOS RETIROS SALDO\n"
             }
         ],
         "fin_documento": [
             {
                 "tipo": "fin_documento",
-                "fin": "SALDO MINIMO REQUERIDO\n"
+                "fin": "TOTAL "
             }
         ]
     }
