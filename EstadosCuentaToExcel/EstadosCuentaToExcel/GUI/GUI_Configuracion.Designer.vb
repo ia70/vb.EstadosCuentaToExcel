@@ -24,8 +24,6 @@ Partial Class GUI_Configuracion
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(GUI_Configuracion))
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -59,6 +57,7 @@ Partial Class GUI_Configuracion
         Me.btnImportar = New System.Windows.Forms.Button()
         Me.dlgFile = New System.Windows.Forms.OpenFileDialog()
         Me.Notificacion = New System.Windows.Forms.NotifyIcon(Me.components)
+        Me.btnGuardarCopia = New System.Windows.Forms.CheckBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -82,7 +81,7 @@ Partial Class GUI_Configuracion
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(10, 113)
+        Me.Label3.Location = New System.Drawing.Point(10, 101)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(240, 18)
         Me.Label3.TabIndex = 2
@@ -92,10 +91,10 @@ Partial Class GUI_Configuracion
         '
         Me.txtFolderIn.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.txtFolderIn.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtFolderIn.Location = New System.Drawing.Point(6, 59)
+        Me.txtFolderIn.Location = New System.Drawing.Point(15, 59)
         Me.txtFolderIn.Name = "txtFolderIn"
         Me.txtFolderIn.ReadOnly = True
-        Me.txtFolderIn.Size = New System.Drawing.Size(434, 26)
+        Me.txtFolderIn.Size = New System.Drawing.Size(425, 26)
         Me.txtFolderIn.TabIndex = 3
         '
         'btnBuscarIn
@@ -119,7 +118,7 @@ Partial Class GUI_Configuracion
         Me.btnBuscarOut.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnBuscarOut.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnBuscarOut.ForeColor = System.Drawing.Color.White
-        Me.btnBuscarOut.Location = New System.Drawing.Point(446, 132)
+        Me.btnBuscarOut.Location = New System.Drawing.Point(446, 119)
         Me.btnBuscarOut.Name = "btnBuscarOut"
         Me.btnBuscarOut.Size = New System.Drawing.Size(82, 32)
         Me.btnBuscarOut.TabIndex = 6
@@ -130,10 +129,10 @@ Partial Class GUI_Configuracion
         '
         Me.txtFolderOut.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.txtFolderOut.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtFolderOut.Location = New System.Drawing.Point(6, 134)
+        Me.txtFolderOut.Location = New System.Drawing.Point(15, 122)
         Me.txtFolderOut.Name = "txtFolderOut"
         Me.txtFolderOut.ReadOnly = True
-        Me.txtFolderOut.Size = New System.Drawing.Size(434, 26)
+        Me.txtFolderOut.Size = New System.Drawing.Size(425, 26)
         Me.txtFolderOut.TabIndex = 5
         '
         'btnGuardar
@@ -143,7 +142,7 @@ Partial Class GUI_Configuracion
         Me.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnGuardar.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnGuardar.ForeColor = System.Drawing.Color.White
-        Me.btnGuardar.Location = New System.Drawing.Point(415, 185)
+        Me.btnGuardar.Location = New System.Drawing.Point(415, 213)
         Me.btnGuardar.Name = "btnGuardar"
         Me.btnGuardar.Size = New System.Drawing.Size(113, 33)
         Me.btnGuardar.TabIndex = 10
@@ -157,7 +156,7 @@ Partial Class GUI_Configuracion
         Me.btnIniciarProceso.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnIniciarProceso.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnIniciarProceso.ForeColor = System.Drawing.Color.White
-        Me.btnIniciarProceso.Location = New System.Drawing.Point(262, 185)
+        Me.btnIniciarProceso.Location = New System.Drawing.Point(262, 213)
         Me.btnIniciarProceso.Name = "btnIniciarProceso"
         Me.btnIniciarProceso.Size = New System.Drawing.Size(147, 33)
         Me.btnIniciarProceso.TabIndex = 11
@@ -276,6 +275,7 @@ Partial Class GUI_Configuracion
         'GroupBox2
         '
         Me.GroupBox2.BackColor = System.Drawing.SystemColors.Control
+        Me.GroupBox2.Controls.Add(Me.btnGuardarCopia)
         Me.GroupBox2.Controls.Add(Me.btnInicioWindows)
         Me.GroupBox2.Controls.Add(Me.btnBuscarIn)
         Me.GroupBox2.Controls.Add(Me.Label2)
@@ -288,7 +288,7 @@ Partial Class GUI_Configuracion
         Me.GroupBox2.Font = New System.Drawing.Font("Arial", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.Location = New System.Drawing.Point(10, 287)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(541, 232)
+        Me.GroupBox2.Size = New System.Drawing.Size(541, 265)
         Me.GroupBox2.TabIndex = 13
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "General"
@@ -298,7 +298,7 @@ Partial Class GUI_Configuracion
         Me.btnInicioWindows.AutoSize = True
         Me.btnInicioWindows.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnInicioWindows.ForeColor = System.Drawing.Color.DodgerBlue
-        Me.btnInicioWindows.Location = New System.Drawing.Point(16, 191)
+        Me.btnInicioWindows.Location = New System.Drawing.Point(16, 219)
         Me.btnInicioWindows.Name = "btnInicioWindows"
         Me.btnInicioWindows.Size = New System.Drawing.Size(182, 23)
         Me.btnInicioWindows.TabIndex = 12
@@ -374,7 +374,7 @@ Partial Class GUI_Configuracion
         Me.GroupBox3.Font = New System.Drawing.Font("Arial", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox3.Location = New System.Drawing.Point(562, 91)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(311, 428)
+        Me.GroupBox3.Size = New System.Drawing.Size(311, 461)
         Me.GroupBox3.TabIndex = 15
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Formatos"
@@ -386,7 +386,7 @@ Partial Class GUI_Configuracion
         Me.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnEliminar.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnEliminar.ForeColor = System.Drawing.Color.White
-        Me.btnEliminar.Location = New System.Drawing.Point(12, 381)
+        Me.btnEliminar.Location = New System.Drawing.Point(12, 409)
         Me.btnEliminar.Name = "btnEliminar"
         Me.btnEliminar.Size = New System.Drawing.Size(289, 33)
         Me.btnEliminar.TabIndex = 13
@@ -408,28 +408,12 @@ Partial Class GUI_Configuracion
         Me.dgTabla.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dgTabla.BackgroundColor = System.Drawing.Color.White
         Me.dgTabla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgTabla.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgTabla.Location = New System.Drawing.Point(12, 74)
         Me.dgTabla.MultiSelect = False
         Me.dgTabla.Name = "dgTabla"
         Me.dgTabla.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgTabla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.dgTabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgTabla.Size = New System.Drawing.Size(289, 301)
+        Me.dgTabla.Size = New System.Drawing.Size(289, 329)
         Me.dgTabla.TabIndex = 12
         '
         'btnImportar
@@ -457,12 +441,24 @@ Partial Class GUI_Configuracion
         Me.Notificacion.Text = "13Ponientes"
         Me.Notificacion.Visible = True
         '
+        'btnGuardarCopia
+        '
+        Me.btnGuardarCopia.AutoSize = True
+        Me.btnGuardarCopia.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnGuardarCopia.ForeColor = System.Drawing.Color.Firebrick
+        Me.btnGuardarCopia.Location = New System.Drawing.Point(18, 154)
+        Me.btnGuardarCopia.Name = "btnGuardarCopia"
+        Me.btnGuardarCopia.Size = New System.Drawing.Size(277, 23)
+        Me.btnGuardarCopia.TabIndex = 13
+        Me.btnGuardarCopia.Text = "Guardar copia en carpeta origen."
+        Me.btnGuardarCopia.UseVisualStyleBackColor = True
+        '
         'GUI_Configuracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 18.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.ClientSize = New System.Drawing.Size(884, 529)
+        Me.ClientSize = New System.Drawing.Size(884, 557)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.GroupBox2)
@@ -520,4 +516,5 @@ Partial Class GUI_Configuracion
     Friend WithEvents dlgFile As OpenFileDialog
     Friend WithEvents Notificacion As NotifyIcon
     Friend WithEvents btnInicioWindows As CheckBox
+    Friend WithEvents btnGuardarCopia As CheckBox
 End Class

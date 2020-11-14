@@ -16,6 +16,7 @@ Public Class N_Configuracion
                 .Id = GetInt(res.Rows(0).Item(0))
                 .Folder_in = GetStr(res.Rows(0).Item(1))
                 .Folder_out = GetStr(res.Rows(0).Item(2))
+                .Copia_origen = GetBool(res.Rows(0).Item(3))
             End With
         Catch ex As Exception
             X(ex)

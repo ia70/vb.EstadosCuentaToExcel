@@ -78,6 +78,7 @@ Public Class GUI_Configuracion
             If Not IsNothing(iden_config) Then
                 txtFolderIn.Text = iden_config.Folder_in
                 txtFolderOut.Text = iden_config.Folder_out
+                btnGuardarCopia.Checked = iden_config.Copia_origen
             End If
 
             'GET FORMATOS -----------------------------------
@@ -179,6 +180,7 @@ Public Class GUI_Configuracion
                     .Id = 1
                     .Folder_in = txtFolderIn.Text
                     .Folder_out = txtFolderOut.Text
+                    .Copia_origen = btnGuardarCopia.Checked
                 End With
 
                 If db.Editar(iden_config) Then
