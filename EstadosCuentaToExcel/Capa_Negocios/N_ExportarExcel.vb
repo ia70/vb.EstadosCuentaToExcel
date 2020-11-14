@@ -9,9 +9,12 @@ Public Class N_ExportarExcel
     Private Rango As Excel.Range
 
     Private _info As I_Archivo
-    Private _campos As List(Of I_Campos)
     Private _tabla As DataTable
     Private _ruta As String
+    Private _formato As I_Formato
+
+    Private Errores As New List(Of String)
+    Private caracter_error As String = "x"
 
 #End Region
 #Region "PROPIEDADES"
@@ -33,15 +36,6 @@ Public Class N_ExportarExcel
         End Set
     End Property
 
-    Public Property Campos As List(Of I_Campos)
-        Get
-            Return _campos
-        End Get
-        Set(value As List(Of I_Campos))
-            _campos = value
-        End Set
-    End Property
-
     Public Property Info As I_Archivo
         Get
             Return _info
@@ -51,23 +45,29 @@ Public Class N_ExportarExcel
         End Set
     End Property
 
+    Public Property Formato As I_Formato
+        Get
+            Return _formato
+        End Get
+        Set(value As I_Formato)
+            _formato = value
+        End Set
+    End Property
+
 #End Region
 #Region "Constructor"
     Public Sub New()
     End Sub
-    Public Sub New(ByVal datos As DataTable, ByVal campos_ As List(Of I_Campos), ByVal ruta_ As String, ByVal info_ As I_Archivo)
-        Tabla = datos
-        Ruta = ruta_
-        Campos = campos_
-        Exportar(Tabla, Campos, _ruta, info_)
+    Public Sub New(ByVal datos As DataTable, ByVal formato_ As I_Formato, ByVal ruta_ As String, ByVal info_ As I_Archivo)
+        Exportar(Tabla, formato_, _ruta, info_)
     End Sub
 #End Region
 #Region "Funciones"
     '----- EXPORTACION MAIN ----------------------------------------
-    Public Function Exportar(ByVal datos As DataTable, ByVal campos_ As List(Of I_Campos), ByVal ruta_ As String, ByVal info_ As I_Archivo) As Boolean
+    Public Function Exportar(ByVal datos As DataTable, ByVal formato_ As I_Formato, ByVal ruta_ As String, ByVal info_ As I_Archivo) As Boolean
         Tabla = datos
         Ruta = ruta_
-        Campos = campos_
+        Formato = formato_
         Info = info_
 
         ExcelHeader()
@@ -97,11 +97,15 @@ Public Class N_ExportarExcel
 
             For Each columna As DataColumn In Tabla.Columns
                 i += 1
-                Hoja.Cells(1, i).Value = columna.ColumnName
-                tipo = Campos(i - 1).Tipo
-                If tipo = "Decimal" Then
-                    Hoja.Columns(i).NumberFormat = "###,###,###,##0.00"
+
+                If Not columna.ColumnName.ToLower() = "valido" Then
+                    Hoja.Cells(1, i).Value = columna.ColumnName
+                    tipo = Formato.Campos(i - 1).Tipo
+                    If tipo = "Decimal" Then
+                        Hoja.Columns(i).NumberFormat = "###,###,###,##0.00"
+                    End If
                 End If
+
             Next
             Return True
         Catch ex As Exception
@@ -123,7 +127,12 @@ Public Class N_ExportarExcel
                 ' Cargamos la información en el excel
 
                 For Each campo As Object In Linea.ItemArray
-                    tipo = Campos(_X).Tipo
+                    Try
+                        tipo = Formato.Campos(_X).Tipo
+                    Catch ex As Exception
+                        tipo = ""
+                    End Try
+
                     _X += 1
                     If tipo = "Decimal" Then
                         Try
@@ -131,7 +140,12 @@ Public Class N_ExportarExcel
                         Catch ex As Exception
                             Hoja.Cells(Y, _X).Value = ""
                         End Try
+                    ElseIf tipo = "" Then
+                        If campo.ToString.ToLower = caracter_error Then
+                            Errores.Add(GetRangoError(Y))
+                        End If
                     Else
+
                         Hoja.Cells(Y, _X).Value = Convert.ToString(campo)
                     End If
                 Next
@@ -144,10 +158,38 @@ Public Class N_ExportarExcel
         End Try
     End Function
 
+    Private Function GetRangoError(ByVal y As Integer) As String
+        Dim rango As String
+
+        Try
+            rango = "A" & Convert.ToString(y) & ":" & GetLetraAbc(Formato.Campos.Count) & Convert.ToString(y)
+        Catch ex As Exception
+            X(ex)
+            Return ""
+        End Try
+
+        Return rango
+    End Function
+
+    Private Sub SetEstiloErrores()
+
+        Try
+            For Each linea As String In Errores
+                Try
+                    Hoja.Range(linea).Interior.Color = RGB(255, 126, 48)
+                Catch ex As Exception
+                End Try
+            Next
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
     '----- FORMATO FINAL -----------------------------------------
     Private Function ExcelFormato() As Boolean
         Dim col, lin As Integer
-        col = Tabla.Columns.Count
+        col = Tabla.Columns.Count - 1
         lin = Tabla.Rows.Count + 1
 
         Try
@@ -156,11 +198,12 @@ Public Class N_ExportarExcel
             Hoja.Range(GetRangoConcepto() & lin).ColumnWidth = 105
 
             Hoja.ListObjects.AddEx(Excel.XlListObjectSourceType.xlSrcRange, Hoja.Range("A1:" & GetLetraAbc(col) & lin),, Excel.XlYesNoGuess.xlYes)
-            Hoja.ListObjects("Tabla1").TableStyle = "TableStyleMedium7"
+            Hoja.ListObjects("Tabla1").TableStyle = "TableStyleMedium12"
 
             Hoja.Range("A1:" & GetLetraAbc(col) & lin).HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft
             Hoja.Range("A1:" & GetLetraAbc(col) & lin).VerticalAlignment = Excel.XlHAlign.xlHAlignCenter
 
+            SetEstiloErrores()
             Return True
         Catch ex As Exception
             X(ex)
@@ -178,8 +221,8 @@ Public Class N_ExportarExcel
         Dim aux As String = ""
 
         Try
-            For i As Integer = 0 To Campos.Count - 1
-                If Campos(i).Idcampo.ToLower = "concepto" Then
+            For i As Integer = 0 To Formato.Campos.Count - 1
+                If Formato.Campos(i).Idcampo.ToLower = "concepto" Then
                     aux = Letra.Substring(i, 1)
                 End If
             Next
@@ -199,24 +242,36 @@ Public Class N_ExportarExcel
             nom = GetNombreFichero()
             ' Guardamos el excel en la ruta que ha especificado el usuario
             Libro.SaveAs(nom)
-            ' Cerramos el workbook
-            Archivo.Workbooks.Close()
-            ' Eliminamos el objeto excel
-            Archivo.Quit()
+            DisposeObjeto()
             Return True
         Catch ex As Exception
+            DisposeObjeto()
             X(ex)
             Return False
         End Try
 
     End Function
 
+    Public Sub DisposeObjeto()
+
+        On Error Resume Next
+        ' Cerramos el workbook
+        Archivo.Workbooks.Close()
+        On Error Resume Next
+        ' Eliminamos el objeto excel
+        Archivo.Quit()
+        On Error Resume Next
+        ' Eliminamos el objeto excel
+        Libro.Close()
+
+    End Sub
+
     Private Function GetNombreFichero() As String
         Dim nom As String
         Dim res As String
 
         Try
-            nom = Info.Rfc + " - " + Format(Info.Fecha, "yyyy-MM")
+            nom = Info.Rfc + " - " + Format(Info.Fecha, "yyyy-MM") + " - " + Formato.Banco
             res = Ruta + "\" + nom
         Catch ex As Exception
             X(ex)

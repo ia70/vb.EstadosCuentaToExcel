@@ -64,6 +64,15 @@
             "condiciones": [
                 {
                     "tipo": 1,
+                    "cadena": "PAGO REFERENCIADO"
+                }
+            ]
+        },
+        {
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
                     "cadena": "ORDEN DE PAGO"
                 }
             ]

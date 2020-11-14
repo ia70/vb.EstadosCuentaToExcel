@@ -18,6 +18,7 @@
     ''' <param name="campos">Lista de campos</param>
     Public Sub New(ByVal campos As List(Of I_Campos))
         Tabla = New DataTable
+
         _campos = campos
 
         Try
@@ -25,6 +26,7 @@
                 'Tabla.Columns.Add(campo.Nombre, Type.GetType("System." & campo.Tipo))
                 Tabla.Columns.Add(campo.Nombre, Type.GetType("System.String"))
             Next
+            Tabla.Columns.Add("valido", Type.GetType("System.String"))
         Catch ex As Exception
             X(ex)
         End Try

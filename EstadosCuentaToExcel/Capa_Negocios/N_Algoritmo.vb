@@ -397,7 +397,7 @@ Public Class N_Algoritmo
             End If
 
             If Not IsNothing(cifras) Then
-                If cifras.Count = 1 And operacion = "" Then
+                If cifras.Count = 1 And Concepto.Contains("SALDO") Then
                     Saldo_Operacion = cifras(0)
                 ElseIf cifras.Count = 2 Then
                     Saldo_Operacion = cifras(1)
@@ -406,6 +406,11 @@ Public Class N_Algoritmo
                     Saldo_Liquidacion = cifras(2)
                 End If
             End If
+
+            'AQUI SE DEFINE SI SE PUDO DETERMINAR EL TIPO DE OPERACION (INGRESO | EGRESO)
+
+
+
             '/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             'MANEJAR LA INFORMACION
@@ -434,6 +439,12 @@ Public Class N_Algoritmo
                         respuesta.Add("")
                 End Select
             Next
+
+            If operacion = "" And Not Concepto.Contains("SALDO") Then
+                respuesta.Add("x")
+            Else
+                respuesta.Add("")
+            End If
         Catch ex As Exception
             X(ex)
         End Try
@@ -743,7 +754,7 @@ Public Class N_Algoritmo
 
         Try
             Dim Exportar As New N_ExportarExcel()
-            Return Exportar.Exportar(_fichero.Tabla, _formato.Campos, _ruta_guardado, _fichero)
+            Return Exportar.Exportar(_fichero.Tabla, _formato, _ruta_guardado, _fichero)
         Catch ex As Exception
             X(ex)
             Return False
