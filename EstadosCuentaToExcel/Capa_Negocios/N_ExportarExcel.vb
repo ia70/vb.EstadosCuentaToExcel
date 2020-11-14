@@ -70,12 +70,17 @@ Public Class N_ExportarExcel
         Formato = formato_
         Info = info_
 
-        ExcelHeader()
-        ExcelBody()
-        ExcelFormato()
-        ExcelGuardar()
+        If ExcelHeader() Then
+            If ExcelBody() Then
+                If ExcelFormato() Then
+                    If ExcelGuardar() Then
+                        Return True
+                    End If
+                End If
+            End If
+        End If
 
-        Return True
+        Return False
     End Function
 
     '----- CABECERA ------------------------------------------------
@@ -239,7 +244,7 @@ Public Class N_ExportarExcel
         Dim nom As String
         Try
             Archivo.DisplayAlerts = False
-            nom = GetNombreFichero()
+            nom = GetRutaFichero()
             ' Guardamos el excel en la ruta que ha especificado el usuario
             Libro.SaveAs(nom)
             DisposeObjeto()
@@ -266,13 +271,24 @@ Public Class N_ExportarExcel
 
     End Sub
 
-    Private Function GetNombreFichero() As String
-        Dim nom As String
+    Public Function GetNombreFichero() As String
         Dim res As String
 
         Try
-            nom = Info.Rfc + " - " + Format(Info.Fecha, "yyyy-MM") + " - " + Formato.Banco
-            res = Ruta + "\" + nom
+            res = Info.Rfc + " - " + Format(Info.Fecha, "yyyy-MM") + " - " + Formato.Banco + ".xlsx"
+        Catch ex As Exception
+            X(ex)
+            res = ""
+        End Try
+
+        Return res
+    End Function
+
+    Private Function GetRutaFichero() As String
+        Dim res As String
+
+        Try
+            res = Ruta + "\" + GetNombreFichero()
         Catch ex As Exception
             X(ex)
             res = ""

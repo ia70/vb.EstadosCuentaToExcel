@@ -12,6 +12,7 @@ Public Class N_Algoritmo
     Private _no_fechas As Integer       'Número de campos de tipo decimal que tiene el formato.
     Private _size_fecha As Integer      'Longitud de fecha de Operacion/Liquidacion del formato.
     Private _ruta_guardado As String    'Ruta donde se guardará el archivo.
+
 #End Region
 #Region "CONSTRUCTORES"
 
@@ -24,10 +25,9 @@ Public Class N_Algoritmo
     ''' <param name="textopdf_">PDF en texto plano</param>
     ''' <param name="formato_">Identidad del formato</param>
     ''' <param name="ruta_">Ruta donde se guardará el archivo.</param>
-    Public Sub New(ByVal textopdf_ As String, ByVal formato_ As I_Formato, ByVal ruta_ As String)
+    Public Sub New(ByVal textopdf_ As String, ByVal formato_ As I_Formato)
         Try
             _textopdf = textopdf_
-            _ruta_guardado = ruta_
             _fichero = New I_Archivo(formato_.Campos)
             _formato = formato_
         Catch ex As Exception
@@ -750,14 +750,23 @@ Public Class N_Algoritmo
     ''' Genera y crea archivo de Excel el la ubicación especificada
     ''' </summary>
     ''' <returns></returns>
-    Public Function GenerarExcel() As Boolean
+    Public Function GenerarExcel(ByVal ruta_ As String) As String
+        Dim res As Boolean
+        Ruta_guardado = ruta_
 
         Try
             Dim Exportar As New N_ExportarExcel()
-            Return Exportar.Exportar(_fichero.Tabla, _formato, _ruta_guardado, _fichero)
+            res = Exportar.Exportar(Fichero.Tabla, Formato, Ruta_guardado, Fichero)
+
+            If res Then
+                Return Exportar.GetNombreFichero
+            Else
+                Return ""
+            End If
+
         Catch ex As Exception
             X(ex)
-            Return False
+            Return ""
         End Try
 
     End Function

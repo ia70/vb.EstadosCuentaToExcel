@@ -5,6 +5,7 @@ Imports Capa_Identidad
 Imports System.Text
 Imports iTextSharp.text.pdf
 Imports iTextSharp.text.pdf.parser
+Imports Path = System.IO.Path
 
 Module mAutomatizacion
 #Region "VARIABLES"
@@ -14,6 +15,7 @@ Module mAutomatizacion
 
     Public G_Folder_In As String = ""
     Public G_Folder_Out As String = ""
+    Public G_CopiaOrigen As Boolean = False
     Public G_Proceso_Activo As Boolean = False
 
     'VARIBLE DE FORMATOS --------------------
@@ -36,14 +38,15 @@ Module mAutomatizacion
         Dim db As New N_Configuracion
         Dim db_formato As New N_Formato
         Dim db_conexion As New N_conexion
-        Dim obj As I_Configuracion
+        Dim obj_config As I_Configuracion
 
 
         Try
             If db_conexion.InicializarDB Then
-                obj = db.Consultar
-                G_Folder_In = obj.Folder_in
-                G_Folder_Out = obj.Folder_out
+                obj_config = db.Consultar
+                G_Folder_In = obj_config.Folder_in
+                G_Folder_Out = obj_config.Folder_out
+                G_CopiaOrigen = obj_config.Copia_origen
                 G_Formatos = db_formato.ListaCompleta
                 Return True
             End If
@@ -169,7 +172,7 @@ Module mAutomatizacion
 
                 For Each formato As I_formato In G_Formatos
                     If Cadena.Contains(formato.Cadena) Then
-                        Return ProcesarFormato(Cadena, G_Formatos(indice))
+                        Return ProcesarFormato(Cadena, G_Formatos(indice), archivo)
                     End If
                     indice += 1
                 Next
@@ -184,19 +187,67 @@ Module mAutomatizacion
 #End Region
 #Region "ALGORITMOS DE LOS FORMATOS"
 
-    Public Function ProcesarFormato(ByVal cadena As String, ByVal formato As I_Formato) As Boolean
+    Public Function ProcesarFormato(ByVal cadena As String, ByVal formato As I_Formato, ByVal ruta_archivo As String) As Boolean
         Dim algoritmo As N_Algoritmo
+        Dim res As String
+        Dim rutas As List(Of String)
+
+        rutas = GetRutas(ruta_archivo)
 
         Try
-            algoritmo = New N_Algoritmo(cadena, formato, G_Folder_Out)
+            algoritmo = New N_Algoritmo(cadena, formato)
             algoritmo.ProcesarFichero()
-            Return algoritmo.GenerarExcel
+
+
+            'SI EL ARCHIVO SE GUARDA DEVUELVE EL (NOMBRE) DEL FICHERO SIN EXTENCION
+            If rutas.Count > 0 Then
+                res = algoritmo.GenerarExcel(rutas(0))
+                If res.Length > 0 Then
+                    If rutas.Count = 2 Then
+                        CopiarArchivo(rutas(0), rutas(1), res & ".xlsx")
+                    End If
+                End If
+            End If
+
+            Return True
         Catch ex As Exception
             X(ex)
             Return False
         End Try
 
     End Function
+
+    Private Sub CopiarArchivo(ByVal origen As String, ByVal destino As String, ByVal nombre As String)
+
+        Try
+            Thread.Sleep(1000)
+            File.Copy(Path.Combine(origen, nombre), Path.Combine(destino, nombre), True)
+        Catch ex As Exception
+            X(ex)
+        End Try
+
+    End Sub
+
+    Private Function GetRutas(ByVal ruta_archivo As String) As List(Of String)
+        Dim res As New List(Of String)
+        Dim folder As String
+
+        Try
+            If G_Folder_Out.Length > 0 Then
+                res.Add(G_Folder_Out)
+            End If
+            If G_CopiaOrigen Then
+                folder = Path.GetDirectoryName(ruta_archivo)
+                res.Add(folder)
+            End If
+
+        Catch ex As Exception
+            X(ex)
+        End Try
+
+        Return res
+    End Function
+
 
 #End Region
 #Region "MONITOR DE ARCHIVOS"

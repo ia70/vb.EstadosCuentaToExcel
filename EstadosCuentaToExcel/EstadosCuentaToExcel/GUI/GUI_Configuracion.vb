@@ -132,8 +132,15 @@ Public Class GUI_Configuracion
     End Sub
 
     Private Sub BtnBuscarOut_Click(sender As Object, e As EventArgs) Handles btnBuscarOut.Click
+        Dim res As Integer
         If dlgFolder.ShowDialog() = DialogResult.OK Then
             txtFolderOut.Text = dlgFolder.SelectedPath
+        Else
+            res = MsgBox("¿Desea borrar este campo?", vbYesNo + vbExclamation, "Configuracion")
+            If res = vbYes Then
+                txtFolderOut.Text = ""
+            End If
+
         End If
     End Sub
 
