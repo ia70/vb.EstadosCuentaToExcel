@@ -155,6 +155,19 @@ Module mAutomatizacion
     ''' <param name="archivo">Patch</param>
     ''' <returns></returns>
     Public Function ProcesarArchivo(ByVal archivo As String) As Boolean
+        Dim ext As String
+
+        'VALIDA LA EXTENCION DEL ARCHIVO
+        Try
+            ext = Path.GetExtension(archivo)
+            If Not ext.ToLower = ".pdf" And Not ext = "" Then
+                Return False
+            End If
+        Catch ex As Exception
+            X(ex)
+        End Try
+
+
         Try
             If File.Exists(archivo) Then
                 Dim Cadena As String = ""
@@ -170,7 +183,7 @@ Module mAutomatizacion
                 Next
                 PdfReader.Close()
 
-                For Each formato As I_formato In G_Formatos
+                For Each formato As I_Formato In G_Formatos
                     If Cadena.Contains(formato.Cadena) Then
                         Return ProcesarFormato(Cadena, G_Formatos(indice), archivo)
                     End If
