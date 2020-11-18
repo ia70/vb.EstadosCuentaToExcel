@@ -204,7 +204,7 @@ Module mAutomatizacion
                 res = algoritmo.GenerarExcel(rutas(0))
                 If res.Length > 0 Then
                     If rutas.Count = 2 Then
-                        CopiarArchivo(rutas(0), rutas(1), res & ".xlsx")
+                        CopiarArchivo(rutas(0), rutas(1), res)
                     End If
                 End If
             End If

@@ -60,7 +60,7 @@
             "condiciones": [
                 {
                     "tipo": 1,
-                    "cadena": "ABONO"
+                    "cadena": "ABONO "
                 }
             ]
         },
@@ -70,6 +70,34 @@
                 {
                     "tipo": 1,
                     "cadena": "CGO IMPTO"
+                }
+            ]
+        }
+        ,
+        {
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "PAGO TRANSFERENCIA SPEI"
+                }
+            ]
+        },
+        {
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "CARGO "
+                }
+            ]
+        },
+        {
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "ABO "
                 }
             ]
         }
@@ -121,6 +149,11 @@
             {
                 "tipo": "ignora_parcial",
                 "inicio": "BANCO SANTANDER (MEXICO) S.A.",
+                "fin": "DESCRIPCION DEPOSITOS RETIROS SALDO\n"
+            },
+            {
+                "tipo": "ignora_parcial",
+                "inicio": "\nESTADO DE CUENTA INTEGRAL\n",
                 "fin": "DESCRIPCION DEPOSITOS RETIROS SALDO\n"
             }
         ],

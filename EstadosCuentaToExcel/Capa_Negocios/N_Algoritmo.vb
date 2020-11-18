@@ -190,33 +190,34 @@ Public Class N_Algoritmo
     ''' <param name="fin">fin a ignorar</param>
     ''' <returns></returns>
     Private Function LimpiaParcial(ByVal cadena As String, ByVal ini As String, ByVal fin As String) As String
-        Dim aux = "", aux2 As String
-        Dim indice As Integer
+        Dim aux = "", aux3 = "", aux2 As String
+        Dim indice, indice2 As Integer
 
         Try
             If cadena.Length > 0 Then
                 If ini.Length > 0 And fin.Length > 0 Then
-                    With Formato.Prefijos
 
-                        'QUITAR PARCIAL
-                        While cadena.IndexOf(ini) >= 0
-                            indice = cadena.IndexOf(ini)
+                    'QUITAR PARCIAL
+                    While cadena.IndexOf(ini) >= 0
+                        indice = cadena.IndexOf(ini)
 
-                            If indice >= 0 Then
-                                aux = cadena.Substring(0, indice)
-                            End If
+                        If indice >= 0 Then
+                            aux = cadena.Substring(0, indice)
+                        End If
 
-                            indice = cadena.IndexOf(fin)
-                            If indice >= 0 Then
-                                aux2 = cadena.Substring(indice + fin.Length)
-                                cadena = aux + aux2
-                            ElseIf aux.Length > 0 Then
-                                cadena = aux
-                            End If
-
-                        End While
-
-                    End With
+                        indice2 = cadena.IndexOf(fin)
+                        If indice2 >= 0 And indice2 > indice Then
+                            aux3 += aux
+                            cadena = cadena.Substring(indice2 + fin.Length)
+                        ElseIf indice2 < indice Then
+                            aux = cadena.Substring(0, indice2 + fin.Length)
+                            aux3 += aux
+                            cadena = cadena.Substring(indice2 + fin.Length)
+                        End If
+                        aux = ""
+                        aux2 = ""
+                    End While
+                    aux3 += cadena
                 Else
                     Return cadena
                 End If
@@ -225,7 +226,7 @@ Public Class N_Algoritmo
             X(ex)
         End Try
 
-        Return cadena
+        Return aux3
     End Function
 
     ''' <summary>
@@ -482,6 +483,7 @@ Public Class N_Algoritmo
                 If indice >= 0 Then
                     Try
                         cadena = cadena.Substring(indice + 1)
+                        cadena = RemoveEspaciosInicio(cadena)
                         aux = cadena.Substring(0, size)
                     Catch ex As Exception
                         Return -1
