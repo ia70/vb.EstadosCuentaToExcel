@@ -4,8 +4,8 @@ Module mGeneral
 #Region "VARIABLES GLOBALES"
 
     Public G_EmpresaNombre As String = "13 Ponientes analistas"
-    Public G_MostrarErrores As Boolean = True
-    Public G_ErrorLog As Boolean = False
+    Public G_MostrarErrores As Boolean = False
+    Public G_ErrorLog As Boolean = True
 
 #End Region
 
