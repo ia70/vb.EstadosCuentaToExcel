@@ -209,10 +209,14 @@ Public Class N_Algoritmo
                         If indice2 >= 0 And indice2 > indice Then
                             aux3 += aux
                             cadena = cadena.Substring(indice2 + fin.Length)
-                        ElseIf indice2 < indice Then
+                        ElseIf indice2 < indice And indice2 >= 0 Then
                             aux = cadena.Substring(0, indice2 + fin.Length)
                             aux3 += aux
                             cadena = cadena.Substring(indice2 + fin.Length)
+                        Else
+                            aux3 = aux
+                            cadena = ""
+                            Exit While
                         End If
                         aux = ""
                         aux2 = ""
@@ -509,9 +513,14 @@ Public Class N_Algoritmo
 
         copy = cadena
         Try
-            While cadena(0) = " "
-                cadena = cadena.Substring(1)
-            End While
+            If cadena.Length > 0 Then
+                While cadena(0) = " "
+                    cadena = cadena.Substring(1)
+                    If cadena.Length > 0 Then
+                        Exit While
+                    End If
+                End While
+            End If
             Return cadena
         Catch ex As Exception
             X(ex)

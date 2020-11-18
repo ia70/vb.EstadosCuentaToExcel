@@ -24,6 +24,9 @@ Partial Class GUI_Configuracion
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(GUI_Configuracion))
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -44,6 +47,7 @@ Partial Class GUI_Configuracion
         Me.txtIP = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.btnGuardarCopia = New System.Windows.Forms.CheckBox()
         Me.btnInicioWindows = New System.Windows.Forms.CheckBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -57,7 +61,6 @@ Partial Class GUI_Configuracion
         Me.btnImportar = New System.Windows.Forms.Button()
         Me.dlgFile = New System.Windows.Forms.OpenFileDialog()
         Me.Notificacion = New System.Windows.Forms.NotifyIcon(Me.components)
-        Me.btnGuardarCopia = New System.Windows.Forms.CheckBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -293,6 +296,18 @@ Partial Class GUI_Configuracion
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "General"
         '
+        'btnGuardarCopia
+        '
+        Me.btnGuardarCopia.AutoSize = True
+        Me.btnGuardarCopia.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnGuardarCopia.ForeColor = System.Drawing.Color.Firebrick
+        Me.btnGuardarCopia.Location = New System.Drawing.Point(18, 154)
+        Me.btnGuardarCopia.Name = "btnGuardarCopia"
+        Me.btnGuardarCopia.Size = New System.Drawing.Size(277, 23)
+        Me.btnGuardarCopia.TabIndex = 13
+        Me.btnGuardarCopia.Text = "Guardar copia en carpeta origen."
+        Me.btnGuardarCopia.UseVisualStyleBackColor = True
+        '
         'btnInicioWindows
         '
         Me.btnInicioWindows.AutoSize = True
@@ -408,10 +423,37 @@ Partial Class GUI_Configuracion
         Me.dgTabla.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dgTabla.BackgroundColor = System.Drawing.Color.White
         Me.dgTabla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgTabla.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgTabla.Location = New System.Drawing.Point(12, 74)
         Me.dgTabla.MultiSelect = False
         Me.dgTabla.Name = "dgTabla"
         Me.dgTabla.ReadOnly = True
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgTabla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White
+        Me.dgTabla.RowsDefaultCellStyle = DataGridViewCellStyle4
+        Me.dgTabla.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White
+        Me.dgTabla.RowTemplate.DefaultCellStyle.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dgTabla.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black
+        Me.dgTabla.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        Me.dgTabla.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White
         Me.dgTabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgTabla.Size = New System.Drawing.Size(289, 329)
         Me.dgTabla.TabIndex = 12
@@ -440,18 +482,6 @@ Partial Class GUI_Configuracion
         Me.Notificacion.Icon = CType(resources.GetObject("Notificacion.Icon"), System.Drawing.Icon)
         Me.Notificacion.Text = "13Ponientes"
         Me.Notificacion.Visible = True
-        '
-        'btnGuardarCopia
-        '
-        Me.btnGuardarCopia.AutoSize = True
-        Me.btnGuardarCopia.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnGuardarCopia.ForeColor = System.Drawing.Color.Firebrick
-        Me.btnGuardarCopia.Location = New System.Drawing.Point(18, 154)
-        Me.btnGuardarCopia.Name = "btnGuardarCopia"
-        Me.btnGuardarCopia.Size = New System.Drawing.Size(277, 23)
-        Me.btnGuardarCopia.TabIndex = 13
-        Me.btnGuardarCopia.Text = "Guardar copia en carpeta origen."
-        Me.btnGuardarCopia.UseVisualStyleBackColor = True
         '
         'GUI_Configuracion
         '

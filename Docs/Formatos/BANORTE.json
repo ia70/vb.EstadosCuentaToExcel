@@ -136,7 +136,7 @@
         "ignora_parcial": [
             {
                 "tipo":"ignora_parcial",
-                "inicio": "\nLínea Directa para su empresa:\n",
+                "inicio": "Línea Directa para su empresa:\n",
                 "fin": "MONTO DEL DEPOSITO MONTO DEL RETIRO SALDO\n"
             }
         ],
