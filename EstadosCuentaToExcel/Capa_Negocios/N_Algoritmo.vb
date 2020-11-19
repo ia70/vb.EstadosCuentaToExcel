@@ -720,11 +720,12 @@ Public Class N_Algoritmo
     ''' <summary>
     ''' Procesa el texto del PDF para obtener todos los datos
     ''' </summary>
-    Public Sub ProcesarFichero()
+    Public Function ProcesarFichero() As Boolean
         Dim cadena As String
         Dim campos As List(Of String)
         Dim aux As String
         Dim indice As Integer
+        Dim res As Boolean = True
 
         'Se quita toda la información que no pertenece al cuerpo del documento
         _textopdf = LimpiarTexto(_textopdf)
@@ -736,6 +737,10 @@ Public Class N_Algoritmo
             Try
                 If aux.Length > 0 Then
                     campos = ProcesarLinea(aux)
+                    If campos(campos.Count - 1) = "x" Then
+                        res = False
+                    End If
+
                     _fichero.agregarFila(campos)
                 Else
                     Exit Do
@@ -755,7 +760,9 @@ Public Class N_Algoritmo
             End Try
         Loop While aux.Length >= 0
 
-    End Sub
+        Return res
+
+    End Function
 
     ''' <summary>
     ''' Genera y crea archivo de Excel el la ubicación especificada

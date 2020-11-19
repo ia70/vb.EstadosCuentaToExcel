@@ -203,13 +203,14 @@ Module mAutomatizacion
     Public Function ProcesarFormato(ByVal cadena As String, ByVal formato As I_Formato, ByVal ruta_archivo As String) As Boolean
         Dim algoritmo As N_Algoritmo
         Dim res As String
+        Dim res_error As Boolean
         Dim rutas As List(Of String)
 
         rutas = GetRutas(ruta_archivo)
 
         Try
             algoritmo = New N_Algoritmo(cadena, formato)
-            algoritmo.ProcesarFichero()
+            res_error = algoritmo.ProcesarFichero()
 
 
             'SI EL ARCHIVO SE GUARDA DEVUELVE EL (NOMBRE) DEL FICHERO SIN EXTENCION
@@ -222,7 +223,7 @@ Module mAutomatizacion
                 End If
             End If
 
-            Return True
+            Return res_error
         Catch ex As Exception
             X(ex)
             Return False
