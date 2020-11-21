@@ -60,11 +60,113 @@
             ]
         },
         {
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "SPEI"
+                },
+                {
+                    "tipo": 1,
+                    "cadena": "COMPENSACION"
+                }
+            ]
+        },
+        {
             "tipo": 0,
             "condiciones": [
                 {
                     "tipo": 1,
                     "cadena": "PAGO REFERENCIADO"
+                }
+            ]
+        },
+        {
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "I.V.A."
+                },
+                {
+                    "tipo": 1,
+                    "cadena": "COM."
+                }
+            ]
+        },
+        {
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "TRASPASO"
+                }
+            ]
+        },
+        {
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "COMPENSACION"
+                }
+            ]
+        },
+        {
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "COMISION"
+                }
+            ]
+        },
+        {
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "TRANSFERENCIA DE FONDOS"
+                }
+            ]
+        },
+        {
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "CHEQUE"
+                },
+                {
+                    "tipo": 0,
+                    "cadena": "NO.CHEQUE"
+                }
+            ]
+        },
+        {
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "NO.CHEQUE"
+                }
+            ]
+        },
+        {
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "TEF BCO"
+                }
+            ]
+        },
+        {
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "CARGO"
                 }
             ]
         },

@@ -38,7 +38,7 @@ Module mGeneral
         End If
         Try
             If G_ErrorLog Then
-                Dim fichero As String = "log.txt"
+                Dim fichero As String = "log_Identidad.txt"
                 Dim escritor As StreamWriter
 
                 escritor = File.AppendText(fichero)

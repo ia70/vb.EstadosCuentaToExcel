@@ -4,8 +4,8 @@ Module mGeneral
 #Region "VARIABLES GLOBALES"
 
     Public G_EmpresaNombre As String = "13 Ponientes analistas"
-    Public G_MostrarErrores As Boolean = True
-    Public G_ErrorLog As Boolean = False
+    Public G_MostrarErrores As Boolean = False
+    Public G_ErrorLog As Boolean = True
 
 #End Region
 
@@ -38,7 +38,7 @@ Module mGeneral
         End If
         Try
             If G_ErrorLog Then
-                Dim fichero As String = "log.txt"
+                Dim fichero As String = "log_Datos.txt"
                 Dim escritor As StreamWriter
 
                 escritor = File.AppendText(fichero)

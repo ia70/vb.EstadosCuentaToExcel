@@ -181,6 +181,15 @@
                     "cadena": "X01 "
                 }
             ]
+        },
+        {
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "CHEQUE PAGADO"
+                }
+            ]
         }
     ],
     "prefijos": {

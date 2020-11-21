@@ -12,6 +12,7 @@ Public Class N_Algoritmo
     Private _no_fechas As Integer       'Número de campos de tipo decimal que tiene el formato.
     Private _size_fecha As Integer      'Longitud de fecha de Operacion/Liquidacion del formato.
     Private _ruta_guardado As String    'Ruta donde se guardará el archivo.
+    Private _ultimoSaldo As Decimal     'Ultimi saldo del linea del formato
 
 #End Region
 #Region "CONSTRUCTORES"
@@ -284,6 +285,7 @@ Public Class N_Algoritmo
         Dim fechas As New List(Of String)
         Dim cadenas As New List(Of String)
         Dim operacion As String
+        Dim SaldoLocal As Decimal
 
         'VARIABLES --------------------
         Dim Fecha_Operacion As String = ""
@@ -371,9 +373,6 @@ Public Class N_Algoritmo
         'OBTIENE CADENAS --------------------------------------------
         cadenas.Add(cadena)
 
-        'DEFINE TIPO DE TRANSACCION INGRESO/EGRESO
-        operacion = GetOperacion(cadena)
-
         'ORDENAMIENTO DE CAMPOS OBTENIDOS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Try
             'Fechas
@@ -392,15 +391,7 @@ Public Class N_Algoritmo
                 End If
             End If
 
-            'Cifras
-            If Not IsNothing(cifras) Then
-                If operacion = "Deposito" Then
-                    Deposito = cifras(0)
-                ElseIf operacion = "Retiro" Then
-                    Retiro = cifras(0)
-                End If
-            End If
-
+            'Saldo de Operacion / Liquidacion
             If Not IsNothing(cifras) Then
                 If cifras.Count = 1 And Concepto.Contains("SALDO") Then
                     Saldo_Operacion = cifras(0)
@@ -409,6 +400,31 @@ Public Class N_Algoritmo
                 ElseIf cifras.Count = 3 Then
                     Saldo_Operacion = cifras(1)
                     Saldo_Liquidacion = cifras(2)
+                End If
+            End If
+
+            'DEFINE TIPO DE TRANSACCION INGRESO/EGRESO
+            operacion = GetOperacion(cadena)
+            If operacion = "" Then
+                Try
+                    If _ultimoSaldo >= 0 Then
+                        SaldoLocal = Convert.ToDecimal(Saldo_Operacion)
+                        If SaldoLocal > _ultimoSaldo Then
+                            operacion = "Deposito"
+                        ElseIf SaldoLocal < _ultimoSaldo Then
+                            operacion = "Retiro"
+                        End If
+                    End If
+                Catch ex As Exception
+                End Try
+            End If
+
+            'Cifras
+            If Not IsNothing(cifras) Then
+                If operacion = "Deposito" Then
+                    Deposito = cifras(0)
+                ElseIf operacion = "Retiro" Then
+                    Retiro = cifras(0)
                 End If
             End If
 
@@ -438,6 +454,11 @@ Public Class N_Algoritmo
                         respuesta.Add(Deposito)
                     Case "SALDOOPERACION"
                         respuesta.Add(Saldo_Operacion)
+                        Try
+                            _ultimoSaldo = Convert.ToDecimal(Saldo_Operacion)
+                        Catch ex As Exception
+                            _ultimoSaldo = -1
+                        End Try
                     Case "SALDOLIQUIDACION"
                         respuesta.Add(Saldo_Liquidacion)
                     Case Else
@@ -497,7 +518,6 @@ Public Class N_Algoritmo
 
             Return -1
         Catch ex As Exception
-            X(ex)
             Return -1
         End Try
 
@@ -523,7 +543,6 @@ Public Class N_Algoritmo
             End If
             Return cadena
         Catch ex As Exception
-            X(ex)
             Return copy
         End Try
     End Function
@@ -730,6 +749,7 @@ Public Class N_Algoritmo
         'Se quita toda la información que no pertenece al cuerpo del documento
         _textopdf = LimpiarTexto(_textopdf)
         cadena = _textopdf
+        _ultimoSaldo = -1
 
         'Se comienza a procesar el cuerpo del documento
         aux = GetLinea(cadena)
