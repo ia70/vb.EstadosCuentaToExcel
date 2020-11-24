@@ -26,7 +26,7 @@
             "IdCampo": "Retiro"
         },
         {
-            "nombre": "Saldo",
+            "nombre": "SALDO",
             "tipo": "Decimal",
             "IdCampo": "SaldoOperacion"
         }
@@ -240,7 +240,7 @@
         },
         "no_cuenta_2": {
             "tipo":"no_cuenta_2",
-            "inicio": " Saldo al corte\nENLACE GLOBAL PM C/INTERESES ",
+            "inicio": " Saldo al corte\nENLACE GLOBAL PM S/INTERESES ",
             "fin": " "
         },
         "saldo_anterior": {
