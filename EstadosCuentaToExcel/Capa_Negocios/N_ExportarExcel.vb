@@ -275,7 +275,7 @@ Public Class N_ExportarExcel
         Dim res As String
 
         Try
-            res = Info.Rfc + " - " + Format(Info.Fecha, "yyyy-MM") + " - " + Formato.Banco + ".xlsx"
+            res = Info.Rfc + " - " + Format(Info.Fecha, "yyyy-MM") + " - " + Formato.Banco + "-" + Info.No_cuenta + "_" + Info.Moneda + ".xlsx"
         Catch ex As Exception
             X(ex)
             res = ""

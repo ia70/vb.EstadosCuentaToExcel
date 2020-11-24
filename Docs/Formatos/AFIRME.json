@@ -63,10 +63,20 @@
             "fin": " IVA",
             "separador": " "
         },
+        "moneda":{
+            "tipo":"moneda",
+            "inicio":" Moneda ",
+            "fin":"\n"
+        },
         "no_cuenta": {
             "tipo": "no_cuenta",
             "inicio": "Número de cuenta  ",
             "fin": " "
+        },
+        "no_cuenta_2": {
+            "tipo":"no_cuenta_2",
+            "inicio": "",
+            "fin": ""
         },
         "saldo_anterior": {
             "tipo": "saldo_anterior",

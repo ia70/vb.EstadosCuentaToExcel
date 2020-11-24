@@ -70,74 +70,6 @@
             ]
         },
         {
-            "tipo": 1,
-            "condiciones": [
-                {
-                    "tipo": 1,
-                    "cadena": "PAGO CUENTA DE TERCERO"
-                },
-                {
-                    "tipo": 0,
-                    "cadena": "0113730891"
-                },
-                {
-                    "tipo": 0,
-                    "cadena": "FACTURA"
-                }
-            ]
-        },
-        {
-            "tipo": 1,
-            "condiciones": [
-                {
-                    "tipo": 1,
-                    "cadena": "PAGO CUENTA DE TERCERO"
-                },
-                {
-                    "tipo": 1,
-                    "cadena": "0113730891"
-                },
-                {
-                    "tipo": 0,
-                    "cadena": "PAGO Ref."
-                },
-                {
-                    "tipo": 0,
-                    "cadena": "FACTURA"
-                }
-            ]
-        },
-        {
-            "tipo": 0,
-            "condiciones": [
-                {
-                    "tipo": 1,
-                    "cadena": "PAGO CUENTA DE TERCERO"
-                },
-                {
-                    "tipo": 1,
-                    "cadena": "0113730891"
-                },
-                {
-                    "tipo": 1,
-                    "cadena": "PAGO Ref."
-                }
-            ]
-        },
-        {
-            "tipo": 0,
-            "condiciones": [
-                {
-                    "tipo": 1,
-                    "cadena": "PAGO CUENTA DE TERCERO"
-                },
-                {
-                    "tipo": 1,
-                    "cadena": "FACTURA"
-                }
-            ]
-        },
-        {
             "tipo": 0,
             "condiciones": [
                 {
@@ -190,7 +122,44 @@
                     "cadena": "CHEQUE PAGADO"
                 }
             ]
+        },
+        {
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "PAGO CUENTA DE TERCERO"
+                },
+                {
+                    "tipo": 1,
+                    "cadena": "FACTURA"
+                }
+            ]
+        },
+
+        {
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
+                    "cadena": "N06 PAGO CUENTA DE TERCERO"
+                },
+                {
+                    "tipo": 3,
+                    "cadena": "BNET 0198045046"
+                },
+                {
+                    "tipo": 3,
+                    "cadena": "BNET 0163488438"
+                },
+                {
+                    "tipo": 3,
+                    "cadena": "BNET 0197972326"
+                }
+            ]
         }
+
+
     ],
     "prefijos": {
         "rfc": {
@@ -204,10 +173,20 @@
             "fin": "\n",
             "separador": "/"
         },
+        "moneda":{
+            "tipo":"moneda",
+            "inicio":"MONEDA ",
+            "fin":"\n"
+        },
         "no_cuenta": {
             "tipo": "no_cuenta",
-            "inicio": "No. de Cuenta ",
+            "inicio": " No. de Cuenta ",
             "fin": "\n"
+        },
+        "no_cuenta_2": {
+            "tipo":"no_cuenta_2",
+            "inicio": "",
+            "fin": ""
         },
         "saldo_anterior": {
             "tipo": "saldo_anterior",

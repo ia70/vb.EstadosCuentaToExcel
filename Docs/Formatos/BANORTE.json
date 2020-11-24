@@ -157,6 +157,15 @@
             "condiciones": [
                 {
                     "tipo": 1,
+                    "cadena": "APERTURA DE CUENTA"
+                }
+            ]
+        },
+        {
+            "tipo": 1,
+            "condiciones": [
+                {
+                    "tipo": 1,
                     "cadena": "TEF BCO"
                 }
             ]
@@ -193,6 +202,15 @@
             "condiciones": [
                 {
                     "tipo": 1,
+                    "cadena": "DEV.SPEICUENTA INEXISTENTE"
+                }
+            ]
+        },
+        {
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
                     "cadena": "I.S.R."
                 }
             ]
@@ -210,9 +228,19 @@
             "fin": "\n",
             "separador": "/"
         },
+        "moneda":{
+            "tipo":"moneda",
+            "inicio":"Moneda ",
+            "fin":"\n"
+        },
         "no_cuenta": {
             "tipo":"no_cuenta",
-            "inicio": "INVERSION ENLACE NEGOCIOS ",
+            "inicio": "Saldo al corte\nENLACE NEGOCIOS BASICA ",
+            "fin": " "
+        },
+        "no_cuenta_2": {
+            "tipo":"no_cuenta_2",
+            "inicio": " Saldo al corte\nENLACE GLOBAL PM C/INTERESES ",
             "fin": " "
         },
         "saldo_anterior": {
@@ -250,6 +278,10 @@
             {
                 "tipo":"fin_documento",
                 "fin": "MENSAJES IMPORTANTES\n"
+            },
+            {
+                "tipo":"fin_documento",
+                "fin": "Advertencia: "
             }
         ]
     }

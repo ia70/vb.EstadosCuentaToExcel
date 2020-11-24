@@ -99,10 +99,20 @@
             "fin": "\n",
             "separador": "/"
         },
+        "moneda":{
+            "tipo":"moneda",
+            "inicio":"denominadas en Pesos Moneda",
+            "fin":"."
+        },
         "no_cuenta": {
             "tipo": "no_cuenta",
             "inicio": "Cuenta de Cheques Moneda\nNacional ",
             "fin": " "
+        },
+        "no_cuenta_2": {
+            "tipo":"no_cuenta_2",
+            "inicio": "",
+            "fin": ""
         },
         "saldo_anterior": {
             "tipo": "saldo_anterior",

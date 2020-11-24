@@ -5,7 +5,9 @@ Public Class I_Prefijos
     Private _id_formato As String
     Private _rfc As I_Prefijo_simple
     Private _fecha_general As I_Prefijo_simple
+    Private _moneda As I_Prefijo_simple
     Private _no_cuenta As I_Prefijo_simple
+    Private _no_cuenta_2 As I_Prefijo_simple
     Private _saldo_anterior As I_Prefijo_simple
     Private _detalles_saldo As I_Prefijo_simple
 
@@ -24,11 +26,13 @@ Public Class I_Prefijos
         _fin_documento = New List(Of I_Prefijo_simple)
     End Sub
 
-    Public Sub New(id_formato As String, rfc As I_Prefijo_simple, fecha_general As I_Prefijo_simple, no_cuenta As I_Prefijo_simple, saldo_anterior As I_Prefijo_simple, detalles_saldo As I_Prefijo_simple, folio As I_Prefijo_simple, referencia As I_Prefijo_simple, fechas_registro As List(Of I_Fechas), ignora_parcial As List(Of I_Prefijo_simple), fin_documento As List(Of I_Prefijo_simple))
+    Public Sub New(id_formato As String, rfc As I_Prefijo_simple, fecha_general As I_Prefijo_simple, moneda As I_Prefijo_simple, no_cuenta As I_Prefijo_simple, no_cuenta_2 As I_Prefijo_simple, saldo_anterior As I_Prefijo_simple, detalles_saldo As I_Prefijo_simple, folio As I_Prefijo_simple, referencia As I_Prefijo_simple, fechas_registro As List(Of I_Fechas), ignora_parcial As List(Of I_Prefijo_simple), fin_documento As List(Of I_Prefijo_simple))
         _id_formato = id_formato
         _rfc = rfc
         _fecha_general = fecha_general
+        _moneda = moneda
         _no_cuenta = no_cuenta
+        _no_cuenta_2 = no_cuenta_2
         _saldo_anterior = saldo_anterior
         _detalles_saldo = detalles_saldo
         _folio = folio
@@ -37,9 +41,6 @@ Public Class I_Prefijos
         _ignora_parcial = ignora_parcial
         _fin_documento = fin_documento
     End Sub
-
-
-
 
 #End Region
 #Region "PROPIEDADES"
@@ -143,6 +144,24 @@ Public Class I_Prefijos
         End Set
     End Property
 
+    Public Property Moneda As I_Prefijo_simple
+        Get
+            Return _moneda
+        End Get
+        Set(value As I_Prefijo_simple)
+            _moneda = value
+        End Set
+    End Property
+
+    Public Property No_cuenta_2 As I_Prefijo_simple
+        Get
+            Return _no_cuenta_2
+        End Get
+        Set(value As I_Prefijo_simple)
+            _no_cuenta_2 = value
+        End Set
+    End Property
+
 #End Region
 #Region "FUNCIONES"
 
@@ -156,8 +175,16 @@ Public Class I_Prefijos
                 Fecha_general.Id_formato = id_
             End If
 
+            If Not IsNothing(Moneda) Then
+                Moneda.Id_formato = id_
+            End If
+
             If Not IsNothing(No_cuenta) Then
                 No_cuenta.Id_formato = id_
+            End If
+
+            If Not IsNothing(No_cuenta_2) Then
+                No_cuenta_2.Id_formato = id_
             End If
 
             If Not IsNothing(Saldo_anterior) Then

@@ -3,6 +3,7 @@
     Private _rfc As String
     Private _saldo_inicial As Decimal
     Private _no_cuenta As String
+    Private _moneda As String
     Private _fecha As Date
     Private _mes As String
     Private _anio As String
@@ -143,6 +144,15 @@
         End Get
         Set(value As Date)
             _fecha = value
+        End Set
+    End Property
+
+    Public Property Moneda As String
+        Get
+            Return _moneda
+        End Get
+        Set(value As String)
+            _moneda = value
         End Set
     End Property
 

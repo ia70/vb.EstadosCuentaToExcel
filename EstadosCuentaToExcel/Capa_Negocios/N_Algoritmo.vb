@@ -148,10 +148,11 @@ Public Class N_Algoritmo
                 .Fecha = GetFecha()
                 .Saldo_inicial = GetSaldoInicial()
                 .No_cuenta = GetNoCuenta()
+                .Moneda = GetMoneda()
             End With
 
         Catch ex As Exception
-            X(ex)
+            'X(ex)
         End Try
 
         Try
@@ -181,6 +182,28 @@ Public Class N_Algoritmo
         End Try
 
         Return cadena
+    End Function
+
+    Private Function GetMoneda() As String
+        Dim cadena As String = ""
+
+        Try
+            cadena = GetCampo(_formato.Prefijos.Moneda.Inicio, _formato.Prefijos.Moneda.Fin)
+            cadena = EliminarEspaciosYsaltos(cadena)
+            If cadena.Length > 0 Then
+                cadena = cadena.Replace(" ", "")
+                If cadena.ToLower.Contains("dolar") Or cadena.ToLower.Contains("usd") Then
+                    Return "USD"
+                Else
+                    Return "MXN"
+                End If
+            End If
+
+        Catch ex As Exception
+            'X(ex)
+        End Try
+
+        Return "NA"
     End Function
 
     ''' <summary>
@@ -404,20 +427,29 @@ Public Class N_Algoritmo
             End If
 
             'DEFINE TIPO DE TRANSACCION INGRESO/EGRESO
-            operacion = GetOperacion(cadena)
-            If operacion = "" Then
-                Try
-                    If _ultimoSaldo >= 0 Then
-                        SaldoLocal = Convert.ToDecimal(Saldo_Operacion)
-                        If SaldoLocal > _ultimoSaldo Then
-                            operacion = "Deposito"
-                        ElseIf SaldoLocal < _ultimoSaldo Then
-                            operacion = "Retiro"
-                        End If
+            Try
+                If _ultimoSaldo >= 0 Then
+                    SaldoLocal = Convert.ToDecimal(Saldo_Operacion)
+                    If SaldoLocal > _ultimoSaldo Then
+                        operacion = "Deposito"
+                    ElseIf SaldoLocal < _ultimoSaldo Then
+                        operacion = "Retiro"
+                    Else
+                        operacion = ""
                     End If
-                Catch ex As Exception
-                End Try
+                Else
+                    operacion = ""
+                End If
+            Catch ex As Exception
+                operacion = ""
+            End Try
+
+            If operacion = "" Then
+                operacion = GetOperacion(cadena)
+
             End If
+
+
 
             'Cifras
             If Not IsNothing(cifras) Then
@@ -556,7 +588,9 @@ Public Class N_Algoritmo
         Dim copy As String
         Dim indice, ini, fin, i, size As Integer
         Dim numero As String
+        Static cont As Integer
 
+        cont += 1
         Try
             copy = cadena
             size = cadena.Length
@@ -565,7 +599,7 @@ Public Class N_Algoritmo
             Do
                 If indice >= 0 Then
                     i = indice - 1
-                    While (i >= 0 Or Not cadena(i) = " ") And (IsNumeric(cadena(i)) Or cadena(i) = ",")
+                    While (i >= 0 And Not cadena(i) = " ") And (IsNumeric(cadena(i)) Or cadena(i) = ",")
                         i -= 1
                     End While
                     If i >= 0 And IsNumeric(cadena(i + 1)) And cadena(i) = " " Then
@@ -574,6 +608,9 @@ Public Class N_Algoritmo
                             If ((indice + 3) <= size - 1) Then
                                 If cadena(indice + 3) = " " Or cadena(indice + 3) = vbLf Then
                                     fin = indice + 3
+                                    Exit Do
+                                ElseIf cadena(indice + 3) = "-" Then
+                                    fin = indice + 4
                                     Exit Do
                                 Else
                                     Return ""
@@ -909,7 +946,7 @@ Public Class N_Algoritmo
 
         Try
             cadena = GetCampo(_formato.Prefijos.Rfc.Inicio, _formato.Prefijos.Rfc.Fin)
-            cadena = cadena.Replace(" ", "")
+            cadena = EliminarEspaciosYsaltos(cadena)
         Catch ex As Exception
             X(ex)
             cadena = ""
@@ -982,11 +1019,46 @@ Public Class N_Algoritmo
 
         Try
             noCuenta = GetCampo(_formato.Prefijos.No_cuenta.Inicio, _formato.Prefijos.No_cuenta.Fin)
+            If noCuenta.Length = 0 Then
+                noCuenta = GetCampo(_formato.Prefijos.No_cuenta_2.Inicio, _formato.Prefijos.No_cuenta_2.Fin)
+            End If
+
+            If noCuenta.Length = 0 Then
+                noCuenta = "GEN_" + Format(numAleatorioEntre(1, 10000), "00000").ToString
+            End If
+            noCuenta = EliminarEspaciosYsaltos(noCuenta)
+
         Catch ex As Exception
-            X(ex)
+            ' X(ex)
         End Try
 
         Return noCuenta
+    End Function
+
+    Private Function EliminarEspaciosYsaltos(ByVal cadena As String) As String
+        Dim copi As String
+
+        copi = cadena
+        Try
+            cadena = cadena.Replace(vbLf, "")
+            cadena = cadena.Replace("-", "")
+            cadena = cadena.Replace(" ", "")
+            Return cadena
+        Catch ex As Exception
+            Return copi
+        End Try
+
+    End Function
+
+    ''' <summary>
+    ''' Genera numero aleatorio entre MIN y MAX
+    ''' </summary>
+    ''' <param name="minimo"></param>
+    ''' <param name="maximo"></param>
+    ''' <returns></returns>
+    Private Function numAleatorioEntre(ByVal minimo As Integer, ByVal maximo As Integer) As Integer
+        Randomize()
+        Return CLng((minimo - maximo) * Rnd() + maximo)
     End Function
 
     ''' <summary>
@@ -1015,11 +1087,15 @@ Public Class N_Algoritmo
             ini = cadenaAux.IndexOf(cad_ini)
             If ini >= 0 Then
                 cadenaAux = cadenaAux.Substring(ini + cad_ini.Length)
-            End If
 
-            fin = cadenaAux.IndexOf(cad_fin)
-            If fin >= 0 Then
-                cadenaAux = cadenaAux.Substring(0, fin)
+                fin = cadenaAux.IndexOf(cad_fin)
+                If fin > 0 Then
+                    cadenaAux = cadenaAux.Substring(0, fin)
+                Else
+                    Return ""
+                End If
+            Else
+                Return ""
             End If
 
             Return cadenaAux

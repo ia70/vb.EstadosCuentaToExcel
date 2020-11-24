@@ -114,10 +114,20 @@
             "fin": " ",
             "separador": "/"
         },
+        "moneda":{
+            "tipo":"moneda",
+            "inicio":"MONEDA",
+            "fin":"\n"
+        },
         "no_cuenta": {
             "tipo": "no_cuenta",
-            "inicio": "PYME ",
+            "inicio": "CUENTA E-PYME ",
             "fin": " "
+        },
+        "no_cuenta_2": {
+            "tipo":"no_cuenta_2",
+            "inicio": "       CUENTA SANTANDER PYME ",
+            "fin": "\n"
         },
         "saldo_anterior": {
             "tipo": "saldo_anterior",

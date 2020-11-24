@@ -17,6 +17,9 @@ Module mAutomatizacion
     Public G_Folder_Out As String = ""
     Public G_CopiaOrigen As Boolean = False
     Public G_Proceso_Activo As Boolean = False
+    Public G_Total_ficheros_analizados As Integer = 0
+    Public G_Total_ficheros_convertidos As Integer = 0
+    Public G_Total_ficheros_detalles As Integer = 0
 
     'VARIBLE DE FORMATOS --------------------
     Public G_Formatos As List(Of I_Formato)
@@ -74,6 +77,22 @@ Module mAutomatizacion
         PROCESO_CORE.Abort()
         On Error Resume Next
         PROCESO_CORE.Join()
+        AnalisisInicial()
+    End Sub
+
+    ''' <summary>
+    ''' AL TERMINAR EL ANALISIS EJECUTA LO SIGUIENTE
+    ''' </summary>
+    Private Sub AnalisisInicial()
+
+        Msg("FICHEROS ANALIZADOS: " + Convert.ToString(G_Total_ficheros_analizados) + vbCrLf _
+            + "FICHEROS CONVERTIDOS: " + Convert.ToString(G_Total_ficheros_convertidos) + vbCrLf _
+            + "FICHEROS CON DETALLES: " + Convert.ToString(G_Total_ficheros_detalles) + vbCrLf)
+
+
+        G_Total_ficheros_analizados = 0
+        G_Total_ficheros_convertidos = 0
+        G_Total_ficheros_detalles = 0
     End Sub
 
     Public Sub ActivarMonitor()
@@ -167,29 +186,29 @@ Module mAutomatizacion
             X(ex)
         End Try
 
+        G_Total_ficheros_analizados += 1
 
         Try
-            If File.Exists(archivo) Then
-                Dim Cadena As String = ""
-                Dim PdfReader = New PdfReader(archivo)
-                Dim page As Integer
-                Dim indice As Integer = 0
+            Dim Cadena As String = ""
+            Dim PdfReader = New PdfReader(archivo)
+            Dim page As Integer
+            Dim indice As Integer = 0
 
-                For page = 1 To PdfReader.NumberOfPages
-                    Dim currentText = PdfTextExtractor.GetTextFromPage(PdfReader, page, New LocationTextExtractionStrategy())
+            For page = 1 To PdfReader.NumberOfPages
+                Dim currentText = PdfTextExtractor.GetTextFromPage(PdfReader, page, New LocationTextExtractionStrategy())
 
-                    currentText = Encoding.UTF8.GetString(Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(currentText)))
-                    Cadena &= currentText
-                Next
-                PdfReader.Close()
+                currentText = Encoding.UTF8.GetString(Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(currentText)))
+                Cadena &= currentText
+            Next
+            PdfReader.Close()
 
-                For Each formato As I_Formato In G_Formatos
-                    If Cadena.Contains(formato.Cadena) Then
-                        Return ProcesarFormato(Cadena, G_Formatos(indice), archivo)
-                    End If
-                    indice += 1
-                Next
-            End If
+            For Each formato As I_Formato In G_Formatos
+                If Cadena.Contains(formato.Cadena) Then
+                    G_Total_ficheros_convertidos += 1
+                    Return ProcesarFormato(Cadena, G_Formatos(indice), archivo)
+                End If
+                indice += 1
+            Next
         Catch ex As Exception
             X(ex)
         End Try
@@ -202,9 +221,10 @@ Module mAutomatizacion
 
     Public Function ProcesarFormato(ByVal cadena As String, ByVal formato As I_Formato, ByVal ruta_archivo As String) As Boolean
         Dim algoritmo As N_Algoritmo
-        Dim res As String
+        Dim res As String = ""
         Dim res_error As Boolean
         Dim rutas As List(Of String)
+        Dim columna As Integer
 
         rutas = GetRutas(ruta_archivo)
 
@@ -212,8 +232,7 @@ Module mAutomatizacion
             algoritmo = New N_Algoritmo(cadena, formato)
             res_error = algoritmo.ProcesarFichero()
 
-
-            'SI EL ARCHIVO SE GUARDA DEVUELVE EL (NOMBRE) DEL FICHERO SIN EXTENCION
+            'SI EL ARCHIVO SE GUARDA DEVUELVE EL (NOMBRE) DEL FICHERO CON EXTENCION
             If rutas.Count > 0 Then
                 res = algoritmo.GenerarExcel(rutas(0))
                 If res.Length > 0 Then
@@ -223,6 +242,18 @@ Module mAutomatizacion
                 End If
             End If
 
+            'VERIFICAR SI TUVO DETALLES O NO
+            columna = algoritmo.Fichero.Tabla.Columns.Count - 1
+            For Each fila As DataRow In algoritmo.Fichero.Tabla.Rows
+                Try
+                    If fila.Item(columna).ToString = "x" Then
+                        SetNoProcesados(ruta_archivo, Path.Combine(rutas(0), res))
+                        Exit For
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
+
             Return res_error
         Catch ex As Exception
             X(ex)
@@ -230,6 +261,23 @@ Module mAutomatizacion
         End Try
 
     End Function
+
+    Private Sub SetNoProcesados(ByVal origen As String, ByVal destino As String)
+        Try
+            Dim fichero As String = "ARCHIVOS CON DETALLES.txt"
+            Dim escritor As StreamWriter
+
+            G_Total_ficheros_detalles += 1
+
+            escritor = File.AppendText(fichero)
+            escritor.Write("--------------------------------------------------------------------------------------------" + vbCrLf)
+            escritor.Write(origen + vbCrLf)
+            escritor.Write(destino)
+            escritor.Flush()
+            escritor.Close()
+        Catch ex2 As Exception
+        End Try
+    End Sub
 
     Private Sub CopiarArchivo(ByVal origen As String, ByVal destino As String, ByVal nombre As String)
 

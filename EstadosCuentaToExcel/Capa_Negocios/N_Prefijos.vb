@@ -23,8 +23,16 @@ Public Class N_Prefijos
                 db.Insertar(obj.Fecha_general)
             End If
 
+            If Not IsNothing(obj.Moneda) Then
+                db.Insertar(obj.Moneda)
+            End If
+
             If Not IsNothing(obj.No_cuenta) Then
                 db.Insertar(obj.No_cuenta)
+            End If
+
+            If Not IsNothing(obj.No_cuenta_2) Then
+                db.Insertar(obj.No_cuenta_2)
             End If
 
             If Not IsNothing(obj.Saldo_anterior) Then
@@ -86,8 +94,12 @@ Public Class N_Prefijos
                             .Rfc = New I_Prefijo_simple(GetInt(linea.Item(0)), GetStr(linea.Item(1)), GetStr(linea.Item(2)), GetStr(linea.Item(3)), GetStr(linea.Item(4)), GetStr(linea.Item(5)), GetStr(linea.Item(6)))
                         Case "fecha_general"
                             .Fecha_general = New I_Prefijo_simple(GetInt(linea.Item(0)), GetStr(linea.Item(1)), GetStr(linea.Item(2)), GetStr(linea.Item(3)), GetStr(linea.Item(4)), GetStr(linea.Item(5)), GetStr(linea.Item(6)))
+                        Case "moneda"
+                            .Moneda = New I_Prefijo_simple(GetInt(linea.Item(0)), GetStr(linea.Item(1)), GetStr(linea.Item(2)), GetStr(linea.Item(3)), GetStr(linea.Item(4)), GetStr(linea.Item(5)), GetStr(linea.Item(6)))
                         Case "no_cuenta"
                             .No_cuenta = New I_Prefijo_simple(GetInt(linea.Item(0)), GetStr(linea.Item(1)), GetStr(linea.Item(2)), GetStr(linea.Item(3)), GetStr(linea.Item(4)), GetStr(linea.Item(5)), GetStr(linea.Item(6)))
+                        Case "no_cuenta_2"
+                            .No_cuenta_2 = New I_Prefijo_simple(GetInt(linea.Item(0)), GetStr(linea.Item(1)), GetStr(linea.Item(2)), GetStr(linea.Item(3)), GetStr(linea.Item(4)), GetStr(linea.Item(5)), GetStr(linea.Item(6)))
                         Case "saldo_anterior"
                             .Saldo_anterior = New I_Prefijo_simple(GetInt(linea.Item(0)), GetStr(linea.Item(1)), GetStr(linea.Item(2)), GetStr(linea.Item(3)), GetStr(linea.Item(4)), GetStr(linea.Item(5)), GetStr(linea.Item(6)))
                         Case "detalles_saldo"
