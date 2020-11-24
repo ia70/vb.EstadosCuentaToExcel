@@ -427,26 +427,25 @@ Public Class N_Algoritmo
             End If
 
             'DEFINE TIPO DE TRANSACCION INGRESO/EGRESO
-            Try
-                If _ultimoSaldo >= 0 Then
-                    SaldoLocal = Convert.ToDecimal(Saldo_Operacion)
-                    If SaldoLocal > _ultimoSaldo Then
-                        operacion = "Deposito"
-                    ElseIf SaldoLocal < _ultimoSaldo Then
-                        operacion = "Retiro"
+
+            operacion = GetOperacion(cadena)
+            If operacion = "" Then
+                Try
+                    If _ultimoSaldo >= 0 Then
+                        SaldoLocal = Convert.ToDecimal(Saldo_Operacion)
+                        If SaldoLocal > _ultimoSaldo Then
+                            operacion = "Deposito"
+                        ElseIf SaldoLocal < _ultimoSaldo Then
+                            operacion = "Retiro"
+                        Else
+                            operacion = ""
+                        End If
                     Else
                         operacion = ""
                     End If
-                Else
+                Catch ex As Exception
                     operacion = ""
-                End If
-            Catch ex As Exception
-                operacion = ""
-            End Try
-
-            If operacion = "" Then
-                operacion = GetOperacion(cadena)
-
+                End Try
             End If
 
 
@@ -639,7 +638,7 @@ Public Class N_Algoritmo
             'VERIFICAR QUE NO SEA CIFRA FALSA -----------------
             If cadena.Length > 6 Then
                 indice = cadena.Length - (6 + 1)
-                If Not cadena(indice) = "," Then
+                If Not cadena(indice) = "," And Not cadena(cadena.Length - 1) = "-" Then
                     Return ""
                 End If
             End If
