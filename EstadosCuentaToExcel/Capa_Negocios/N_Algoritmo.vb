@@ -735,26 +735,39 @@ Public Class N_Algoritmo
     ''' <param name="cadena"></param>
     ''' <returns></returns>
     Protected Overridable Function GetOperacion(ByVal cadena As String) As String
-        Dim verdadero As Boolean
+        Dim v As Boolean
+        Dim v2_act As Boolean
+        Dim v2 As Boolean
 
         Try
             For Each linea As I_Tipo_operacion In _formato.Tipo_operacion
-                verdadero = True
+                v = True
+                v2 = False
+                v2_act = False
                 For Each condicion As I_Condicion In linea.Condiciones
-                    If condicion.Tipo Then
+                    If condicion.Tipo = 1 Then
                         If Not cadena.Contains(condicion.Cadena) Then
-                            verdadero = False
+                            v = False
                             Exit For
                         End If
-                    Else
+                    ElseIf condicion.Tipo = 2 Then
+                        v2_act = True
                         If cadena.Contains(condicion.Cadena) Then
-                            verdadero = False
+                            v2 = True
+                        End If
+                    ElseIf condicion.Tipo = 0 Then
+                        If cadena.Contains(condicion.Cadena) Then
+                            v = False
                             Exit For
                         End If
                     End If
                 Next
 
-                If verdadero Then
+                If v2_act And Not v2 Then
+                    v = False
+                End If
+
+                If v Then
                     If linea.Tipo Then
                         Return "Deposito"
                     Else
