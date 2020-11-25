@@ -131,7 +131,7 @@
                     "cadena": "PAGO CUENTA DE TERCERO"
                 },
                 {
-                    "tipo": 1,
+                    "tipo": 2,
                     "cadena": "FACTURA"
                 }
             ]
@@ -145,16 +145,20 @@
                     "cadena": "N06 PAGO CUENTA DE TERCERO"
                 },
                 {
-                    "tipo": 3,
+                    "tipo": 2,
                     "cadena": "BNET 0198045046"
                 },
                 {
-                    "tipo": 3,
+                    "tipo": 2,
                     "cadena": "BNET 0163488438"
                 },
                 {
-                    "tipo": 3,
+                    "tipo": 2,
                     "cadena": "BNET 0197972326"
+                },
+                {
+                    "tipo": 2,
+                    "cadena": "pago servicios"
                 }
             ]
         }
