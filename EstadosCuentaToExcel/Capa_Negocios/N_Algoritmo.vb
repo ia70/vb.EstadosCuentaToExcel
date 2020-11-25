@@ -426,9 +426,10 @@ Public Class N_Algoritmo
                 End If
             End If
 
-            'DEFINE TIPO DE TRANSACCION INGRESO/EGRESO
+            'DEFINE TIPO DE TRANSACCION INGRESO/EGRESO +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
             operacion = GetOperacion(cadena)
+
             If operacion = "" Then
                 Try
                     If _ultimoSaldo >= 0 Then
@@ -448,22 +449,33 @@ Public Class N_Algoritmo
                 End Try
             End If
 
+            Try
+                If operacion = "" And Formato.Banco.ToLower = "bbva" Then
+                    If cadena.Contains("N06") And cadena.Contains(Fichero.No_cuenta) Then
+                        operacion = "Deposito"
+                    End If
+                End If
+            Catch ex As Exception
+                operacion = ""
+            End Try
+
+            '////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
             'Cifras
-            If Not IsNothing(cifras) Then
-                If operacion = "Deposito" Then
-                    Deposito = cifras(0)
-                ElseIf operacion = "Retiro" Then
-                    Retiro = cifras(0)
+            Try
+                If Not IsNothing(cifras) Then
+                    If operacion = "Deposito" Then
+                        Deposito = cifras(0)
+                    ElseIf operacion = "Retiro" Then
+                        Retiro = cifras(0)
+                    ElseIf Not Concepto.Contains("SALDO") Then
+                        Retiro = cifras(0)
+                    End If
                 End If
-            End If
+            Catch ex As Exception
+            End Try
 
-            'AQUI SE DEFINE SI SE PUDO DETERMINAR EL TIPO DE OPERACION (INGRESO | EGRESO)
-
-
-
-            '/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             'MANEJAR LA INFORMACION
             For Each campo As I_Campos In _formato.Campos
