@@ -181,7 +181,7 @@ Public Class N_ExportarExcel
         Try
             For Each linea As String In Errores
                 Try
-                    Hoja.Range(linea).Interior.Color = RGB(255, 126, 48)
+                    Hoja.Range(linea).Interior.Color = RGB(42, 255, 0)
                 Catch ex As Exception
                 End Try
             Next
