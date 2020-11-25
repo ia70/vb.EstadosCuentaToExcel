@@ -36,7 +36,7 @@ Public Class N_Condicion
                     .Id = GetInt(linea.Item(0))
                     .Id_formato = GetStr(linea(1))
                     .Id_tipo_operacion = GetInt(linea.Item(2))
-                    .Tipo = GetBool(linea.Item(3))
+                    .Tipo = GetInt(linea.Item(3))
                     .Cadena = GetStr(linea(4))
                 End With
 
