@@ -144,35 +144,7 @@
                     "cadena": "FACTURA"
                 }
             ]
-        },
-
-        {
-            "tipo": 1,
-            "condiciones": [
-                {
-                    "tipo": 1,
-                    "cadena": "N06 PAGO CUENTA DE TERCERO"
-                },
-                {
-                    "tipo": 2,
-                    "cadena": "BNET 0198045046"
-                },
-                {
-                    "tipo": 2,
-                    "cadena": "BNET 0163488438"
-                },
-                {
-                    "tipo": 2,
-                    "cadena": "BNET 0197972326"
-                },
-                {
-                    "tipo": 2,
-                    "cadena": "pago servicios"
-                }
-            ]
         }
-
-
     ],
     "prefijos": {
         "rfc": {
