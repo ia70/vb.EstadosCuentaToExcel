@@ -2,7 +2,7 @@
     Private _id As Integer
     Private _id_formato As String
     Private _id_tipo_operacion As Integer
-    Private _tipo As Boolean
+    Private _tipo As Integer
     Private _cadena As String
 
 #Region "CONSTRUCTOR"
@@ -14,9 +14,9 @@
     ''' </summary>
     ''' <param name="id_formato"></param>
     ''' <param name="id_tipo_operacion">ID tipo_operacion</param>
-    ''' <param name="tipo">True - CONTENER | False NO_CONTENER cadena</param>
+    ''' <param name="tipo">1 - CONTENER | 0 NO_CONTENER | 2 Opcional</param>
     ''' <param name="cadena">Cadena a buscar</param>
-    Public Sub New(id_formato As String, id_tipo_operacion As Integer, tipo As Boolean, cadena As String)
+    Public Sub New(id_formato As String, id_tipo_operacion As Integer, tipo As Integer, cadena As String)
         _id = Id
         _id_formato = id_formato
         _id_tipo_operacion = id_tipo_operacion
@@ -55,11 +55,11 @@
     ''' True - CONTENER | False NO_CONTENER Cadena
     ''' </summary>
     ''' <returns></returns>
-    Public Property Tipo As Boolean
+    Public Property Tipo As Integer
         Get
             Return _tipo
         End Get
-        Set(value As Boolean)
+        Set(value As Integer)
             _tipo = value
         End Set
     End Property
