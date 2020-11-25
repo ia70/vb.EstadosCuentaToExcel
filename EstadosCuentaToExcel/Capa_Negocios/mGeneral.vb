@@ -14,10 +14,22 @@ Module mGeneral
         Dim aux As String
 
         Try
-            aux = valor
+            aux = Convert.ToString(valor)
             Return valor
         Catch ex As Exception
             Return ""
+        End Try
+
+    End Function
+
+    Public Function GetDecimal(ByVal valor As Object) As Decimal
+        Dim aux As Decimal
+
+        Try
+            aux = Convert.ToDecimal(valor)
+            Return valor
+        Catch ex As Exception
+            Return 0
         End Try
 
     End Function
@@ -26,7 +38,7 @@ Module mGeneral
         Dim aux As Integer
 
         Try
-            aux = valor
+            aux = Convert.ToInt32(valor)
             Return valor
         Catch ex As Exception
             Return 0
@@ -37,7 +49,7 @@ Module mGeneral
         Dim aux As Boolean
 
         Try
-            aux = valor
+            aux = Convert.ToBoolean(valor)
             Return valor
         Catch ex As Exception
             Return False
