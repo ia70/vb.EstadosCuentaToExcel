@@ -14,6 +14,9 @@ Public Class N_Algoritmo
     Private _ruta_guardado As String    'Ruta donde se guardará el archivo.
     Private _ultimoSaldo As Decimal     'Ultimi saldo del linea del formato
 
+
+    Private _bbvaDetalles As Boolean    'ESPECIFICA SI SE ENCONTRO UN DETALLE EN EL FORMATO BBVA
+
 #End Region
 #Region "CONSTRUCTORES"
 
@@ -25,9 +28,9 @@ Public Class N_Algoritmo
     ''' </summary>
     ''' <param name="textopdf_">PDF en texto plano</param>
     ''' <param name="formato_">Identidad del formato</param>
-    ''' <param name="ruta_">Ruta donde se guardará el archivo.</param>
     Public Sub New(ByVal textopdf_ As String, ByVal formato_ As I_Formato)
         Try
+            _bbvaDetalles = False
             _textopdf = textopdf_
             _fichero = New I_Archivo(formato_.Campos)
             _formato = formato_
@@ -511,6 +514,7 @@ Public Class N_Algoritmo
 
             If operacion = "" And Not Concepto.Contains("SALDO") Then
                 respuesta.Add("x")
+                _bbvaDetalles = True
             Else
                 respuesta.Add("")
             End If
@@ -840,8 +844,17 @@ Public Class N_Algoritmo
                 aux = ""
             End Try
         Loop While aux.Length >= 0
-
         Return res
+
+        'SI HAY DETALLES EN FORMATO BBVA HACER LO SIGUIENTE +++++++++++++++++++++++++++++++++++++++++++++++++
+        Try
+            If _bbvaDetalles Then
+                'ProcesarBBVA()
+            End If
+        Catch ex As Exception
+
+        End Try
+
 
     End Function
 
@@ -1277,6 +1290,122 @@ Public Class N_Algoritmo
     End Function
 
 #End Region
+#End Region
+#Region "PROCESAR BBVA"
+    Private Tabla As DataTable
+
+    'DEFINICION COLUMNAS ---------------------------
+    Private colCargos As Integer = 3
+    Private colAbonos As Integer = 4
+    Private colSaldo As Integer = 5
+    Private colAdicional As Integer = 7
+
+    Private Fila As Integer
+    Private NoFilas As Integer
+    Private i As Integer
+
+
+    Private Sub ProcesarBBVA()
+        Dim iA As Integer
+        Dim iB As Integer
+
+        Try
+            Fila = 0
+            NoFilas = Fichero.Tabla.Rows.Count
+
+            'OBTENER TABLA ORIGEN
+            Tabla = Fichero.Tabla
+
+            'Comprobar Saldo origen
+            For i = 0 To NoFilas - 1
+                If GetStr(Tabla.Rows(i).Item(colAdicional)) = "x" Then
+                    iA = GetIndiceArriba(i)
+                    iB = GetIndiceAbajo(i)
+                    DesifrarOperacion(i, iA, iB)
+                End If
+            Next
+
+
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub DesifrarOperacion(ByVal linea As Integer, ByVal iA As Integer, ByVal iB As Integer)
+        Dim mTabla((iA - 1) - iB, 3) As Decimal
+        Dim i2, y As Integer
+
+        'LLENAR ARREGLO -----------------------------------
+        Try
+            y = 0
+            For i2 = iA To iB
+                If Not GetStr(Tabla.Rows(i2).Item(colAdicional)) = "x" Then
+                    If GetStr(Tabla.Rows(i2).Item(colCargos)).Length > 0 Then
+                        mTabla(y, 0) = GetDecimal(Tabla.Rows(i2).Item(colCargos))
+                        mTabla(y, 2) = 0
+                    Else
+                        mTabla(y, 0) = GetDecimal(Tabla.Rows(i2).Item(colAbonos))
+                        mTabla(y, 2) = 1
+                    End If
+                Else
+                    mTabla(y, 0) = GetDecimal(Tabla.Rows(i2).Item(colCargos))
+                    mTabla(y, 2) = -1
+                End If
+
+                mTabla(y, 1) = GetDecimal(Tabla.Rows(i2).Item(colSaldo))
+
+                y += 1
+            Next
+        Catch ex As Exception
+        End Try
+
+
+
+        Try
+            If iA >= 0 And iB >= 0 Then
+
+            End If
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
+    Private Function GetIndiceArriba(ByVal linea As Integer) As Integer
+        Dim i2 As Integer
+
+        Try
+            For i2 = linea - 1 To 0 Step -1
+                If GetStr(Tabla.Rows(i2).Item(colSaldo)).Length > 0 Then
+                    If Not GetStr(Tabla.Rows(i2).Item(colAdicional)) = "x" Then
+                        Return i2
+                    End If
+                End If
+            Next
+            Return -1
+        Catch ex As Exception
+            Return -1
+        End Try
+
+    End Function
+
+    Private Function GetIndiceAbajo(ByVal linea As Integer) As Integer
+        Dim i2 As Integer
+
+        Try
+            For i2 = linea + 1 To NoFilas - 1
+                If GetStr(Tabla.Rows(i2).Item(colSaldo)).Length > 0 Then
+                    If Not GetStr(Tabla.Rows(i2).Item(colAdicional)) = "x" Then
+                        Return i2
+                    End If
+                End If
+            Next
+            Return -1
+        Catch ex As Exception
+            Return -1
+        End Try
+    End Function
 
 #End Region
 End Class
