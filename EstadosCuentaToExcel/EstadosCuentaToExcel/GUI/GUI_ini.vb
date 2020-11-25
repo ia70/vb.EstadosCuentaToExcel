@@ -7,6 +7,7 @@ Public Class GUI_ini
             G_DB_Inicializada = CargarVariablesGlobales()
             GUI_Configuracion.Show()
             'Test.Show()
+            'Shell(Environ("windir") & "\System32\notepad.exe " + G_NombreFicheroDetalles, AppWinStyle.NormalFocus)
         Catch ex As Exception
             X(ex)
             End
