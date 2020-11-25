@@ -92,6 +92,15 @@
             "condiciones": [
                 {
                     "tipo": 1,
+                    "cadena": "PAGO DE NOMINA"
+                }
+            ]
+        },
+        {
+            "tipo": 0,
+            "condiciones": [
+                {
+                    "tipo": 1,
                     "cadena": "SPEI ENVIADO"
                 }
             ]
