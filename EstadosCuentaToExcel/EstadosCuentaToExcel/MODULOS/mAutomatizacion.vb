@@ -20,6 +20,7 @@ Module mAutomatizacion
     Public G_Total_ficheros_analizados As Integer = 0
     Public G_Total_ficheros_convertidos As Integer = 0
     Public G_Total_ficheros_detalles As Integer = 0
+    Public G_NombreFicheroDetalles As String = "ARCHIVOS CON DETALLES.txt"
 
     'VARIBLE DE FORMATOS --------------------
     Public G_Formatos As List(Of I_Formato)
@@ -93,6 +94,13 @@ Module mAutomatizacion
         G_Total_ficheros_analizados = 0
         G_Total_ficheros_convertidos = 0
         G_Total_ficheros_detalles = 0
+
+        Try
+            Shell(Environ("windir") & "\System32\notepad.exe " + G_NombreFicheroDetalles, AppWinStyle.NormalFocus)
+        Catch ex As Exception
+
+        End Try
+
     End Sub
 
     Public Sub ActivarMonitor()
@@ -102,6 +110,12 @@ Module mAutomatizacion
     End Sub
 
     Public Sub IniciarBusqueda()
+        'ELIMINAR ARCHIVO PREVIO DE DETALLES ARCHIVOS
+        Try
+            My.Computer.FileSystem.DeleteFile(G_NombreFicheroDetalles)
+        Catch ex As Exception
+        End Try
+
         Try
             PROCESO_BUSQUEDA = New Thread(AddressOf Buscararchivos) 'Proceso que buscará archivos
             PROCESO_BUSQUEDA.Start()
@@ -264,15 +278,26 @@ Module mAutomatizacion
 
     Private Sub SetNoProcesados(ByVal origen As String, ByVal destino As String)
         Try
-            Dim fichero As String = "ARCHIVOS CON DETALLES.txt"
+            Dim fichero As String = G_NombreFicheroDetalles
             Dim escritor As StreamWriter
+            Dim indice As Integer
+
+            Try
+                indice = origen.IndexOf("C:")
+                If indice >= 0 Then
+                    origen = origen.Substring(indice)
+                End If
+            Catch ex As Exception
+
+            End Try
+
 
             G_Total_ficheros_detalles += 1
 
             escritor = File.AppendText(fichero)
-            escritor.Write("--------------------------------------------------------------------------------------------" + vbCrLf)
+            escritor.Write(vbCrLf + "--------------------------------------------------------------------------------------------" + vbCrLf)
             escritor.Write(origen + vbCrLf)
-            escritor.Write(destino)
+            escritor.Write(destino + vbCrLf)
             escritor.Flush()
             escritor.Close()
         Catch ex2 As Exception
