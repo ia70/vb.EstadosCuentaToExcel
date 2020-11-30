@@ -48,11 +48,17 @@ Public Class N_Ficheros_procesados
     ''' </summary>
     ''' <param name="id">ID formato</param>
     ''' <returns>True - si se ha eliminado</returns>
-    Public Function Eliminar(ByVal id As String)
+    Public Function Eliminar(ByVal id As String) As Boolean
         Dim db As New D_db_operaciones(tabla)
 
         Return db.Eliminar("id_formato", id)
 
+    End Function
+
+    Public Function Vaciar() As Boolean
+        Dim db As New D_db_operaciones(tabla)
+
+        Return db.VaciarTabla()
     End Function
 
 #End Region
