@@ -20,7 +20,9 @@ Module mAutomatizacion
     Public G_Total_ficheros_analizados As Integer = 0
     Public G_Total_ficheros_convertidos As Integer = 0
     Public G_Total_ficheros_detalles As Integer = 0
+    Public G_Total_fecheros_no_convertidos As Integer = 0
     Public G_NombreFicheroDetalles As String = "ARCHIVOS CON DETALLES.txt"
+    Public G_NombreFicherosNoProcesados As String = "ARCHIVOS NO CONVERTIDOS.txt"
 
     'VARIBLE DE FORMATOS --------------------
     Public G_Formatos As List(Of I_Formato)
@@ -88,15 +90,22 @@ Module mAutomatizacion
 
         Msg("FICHEROS ANALIZADOS: " + Convert.ToString(G_Total_ficheros_analizados) + vbCrLf _
             + "FICHEROS CONVERTIDOS: " + Convert.ToString(G_Total_ficheros_convertidos) + vbCrLf _
-            + "FICHEROS CON DETALLES: " + Convert.ToString(G_Total_ficheros_detalles) + vbCrLf)
+            + "FICHEROS CON DETALLES: " + Convert.ToString(G_Total_ficheros_detalles) + vbCrLf _
+            + "FICHEROS NO CONVERTIDOS: " + Convert.ToString(G_Total_fecheros_no_convertidos))
 
 
         G_Total_ficheros_analizados = 0
         G_Total_ficheros_convertidos = 0
         G_Total_ficheros_detalles = 0
+        G_Total_fecheros_no_convertidos = 0
 
         Try
-            Shell(Environ("windir") & "\System32\notepad.exe " + G_NombreFicheroDetalles, AppWinStyle.NormalFocus)
+            If File.Exists(G_NombreFicheroDetalles) Then
+                Shell(Environ("windir") & "\System32\notepad.exe " + G_NombreFicheroDetalles, AppWinStyle.NormalFocus)
+            End If
+            If File.Exists(G_NombreFicherosNoProcesados) Then
+                Shell(Environ("windir") & "\System32\notepad.exe " + G_NombreFicherosNoProcesados, AppWinStyle.NormalFocus)
+            End If
         Catch ex As Exception
 
         End Try
@@ -113,6 +122,10 @@ Module mAutomatizacion
         'ELIMINAR ARCHIVO PREVIO DE DETALLES ARCHIVOS
         Try
             My.Computer.FileSystem.DeleteFile(G_NombreFicheroDetalles)
+        Catch ex As Exception
+        End Try
+        Try
+            My.Computer.FileSystem.DeleteFile(G_NombreFicherosNoProcesados)
         Catch ex As Exception
         End Try
 
@@ -223,6 +236,10 @@ Module mAutomatizacion
                 End If
                 indice += 1
             Next
+
+            'NO RPOCESADO -------------------------------
+            SetNoProcesados(archivo)
+
         Catch ex As Exception
             X(ex)
         End Try
@@ -261,7 +278,7 @@ Module mAutomatizacion
             For Each fila As DataRow In algoritmo.Fichero.Tabla.Rows
                 Try
                     If fila.Item(columna).ToString = "x" Then
-                        SetNoProcesados(ruta_archivo, Path.Combine(rutas(0), res))
+                        SetConDetalles(ruta_archivo, Path.Combine(rutas(0), res))
                         Exit For
                     End If
                 Catch ex As Exception
@@ -276,7 +293,33 @@ Module mAutomatizacion
 
     End Function
 
-    Private Sub SetNoProcesados(ByVal origen As String, ByVal destino As String)
+    Private Sub SetNoProcesados(ByVal origen As String)
+        Try
+            Dim fichero As String = G_NombreFicherosNoProcesados
+            Dim escritor As StreamWriter
+            Dim indice As Integer
+
+            Try
+                indice = origen.IndexOf("C:")
+                If indice >= 0 Then
+                    origen = origen.Substring(indice)
+                End If
+            Catch ex As Exception
+            End Try
+
+
+            G_Total_fecheros_no_convertidos += 1
+
+            escritor = File.AppendText(fichero)
+            escritor.Write(vbCrLf + "--------------------------------------------------------------------------------------------" + vbCrLf)
+            escritor.Write(origen + vbCrLf)
+            escritor.Flush()
+            escritor.Close()
+        Catch ex2 As Exception
+        End Try
+    End Sub
+
+    Private Sub SetConDetalles(ByVal origen As String, ByVal destino As String)
         Try
             Dim fichero As String = G_NombreFicheroDetalles
             Dim escritor As StreamWriter
