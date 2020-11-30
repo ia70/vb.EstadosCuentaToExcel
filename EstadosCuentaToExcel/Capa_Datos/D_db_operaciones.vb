@@ -169,5 +169,25 @@
         Return res
     End Function
 
+    ''' <summary>
+    ''' Elimina todo el contenido de una tabla
+    ''' </summary>
+    ''' <returns>True - Si exitoso</returns>
+    Public Function VaciarTabla() As Boolean
+        Dim DB As New D_DB_Core
+        Dim sql As String
+        Dim res As Boolean
+
+        Try
+            sql = "TRUNCATE TABLE " & Tabla
+            res = DB.Update(sql)
+        Catch ex As Exception
+            X(ex)
+            Return False
+        End Try
+
+        Return res
+    End Function
+
 #End Region
 End Class
