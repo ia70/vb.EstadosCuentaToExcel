@@ -273,5 +273,18 @@ Public Class GUI_Configuracion
     Private Sub BtnInicioWindows_Click(sender As Object, e As EventArgs) Handles btnInicioWindows.Click
         EscribirRegistro()
     End Sub
+
+    Private Sub BtnVaciarFProcesados_Click(sender As Object, e As EventArgs) Handles btnVaciarFProcesados.Click
+        Dim db As New N_Ficheros_procesados
+
+        Try
+            db.Vaciar()
+        Catch ex As Exception
+        End Try
+
+        Msg("¡Datos de ficheros convertidos borrados!")
+
+
+    End Sub
 #End Region
 End Class
