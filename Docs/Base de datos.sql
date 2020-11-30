@@ -1,5 +1,6 @@
-CREATE DATABASE IF NOT EXISTS `xrestadoscuentas`
-USE xrestadoscuentas
+CREATE DATABASE IF NOT EXISTS `xrestadoscuentas`;
+USE xrestadoscuentas;
+
 
 CREATE TABLE `campos`  (
   `id` int NOT NULL AUTO_INCREMENT,
