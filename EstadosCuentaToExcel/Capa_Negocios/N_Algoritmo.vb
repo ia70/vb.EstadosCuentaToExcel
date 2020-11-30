@@ -792,7 +792,7 @@ Public Class N_Algoritmo
                 End If
             Next
         Catch ex As Exception
-            X(ex)
+            'X(ex)
         End Try
 
         Return ""
@@ -849,7 +849,7 @@ Public Class N_Algoritmo
         'SI HAY DETALLES EN FORMATO BBVA HACER LO SIGUIENTE +++++++++++++++++++++++++++++++++++++++++++++++++
         Try
             If _bbvaDetalles Then
-                'ProcesarBBVA()
+                ProcesarBBVA()
             End If
         Catch ex As Exception
 
@@ -1336,34 +1336,32 @@ Public Class N_Algoritmo
         Dim mTabla((iA - 1) - iB, 3) As Decimal
         Dim i2, y As Integer
 
-        'LLENAR ARREGLO -----------------------------------
-        Try
-            y = 0
-            For i2 = iA To iB
-                If Not GetStr(Tabla.Rows(i2).Item(colAdicional)) = "x" Then
-                    If GetStr(Tabla.Rows(i2).Item(colCargos)).Length > 0 Then
-                        mTabla(y, 0) = GetDecimal(Tabla.Rows(i2).Item(colCargos))
-                        mTabla(y, 2) = 0
-                    Else
-                        mTabla(y, 0) = GetDecimal(Tabla.Rows(i2).Item(colAbonos))
-                        mTabla(y, 2) = 1
-                    End If
-                Else
-                    mTabla(y, 0) = GetDecimal(Tabla.Rows(i2).Item(colCargos))
-                    mTabla(y, 2) = -1
-                End If
-
-                mTabla(y, 1) = GetDecimal(Tabla.Rows(i2).Item(colSaldo))
-
-                y += 1
-            Next
-        Catch ex As Exception
-        End Try
-
-
-
+        'LLENAR ARREGLO ------------------------------------------------------------------------
         Try
             If iA >= 0 And iB >= 0 Then
+
+                Try
+                    y = 0
+                    For i2 = iA To iB
+                        If Not GetStr(Tabla.Rows(i2).Item(colAdicional)) = "x" Then
+                            If GetStr(Tabla.Rows(i2).Item(colCargos)).Length > 0 Then
+                                mTabla(y, 0) = GetDecimal(Tabla.Rows(i2).Item(colCargos))
+                                mTabla(y, 2) = 0
+                            Else
+                                mTabla(y, 0) = GetDecimal(Tabla.Rows(i2).Item(colAbonos))
+                                mTabla(y, 2) = 1
+                            End If
+                        Else
+                            mTabla(y, 0) = GetDecimal(Tabla.Rows(i2).Item(colCargos))
+                            mTabla(y, 2) = -1
+                        End If
+
+                        mTabla(y, 1) = GetDecimal(Tabla.Rows(i2).Item(colSaldo))
+
+                        y += 1
+                    Next
+                Catch ex As Exception
+                End Try
 
             End If
         Catch ex As Exception
