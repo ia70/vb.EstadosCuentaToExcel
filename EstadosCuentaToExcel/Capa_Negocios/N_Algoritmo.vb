@@ -849,7 +849,7 @@ Public Class N_Algoritmo
         'SI HAY DETALLES EN FORMATO BBVA HACER LO SIGUIENTE +++++++++++++++++++++++++++++++++++++++++++++++++
         Try
             If _bbvaDetalles Then
-                ProcesarBBVA()
+                'ProcesarBBVA()
             End If
         Catch ex As Exception
 
@@ -1339,7 +1339,6 @@ Public Class N_Algoritmo
         'LLENAR ARREGLO ------------------------------------------------------------------------
         Try
             If iA >= 0 And iB >= 0 Then
-
                 Try
                     y = 0
                     For i2 = iA To iB
@@ -1361,7 +1360,13 @@ Public Class N_Algoritmo
                         y += 1
                     Next
                 Catch ex As Exception
+                    '0  -> EGRESO
+                    '1  -> INGRESO
+                    '-1 -> SIN DEFINIR
                 End Try
+
+
+
 
             End If
         Catch ex As Exception
