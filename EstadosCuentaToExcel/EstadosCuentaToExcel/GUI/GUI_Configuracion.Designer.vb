@@ -23,8 +23,8 @@ Partial Class GUI_Configuracion
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(GUI_Configuracion))
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -45,6 +45,7 @@ Partial Class GUI_Configuracion
         Me.txtIP = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.btnVaciarFProcesados = New System.Windows.Forms.Button()
         Me.btnGuardarCopia = New System.Windows.Forms.CheckBox()
         Me.btnInicioWindows = New System.Windows.Forms.CheckBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -59,7 +60,6 @@ Partial Class GUI_Configuracion
         Me.btnImportar = New System.Windows.Forms.Button()
         Me.dlgFile = New System.Windows.Forms.OpenFileDialog()
         Me.Notificacion = New System.Windows.Forms.NotifyIcon(Me.components)
-        Me.btnVaciarFProcesados = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -296,6 +296,20 @@ Partial Class GUI_Configuracion
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "General"
         '
+        'btnVaciarFProcesados
+        '
+        Me.btnVaciarFProcesados.BackColor = System.Drawing.Color.Gold
+        Me.btnVaciarFProcesados.FlatAppearance.BorderSize = 2
+        Me.btnVaciarFProcesados.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnVaciarFProcesados.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnVaciarFProcesados.ForeColor = System.Drawing.Color.Black
+        Me.btnVaciarFProcesados.Location = New System.Drawing.Point(277, 18)
+        Me.btnVaciarFProcesados.Name = "btnVaciarFProcesados"
+        Me.btnVaciarFProcesados.Size = New System.Drawing.Size(251, 33)
+        Me.btnVaciarFProcesados.TabIndex = 14
+        Me.btnVaciarFProcesados.Text = "Borrar DB Ficheros procesados"
+        Me.btnVaciarFProcesados.UseVisualStyleBackColor = False
+        '
         'btnGuardarCopia
         '
         Me.btnGuardarCopia.AutoSize = True
@@ -413,12 +427,12 @@ Partial Class GUI_Configuracion
         Me.dgTabla.AllowUserToAddRows = False
         Me.dgTabla.AllowUserToResizeColumns = False
         Me.dgTabla.AllowUserToResizeRows = False
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.Azure
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White
-        Me.dgTabla.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.Azure
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White
+        Me.dgTabla.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
         Me.dgTabla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgTabla.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dgTabla.BackgroundColor = System.Drawing.Color.White
@@ -427,12 +441,12 @@ Partial Class GUI_Configuracion
         Me.dgTabla.MultiSelect = False
         Me.dgTabla.Name = "dgTabla"
         Me.dgTabla.ReadOnly = True
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White
-        Me.dgTabla.RowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle6.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White
+        Me.dgTabla.RowsDefaultCellStyle = DataGridViewCellStyle6
         Me.dgTabla.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White
         Me.dgTabla.RowTemplate.DefaultCellStyle.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dgTabla.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black
@@ -467,20 +481,6 @@ Partial Class GUI_Configuracion
         Me.Notificacion.Text = "13Ponientes"
         Me.Notificacion.Visible = True
         '
-        'btnVaciarFProcesados
-        '
-        Me.btnVaciarFProcesados.BackColor = System.Drawing.Color.Gold
-        Me.btnVaciarFProcesados.FlatAppearance.BorderSize = 2
-        Me.btnVaciarFProcesados.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnVaciarFProcesados.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnVaciarFProcesados.ForeColor = System.Drawing.Color.Black
-        Me.btnVaciarFProcesados.Location = New System.Drawing.Point(277, 18)
-        Me.btnVaciarFProcesados.Name = "btnVaciarFProcesados"
-        Me.btnVaciarFProcesados.Size = New System.Drawing.Size(251, 33)
-        Me.btnVaciarFProcesados.TabIndex = 14
-        Me.btnVaciarFProcesados.Text = "Borrar DB Ficheros procesados"
-        Me.btnVaciarFProcesados.UseVisualStyleBackColor = False
-        '
         'GUI_Configuracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 18.0!)
@@ -499,7 +499,7 @@ Partial Class GUI_Configuracion
         Me.Name = "GUI_Configuracion"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Configuración"
+        Me.Text = "Configuración v1.0.4"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
