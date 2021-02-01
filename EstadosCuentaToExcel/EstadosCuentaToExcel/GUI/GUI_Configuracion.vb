@@ -286,5 +286,6 @@ Public Class GUI_Configuracion
 
 
     End Sub
+
 #End Region
 End Class
